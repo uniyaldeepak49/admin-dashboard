@@ -1,0 +1,182 @@
+.revenue-container {
+  padding: 32px;
+  min-height: 100vh;
+}
+
+.revenue-header {
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 500;
+    color: #1a202c;
+    margin: 0 0 8px 0;
+  }
+
+  p {
+    color: #64748b;
+    margin: 0;
+  }
+}
+
+.overview-card {
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  margin-bottom: 32px;
+}
+
+.overview-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+.revenue-amount {
+  h2 {
+    font-size: 48px;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0 0 8px 0;
+  }
+
+  .growth {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &.positive {
+      color: #10b981;
+    }
+  }
+}
+
+.target-progress {
+  flex: 1;
+  max-width: 300px;
+
+  p {
+    margin: 0 0 8px 0;
+    font-weight: 500;
+  }
+
+  mat-progress-bar {
+    margin-bottom: 8px;
+  }
+
+  span {
+    font-size: 14px;
+    color: #64748b;
+  }
+}
+
+.revenue-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.monthly-card,
+.sources-card {
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.month-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .month-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .month-name {
+      font-weight: 500;
+    }
+
+    .month-amount {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a202c;
+    }
+  }
+
+  .month-growth {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &.positive {
+      color: #10b981;
+    }
+
+    &.negative {
+      color: #ef4444;
+    }
+  }
+}
+
+.source-item {
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .source-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .source-amount {
+      font-weight: 600;
+      color: #1a202c;
+    }
+  }
+
+  .source-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    mat-progress-bar {
+      flex: 1;
+    }
+
+    span {
+      font-size: 14px;
+      color: #64748b;
+      min-width: 30px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .revenue-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

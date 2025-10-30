@@ -1,0 +1,148 @@
+.logs-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 32px;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 2.5rem;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--mat-text-secondary);
+  }
+}
+
+.logs-card {
+  mat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      mat-form-field {
+        width: 150px;
+      }
+    }
+  }
+}
+
+.logs-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  padding: 16px;
+  border-left: 4px solid;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  background: var(--mat-surface-variant);
+
+  &.log-info {
+    border-left-color: #2196f3;
+  }
+
+  &.log-warning {
+    border-left-color: #ff9800;
+  }
+
+  &.log-error {
+    border-left-color: #f44336;
+  }
+
+  &.log-debug {
+    border-left-color: #9c27b0;
+  }
+
+  .log-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+
+    .level-chip {
+      font-size: 0.75rem;
+      height: 24px;
+    }
+
+    .timestamp {
+      font-family: monospace;
+      font-size: 0.875rem;
+      color: var(--mat-text-secondary);
+    }
+
+    .source {
+      font-size: 0.875rem;
+      color: var(--mat-text-secondary);
+      font-weight: 500;
+    }
+  }
+
+  .log-message {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .log-user {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--mat-text-secondary);
+
+    mat-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+.no-logs {
+  text-align: center;
+  padding: 48px;
+  color: var(--mat-text-secondary);
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .logs-card mat-card-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+
+    .header-actions {
+      justify-content: space-between;
+
+      mat-form-field {
+        width: auto;
+        flex: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,342 @@
+<div class="forms-container">
+  <div class="forms-header">
+    <h1>Form Components</h1>
+    <p>Various form controls and layouts</p>
+  </div>
+
+  <div class="forms-grid">
+    <!-- Basic Form -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>edit</mat-icon>
+          Basic Form
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="basicForm" (ngSubmit)="onBasicSubmit()">
+          <mat-form-field appearance="outline">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="name" />
+            <mat-icon matSuffix>person</mat-icon>
+            @if (basicForm.get('name')?.invalid && basicForm.get('name')?.touched) {
+              <mat-error>{{ getErrorMessage('basic', 'name') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" />
+            <mat-icon matSuffix>email</mat-icon>
+            @if (basicForm.get('email')?.invalid && basicForm.get('email')?.touched) {
+              <mat-error>{{ getErrorMessage('basic', 'email') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" />
+            <mat-icon matSuffix>phone</mat-icon>
+            @if (basicForm.get('phone')?.invalid && basicForm.get('phone')?.touched) {
+              <mat-error>{{ getErrorMessage('basic', 'phone') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Message</mat-label>
+            <textarea matInput rows="4" formControlName="message"></textarea>
+            @if (basicForm.get('message')?.invalid && basicForm.get('message')?.touched) {
+              <mat-error>{{ getErrorMessage('basic', 'message') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+            <button mat-button type="button">Cancel</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Advanced Form -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>settings</mat-icon>
+          Advanced Form
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="advancedForm" (ngSubmit)="onAdvancedSubmit()">
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" />
+              @if (
+                advancedForm.get('firstName')?.invalid && advancedForm.get('firstName')?.touched
+              ) {
+                <mat-error>{{ getErrorMessage('advanced', 'firstName') }}</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" />
+              @if (advancedForm.get('lastName')?.invalid && advancedForm.get('lastName')?.touched) {
+                <mat-error>{{ getErrorMessage('advanced', 'lastName') }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" />
+            @if (advancedForm.get('email')?.invalid && advancedForm.get('email')?.touched) {
+              <mat-error>{{ getErrorMessage('advanced', 'email') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password" />
+              @if (advancedForm.get('password')?.invalid && advancedForm.get('password')?.touched) {
+                <mat-error>{{ getErrorMessage('advanced', 'password') }}</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput type="password" formControlName="confirmPassword" />
+              @if (
+                advancedForm.get('confirmPassword')?.invalid &&
+                advancedForm.get('confirmPassword')?.touched
+              ) {
+                <mat-error>{{ getErrorMessage('advanced', 'confirmPassword') }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <mat-select formControlName="country">
+                @for (country of countries; track country) {
+                  <mat-option [value]="country">{{ country }}</mat-option>
+                }
+              </mat-select>
+              @if (advancedForm.get('country')?.invalid && advancedForm.get('country')?.touched) {
+                <mat-error>{{ getErrorMessage('advanced', 'country') }}</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city" />
+              @if (advancedForm.get('city')?.invalid && advancedForm.get('city')?.touched) {
+                <mat-error>{{ getErrorMessage('advanced', 'city') }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Website</mat-label>
+            <input matInput formControlName="website" placeholder="https://example.com" />
+            @if (advancedForm.get('website')?.invalid && advancedForm.get('website')?.touched) {
+              <mat-error>{{ getErrorMessage('advanced', 'website') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Birth Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="birthDate" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (advancedForm.get('birthDate')?.invalid && advancedForm.get('birthDate')?.touched) {
+              <mat-error>{{ getErrorMessage('advanced', 'birthDate') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="form-section">
+            <h3>Gender</h3>
+            <mat-radio-group formControlName="gender">
+              @for (gender of genders; track gender) {
+                <mat-radio-button [value]="gender">{{ gender }}</mat-radio-button>
+              }
+            </mat-radio-group>
+          </div>
+
+          <div class="form-section">
+            <mat-checkbox formControlName="newsletter">Subscribe to newsletter</mat-checkbox>
+            <mat-slide-toggle formControlName="notifications"
+              >Enable notifications</mat-slide-toggle
+            >
+          </div>
+
+          <div class="form-actions">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="advancedForm.invalid"
+            >
+              Save
+            </button>
+            <button mat-button type="button">Reset</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Stepper Form -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>linear_scale</mat-icon>
+          Stepper Form
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="stepperForm" (ngSubmit)="onStepperSubmit()">
+          <mat-stepper>
+            <mat-step formGroupName="personalInfo" [stepControl]="stepperForm.get('personalInfo')!">
+              <ng-template matStepLabel>Personal Information</ng-template>
+              <div class="form-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input matInput formControlName="firstName" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput formControlName="lastName" />
+                </mat-form-field>
+              </div>
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" />
+              </mat-form-field>
+              <div class="form-actions">
+                <button mat-button matStepperNext>Next</button>
+              </div>
+            </mat-step>
+
+            <mat-step formGroupName="addressInfo" [stepControl]="stepperForm.get('addressInfo')!">
+              <ng-template matStepLabel>Address Information</ng-template>
+              <mat-form-field appearance="outline">
+                <mat-label>Street Address</mat-label>
+                <input matInput formControlName="street" />
+              </mat-form-field>
+              <div class="form-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>City</mat-label>
+                  <input matInput formControlName="city" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Zip Code</mat-label>
+                  <input matInput formControlName="zipCode" />
+                </mat-form-field>
+              </div>
+              <div class="form-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+              </div>
+            </mat-step>
+
+            <mat-step formGroupName="preferences">
+              <ng-template matStepLabel>Preferences</ng-template>
+              <div class="form-section">
+                <mat-checkbox formControlName="newsletter">Subscribe to newsletter</mat-checkbox>
+                <mat-slide-toggle formControlName="notifications"
+                  >Enable notifications</mat-slide-toggle
+                >
+              </div>
+              <div class="form-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  type="submit"
+                  [disabled]="stepperForm.invalid"
+                >
+                  Submit
+                </button>
+              </div>
+            </mat-step>
+          </mat-stepper>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Accordion Form -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>expand_more</mat-icon>
+          Accordion Form
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Personal Details</mat-panel-title>
+              <mat-panel-description>Basic information</mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Full Name</mat-label>
+                <input matInput />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" />
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline">
+              <mat-label>Phone</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Address Information</mat-panel-title>
+              <mat-panel-description>Location details</mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-form-field appearance="outline">
+              <mat-label>Street Address</mat-label>
+              <input matInput />
+            </mat-form-field>
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <input matInput />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>State</mat-label>
+                <mat-select>
+                  <mat-option value="CA">California</mat-option>
+                  <mat-option value="NY">New York</mat-option>
+                  <mat-option value="TX">Texas</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Preferences</mat-panel-title>
+              <mat-panel-description>Your settings</mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="form-section">
+              <mat-checkbox>Marketing emails</mat-checkbox>
+              <mat-checkbox>SMS notifications</mat-checkbox>
+              <mat-slide-toggle>Dark mode</mat-slide-toggle>
+            </div>
+            <mat-action-row>
+              <button mat-button>Cancel</button>
+              <button mat-raised-button color="primary">Save</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

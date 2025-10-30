@@ -1,0 +1,136 @@
+<div class="drag-drop-container">
+  <div class="drag-drop-header">
+    <h1>Drag & Drop Components</h1>
+    <p>Sortable lists and kanban board with drag and drop functionality</p>
+    <button mat-raised-button color="primary" (click)="resetLists()">
+      <mat-icon>refresh</mat-icon>
+      Reset Lists
+    </button>
+  </div>
+
+  <div class="drag-drop-grid">
+    <!-- Sortable List -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>sort</mat-icon>
+          Sortable List
+        </mat-card-title>
+        <mat-card-subtitle>Drag items to reorder</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div cdkDropList (cdkDropListDropped)="onSortableDrop($event)" class="sortable-list">
+          @for (item of sortableItems(); track item; let i = $index) {
+            <div cdkDrag class="sortable-item">
+              <mat-icon cdkDragHandle class="drag-handle">drag_indicator</mat-icon>
+              <span class="item-text">{{ item }}</span>
+              <span class="item-index">#{{ i + 1 }}</span>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Kanban Board -->
+    <div class="kanban-board">
+      <!-- To Do Column -->
+      <mat-card class="kanban-column">
+        <mat-card-header>
+          <mat-card-title class="column-title todo">
+            <mat-icon>assignment</mat-icon>
+            To Do ({{ todoTasks().length }})
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div
+            cdkDropList
+            id="todo"
+            [cdkDropListData]="todoTasks()"
+            [cdkDropListConnectedTo]="['inProgress', 'done']"
+            (cdkDropListDropped)="onTaskDrop($event)"
+            class="task-list"
+          >
+            @for (task of todoTasks(); track task.id) {
+              <div cdkDrag class="task-card">
+                <div class="task-header">
+                  <span class="task-title">{{ task.title }}</span>
+                  <mat-icon [class]="getPriorityClass(task.priority)">
+                    {{ getPriorityIcon(task.priority) }}
+                  </mat-icon>
+                </div>
+                <p class="task-description">{{ task.description }}</p>
+                <div class="task-priority">Priority: {{ task.priority }}</div>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- In Progress Column -->
+      <mat-card class="kanban-column">
+        <mat-card-header>
+          <mat-card-title class="column-title progress">
+            <mat-icon>hourglass_empty</mat-icon>
+            In Progress ({{ inProgressTasks().length }})
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div
+            cdkDropList
+            id="inProgress"
+            [cdkDropListData]="inProgressTasks()"
+            [cdkDropListConnectedTo]="['todo', 'done']"
+            (cdkDropListDropped)="onTaskDrop($event)"
+            class="task-list"
+          >
+            @for (task of inProgressTasks(); track task.id) {
+              <div cdkDrag class="task-card">
+                <div class="task-header">
+                  <span class="task-title">{{ task.title }}</span>
+                  <mat-icon [class]="getPriorityClass(task.priority)">
+                    {{ getPriorityIcon(task.priority) }}
+                  </mat-icon>
+                </div>
+                <p class="task-description">{{ task.description }}</p>
+                <div class="task-priority">Priority: {{ task.priority }}</div>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Done Column -->
+      <mat-card class="kanban-column">
+        <mat-card-header>
+          <mat-card-title class="column-title done">
+            <mat-icon>check_circle</mat-icon>
+            Done ({{ doneTasks().length }})
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div
+            cdkDropList
+            id="done"
+            [cdkDropListData]="doneTasks()"
+            [cdkDropListConnectedTo]="['todo', 'inProgress']"
+            (cdkDropListDropped)="onTaskDrop($event)"
+            class="task-list"
+          >
+            @for (task of doneTasks(); track task.id) {
+              <div cdkDrag class="task-card">
+                <div class="task-header">
+                  <span class="task-title">{{ task.title }}</span>
+                  <mat-icon [class]="getPriorityClass(task.priority)">
+                    {{ getPriorityIcon(task.priority) }}
+                  </mat-icon>
+                </div>
+                <p class="task-description">{{ task.description }}</p>
+                <div class="task-priority">Priority: {{ task.priority }}</div>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

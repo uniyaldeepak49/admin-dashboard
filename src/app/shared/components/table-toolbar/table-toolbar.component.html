@@ -1,0 +1,82 @@
+<div class="table-toolbar">
+  @for (filter of quickFilters(); track filter.key) {
+    <button
+      mat-stroked-button
+      [color]="activeQuickFilter() === filter.key ? 'primary' : ''"
+      [class.active]="activeQuickFilter() === filter.key"
+      (click)="quickFilterClick.emit(filter.key)"
+    >
+      @if (filter.icon) {
+        <mat-icon>{{ filter.icon }}</mat-icon>
+      }
+      {{ filter.label }}
+    </button>
+  }
+
+  <div class="toolbar-spacer"></div>
+
+  @if (activeQuickFilter() || sortColumns().length > 0) {
+    <button mat-icon-button (click)="clearAllFilters.emit()" aria-label="Clear all filters">
+      <mat-icon>clear_all</mat-icon>
+    </button>
+  }
+
+  @if (multiSort() && sortColumns().length > 1) {
+    <button mat-stroked-button (click)="clearSort.emit()" aria-label="Clear sorting">
+      <mat-icon>sort</mat-icon>
+      Clear Sort
+    </button>
+  }
+
+  @if (showGrouping() && groupBy()) {
+    <button mat-stroked-button (click)="expandAllGroups.emit()" aria-label="Expand all groups">
+      <mat-icon>expand_more</mat-icon>
+      Expand All
+    </button>
+    <button mat-stroked-button (click)="collapseAllGroups.emit()" aria-label="Collapse all groups">
+      <mat-icon>expand_less</mat-icon>
+      Collapse All
+    </button>
+  }
+
+  @if (hierarchical()) {
+    <button mat-stroked-button (click)="expandAllNodes.emit()" aria-label="Expand all nodes">
+      <mat-icon>account_tree</mat-icon>
+      Expand All
+    </button>
+    <button mat-stroked-button (click)="collapseAllNodes.emit()" aria-label="Collapse all nodes">
+      <mat-icon>folder</mat-icon>
+      Collapse All
+    </button>
+  }
+
+  @if (showExport() && exportFormats().length > 0) {
+    <button mat-stroked-button [matMenuTriggerFor]="exportMenu" aria-label="Export data">
+      <mat-icon>download</mat-icon>
+      Export
+    </button>
+    <mat-menu #exportMenu="matMenu">
+      @for (format of exportFormats(); track format) {
+        <button mat-menu-item (click)="exportData.emit(format)">
+          <mat-icon>
+            @switch (format) {
+              @case ('csv') {
+                table_chart
+              }
+              @case ('excel') {
+                grid_on
+              }
+              @case ('pdf') {
+                picture_as_pdf
+              }
+              @case ('json') {
+                code
+              }
+            }
+          </mat-icon>
+          <span>Export as {{ format.toUpperCase() }}</span>
+        </button>
+      }
+    </mat-menu>
+  }
+</div>

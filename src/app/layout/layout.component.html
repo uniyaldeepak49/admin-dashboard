@@ -1,0 +1,25 @@
+<div class="layout-container">
+  <app-header (toggleSidebar)="toggleSidebar()" />
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      #sidenav
+      [opened]="sidebarOpen()"
+      [mode]="isMobile() ? 'over' : 'side'"
+      (openedChange)="sidebarOpen.set($event)"
+    >
+      <app-sidebar
+        [isOpen]="sidebarOpen()"
+        (navClick)="closeSidebar()"
+        (sidebarToggle)="toggleSidebar()"
+      />
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <main class="main-content">
+        <router-outlet />
+      </main>
+      <app-footer />
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

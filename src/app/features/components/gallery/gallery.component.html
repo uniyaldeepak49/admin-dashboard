@@ -1,0 +1,68 @@
+<div class="gallery-container">
+  <h1>Gallery</h1>
+  <p>Image gallery with filtering and preview functionality.</p>
+
+  <!-- Category Filter -->
+  <mat-card class="filter-section">
+    <mat-card-content>
+      <h3>Filter by Category</h3>
+      <div class="category-buttons">
+        @for (category of categories(); track category.value) {
+          <button
+            mat-raised-button
+            [color]="selectedCategory() === category.value ? 'primary' : ''"
+            (click)="selectCategory(category.value)"
+          >
+            {{ category.label }}
+          </button>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Gallery Grid -->
+  <div class="gallery-grid">
+    @for (item of filteredItems(); track item.id) {
+      <mat-card class="gallery-item" (click)="openImageDialog(item)">
+        <div class="image-container">
+          <img [src]="item.imageUrl" [alt]="item.title" loading="lazy" />
+          <div class="overlay">
+            <mat-icon>zoom_in</mat-icon>
+          </div>
+        </div>
+        <mat-card-content>
+          <h4>{{ item.title }}</h4>
+          <p>{{ item.description }}</p>
+          <span class="category-tag">{{ item.category }}</span>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  @if (filteredItems().length === 0) {
+    <div class="empty-state">
+      <mat-icon>photo_library</mat-icon>
+      <h3>No items found</h3>
+      <p>Try selecting a different category.</p>
+    </div>
+  }
+
+  <!-- Image Modal -->
+  @if (selectedImage(); as image) {
+    <div class="image-modal" (click)="closeImageDialog()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button mat-icon-button class="close-btn" (click)="closeImageDialog()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <div class="image-container-modal">
+          <img [src]="image.imageUrl" [alt]="image.title" class="modal-image" />
+        </div>
+        <div class="image-info">
+          <h3>{{ image.title }}</h3>
+          <p>{{ image.description }}</p>
+          <span class="category-tag">{{ image.category }}</span>
+        </div>
+      </div>
+    </div>
+  }
+</div>

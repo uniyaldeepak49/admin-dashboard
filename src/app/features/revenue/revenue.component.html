@@ -1,0 +1,75 @@
+<div class="revenue-container">
+  <div class="revenue-header">
+    <h1>Total Revenue Analytics</h1>
+    <p>Comprehensive revenue tracking and analysis</p>
+  </div>
+
+  <div class="revenue-overview">
+    <mat-card class="overview-card">
+      <div class="overview-content">
+        <div class="revenue-amount">
+          <h2>${{ revenueData().total | number }}</h2>
+          <div class="growth positive">
+            <mat-icon>trending_up</mat-icon>
+            <span>+{{ revenueData().growth }}%</span>
+          </div>
+        </div>
+        <div class="target-progress">
+          <p>Target: ${{ revenueData().target | number }}</p>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="progressPercentage()"
+            color="primary"
+          ></mat-progress-bar>
+          <span>{{ progressPercentage() }}% of target achieved</span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="revenue-grid">
+    <mat-card class="monthly-card">
+      <mat-card-header>
+        <mat-card-title>Monthly Revenue</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @for (month of revenueData().monthly; track month.month) {
+          <div class="month-item">
+            <div class="month-info">
+              <span class="month-name">{{ month.month }}</span>
+              <span class="month-amount">${{ month.amount | number }}</span>
+            </div>
+            <div class="month-growth" [class]="month.growth > 0 ? 'positive' : 'negative'">
+              <mat-icon>{{ month.growth > 0 ? 'trending_up' : 'trending_down' }}</mat-icon>
+              <span>{{ month.growth }}%</span>
+            </div>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="sources-card">
+      <mat-card-header>
+        <mat-card-title>Revenue Sources</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @for (source of revenueData().sources; track source.name) {
+          <div class="source-item">
+            <div class="source-info">
+              <h4>{{ source.name }}</h4>
+              <span class="source-amount">${{ source.amount | number }}</span>
+            </div>
+            <div class="source-progress">
+              <mat-progress-bar
+                mode="determinate"
+                [value]="source.percentage"
+                color="primary"
+              ></mat-progress-bar>
+              <span>{{ source.percentage }}%</span>
+            </div>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

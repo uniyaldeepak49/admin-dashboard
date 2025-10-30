@@ -1,0 +1,133 @@
+<div class="cards-container">
+  <div class="cards-header">
+    <h1>Card Components</h1>
+    <p>Various card layouts and designs</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="section">
+    <h2>Statistics Cards</h2>
+    <div class="stats-grid">
+      @for (stat of stats(); track stat.title) {
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-header">
+              <mat-icon [class]="'stat-icon ' + stat.color">{{ stat.icon }}</mat-icon>
+              <span class="stat-change" [class]="stat.color">{{ stat.change }}</span>
+            </div>
+            <div class="stat-value">{{ stat.value }}</div>
+            <div class="stat-title">{{ stat.title }}</div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </div>
+
+  <!-- Product Cards -->
+  <div class="section">
+    <h2>Product Cards</h2>
+    <div class="products-grid">
+      @for (product of products(); track product.id) {
+        <mat-card class="product-card">
+          <div class="product-image">
+            <mat-icon>{{ product.image }}</mat-icon>
+          </div>
+          <mat-card-content>
+            <mat-card-title>{{ product.name }}</mat-card-title>
+            <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
+            <div class="product-rating">
+              <mat-icon>star</mat-icon>
+              <span>{{ product.rating }}</span>
+            </div>
+            <mat-chip-set>
+              <mat-chip>{{ product.category }}</mat-chip>
+            </mat-chip-set>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary">View Details</button>
+            <button mat-raised-button color="primary">Add to Cart</button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  </div>
+
+  <!-- Team Cards -->
+  <div class="section">
+    <h2>Team Member Cards</h2>
+    <div class="team-grid">
+      @for (member of teamMembers(); track member.id) {
+        <mat-card class="team-card">
+          <mat-card-content>
+            <div class="member-avatar">
+              <mat-icon
+                matBadge="●"
+                [matBadgeColor]="
+                  member.status === 'online'
+                    ? 'primary'
+                    : member.status === 'away'
+                      ? 'accent'
+                      : 'warn'
+                "
+              >
+                {{ member.avatar }}
+              </mat-icon>
+            </div>
+            <mat-card-title>{{ member.name }}</mat-card-title>
+            <mat-card-subtitle>{{ member.role }}</mat-card-subtitle>
+            <div class="member-status">
+              <span class="status-dot" [class]="member.status"></span>
+              {{ member.status | titlecase }}
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-icon-button><mat-icon>message</mat-icon></button>
+            <button mat-icon-button><mat-icon>email</mat-icon></button>
+            <button mat-icon-button><mat-icon>phone</mat-icon></button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  </div>
+
+  <!-- Project Cards -->
+  <div class="section">
+    <h2>Project Cards</h2>
+    <div class="projects-grid">
+      @for (project of projects(); track project.name) {
+        <mat-card class="project-card">
+          <mat-card-header>
+            <mat-card-title>{{ project.name }}</mat-card-title>
+            <mat-card-subtitle>Due: {{ project.dueDate }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="project-status">
+              <mat-chip
+                [color]="
+                  project.status === 'In Progress'
+                    ? 'primary'
+                    : project.status === 'Review'
+                      ? 'accent'
+                      : 'warn'
+                "
+              >
+                {{ project.status }}
+              </mat-chip>
+            </div>
+            <div class="project-progress">
+              <div class="progress-header">
+                <span>Progress</span>
+                <span>{{ project.progress }}%</span>
+              </div>
+              <mat-progress-bar mode="determinate" [value]="project.progress"></mat-progress-bar>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>View Details</button>
+            <button mat-button color="primary">Edit</button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  </div>
+</div>

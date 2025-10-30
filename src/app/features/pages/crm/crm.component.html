@@ -1,0 +1,243 @@
+<div class="crm-container">
+  <div class="crm-header">
+    <h1>CRM & Customer Management</h1>
+    <div class="header-stats">
+      <mat-card class="stat-card">
+        <div class="stat-value">{{ customers().length }}</div>
+        <div class="stat-label">Customers</div>
+      </mat-card>
+      <mat-card class="stat-card">
+        <div class="stat-value">{{ activeLeads().length }}</div>
+        <div class="stat-label">Active Leads</div>
+      </mat-card>
+      <mat-card class="stat-card">
+        <div class="stat-value">{{ pendingTasks().length }}</div>
+        <div class="stat-label">Pending Tasks</div>
+      </mat-card>
+      <mat-card class="stat-card">
+        <div class="stat-value">${{ totalPipelineValue() | number: '1.0-0' }}</div>
+        <div class="stat-label">Pipeline Value</div>
+      </mat-card>
+    </div>
+  </div>
+
+  <mat-tab-group class="crm-tabs">
+    <!-- Customers Tab -->
+    <mat-tab label="Customers">
+      <div class="tab-content">
+        <div class="tab-header">
+          <h2>Customer Database</h2>
+          <button mat-raised-button color="primary" (click)="addCustomer()">
+            <mat-icon>person_add</mat-icon>
+            Add Customer
+          </button>
+        </div>
+
+        <div class="customers-grid">
+          @for (customer of customers(); track customer.id) {
+            <mat-card class="customer-card">
+              <mat-card-header>
+                <div mat-card-avatar class="customer-avatar">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <mat-card-title>{{ customer.name }}</mat-card-title>
+                <mat-card-subtitle>{{ customer.company }}</mat-card-subtitle>
+              </mat-card-header>
+
+              <mat-card-content>
+                <div class="customer-info">
+                  <div class="info-item">
+                    <mat-icon>email</mat-icon>
+                    <span>{{ customer.email }}</span>
+                  </div>
+                  <div class="info-item">
+                    <mat-icon>phone</mat-icon>
+                    <span>{{ customer.phone }}</span>
+                  </div>
+                  <div class="info-item">
+                    <mat-icon>attach_money</mat-icon>
+                    <span>${{ customer.totalValue | number: '1.0-0' }}</span>
+                  </div>
+                </div>
+
+                <mat-chip-set>
+                  <mat-chip [class]="'status-' + customer.status">
+                    {{ customer.status | titlecase }}
+                  </mat-chip>
+                </mat-chip-set>
+              </mat-card-content>
+
+              <mat-card-actions>
+                <button mat-button (click)="viewCustomer(customer)">View</button>
+                <button mat-button (click)="editCustomer(customer)">Edit</button>
+                <button mat-icon-button [matMenuTriggerFor]="customerMenu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #customerMenu="matMenu">
+                  <button mat-menu-item (click)="addInteraction(customer)">
+                    <mat-icon>add_comment</mat-icon>
+                    Add Interaction
+                  </button>
+                  <button mat-menu-item (click)="createTask(customer)">
+                    <mat-icon>task</mat-icon>
+                    Create Task
+                  </button>
+                </mat-menu>
+              </mat-card-actions>
+            </mat-card>
+          }
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Leads Tab -->
+    <mat-tab label="Leads">
+      <div class="tab-content">
+        <div class="tab-header">
+          <h2>Sales Pipeline</h2>
+          <button mat-raised-button color="primary" (click)="addLead()">
+            <mat-icon>trending_up</mat-icon>
+            Add Lead
+          </button>
+        </div>
+
+        <div class="pipeline-board">
+          @for (stage of leadStages; track stage.key) {
+            <div class="pipeline-column">
+              <div class="column-header">
+                <h3>{{ stage.label }}</h3>
+                <span class="lead-count">{{ getLeadsByStage(stage.key).length }}</span>
+              </div>
+
+              <div class="leads-list">
+                @for (lead of getLeadsByStage(stage.key); track lead.id) {
+                  <mat-card class="lead-card">
+                    <mat-card-header>
+                      <mat-card-title>{{ lead.name }}</mat-card-title>
+                      <mat-card-subtitle>{{ lead.company }}</mat-card-subtitle>
+                    </mat-card-header>
+
+                    <mat-card-content>
+                      <div class="lead-value">${{ lead.value | number: '1.0-0' }}</div>
+                      <div class="lead-probability">{{ lead.probability }}% probability</div>
+                      <div class="lead-source">{{ lead.source }}</div>
+                      <div class="lead-close">Close: {{ lead.expectedClose | date: 'short' }}</div>
+                    </mat-card-content>
+
+                    <mat-card-actions>
+                      <button mat-button (click)="editLead(lead)">Edit</button>
+                      <button mat-button (click)="convertLead(lead)">Convert</button>
+                    </mat-card-actions>
+                  </mat-card>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Tasks Tab -->
+    <mat-tab label="Tasks">
+      <div class="tab-content">
+        <div class="tab-header">
+          <h2>Task Management</h2>
+          <button mat-raised-button color="primary" (click)="addTask()">
+            <mat-icon>add_task</mat-icon>
+            Add Task
+          </button>
+        </div>
+
+        <div class="tasks-container">
+          @for (task of tasks(); track task.id) {
+            <mat-card class="task-card" [class]="'priority-' + task.priority">
+              <mat-card-header>
+                <mat-card-title>{{ task.title }}</mat-card-title>
+                <mat-card-subtitle
+                  >{{ task.type | titlecase }} • {{ task.assignedTo }}</mat-card-subtitle
+                >
+              </mat-card-header>
+
+              <mat-card-content>
+                <p>{{ task.description }}</p>
+                <div class="task-meta">
+                  <div class="task-due">
+                    <mat-icon>schedule</mat-icon>
+                    Due: {{ task.dueDate | date: 'short' }}
+                  </div>
+                  <mat-chip-set>
+                    <mat-chip [class]="'status-' + task.status">
+                      {{ task.status | titlecase }}
+                    </mat-chip>
+                    <mat-chip [class]="'priority-' + task.priority">
+                      {{ task.priority | titlecase }}
+                    </mat-chip>
+                  </mat-chip-set>
+                </div>
+              </mat-card-content>
+
+              <mat-card-actions>
+                <button
+                  mat-button
+                  (click)="completeTask(task)"
+                  [disabled]="task.status === 'completed'"
+                >
+                  Complete
+                </button>
+                <button mat-button (click)="editTask(task)">Edit</button>
+              </mat-card-actions>
+            </mat-card>
+          }
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Calendar Tab -->
+    <mat-tab label="Calendar">
+      <div class="tab-content">
+        <div class="tab-header">
+          <h2>Appointments & Meetings</h2>
+          <button mat-raised-button color="primary" (click)="scheduleAppointment()">
+            <mat-icon>event</mat-icon>
+            Schedule Meeting
+          </button>
+        </div>
+
+        <div class="calendar-view">
+          <mat-card class="calendar-card">
+            <mat-card-header>
+              <mat-card-title>Upcoming Appointments</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+              @for (appointment of upcomingAppointments(); track appointment.id) {
+                <div class="appointment-item">
+                  <div class="appointment-time">
+                    <mat-icon>schedule</mat-icon>
+                    {{ appointment.date | date: 'short' }}
+                  </div>
+                  <div class="appointment-details">
+                    <h4>{{ appointment.title }}</h4>
+                    <p>{{ appointment.description }}</p>
+                    <div class="appointment-attendees">
+                      <mat-icon>people</mat-icon>
+                      {{ appointment.attendees.join(', ') }}
+                    </div>
+                  </div>
+                  <div class="appointment-actions">
+                    <button mat-icon-button (click)="editAppointment(appointment)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="cancelAppointment(appointment)">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              }
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

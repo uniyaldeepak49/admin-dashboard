@@ -1,0 +1,37 @@
+.filter-builder {
+  padding: 16px;
+  border: 1px solid var(--mat-divider-color);
+  border-radius: 8px;
+}
+
+.filter-group {
+  border: 1px solid var(--mat-divider-color);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.nested-group {
+  margin-left: 20px;
+  border-left: 2px solid var(--mat-primary);
+  padding-left: 12px;
+  margin-top: 8px;
+}
+
+.group-header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.condition-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.condition-row mat-form-field {
+  flex: 1;
+}

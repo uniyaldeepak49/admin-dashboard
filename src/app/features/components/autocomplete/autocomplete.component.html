@@ -1,0 +1,167 @@
+<div class="autocomplete-container">
+  <div class="autocomplete-header">
+    <h1>Autocomplete Components</h1>
+    <p>Various autocomplete examples with filtering and selection</p>
+  </div>
+
+  <div class="autocomplete-grid">
+    <!-- Country Autocomplete -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>public</mat-icon>
+          Country Selection
+        </mat-card-title>
+        <mat-card-subtitle>Search and select countries with flags</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Choose a country</mat-label>
+          <input
+            matInput
+            [formControl]="countryControl"
+            [matAutocomplete]="countryAuto"
+            placeholder="Type to search..."
+          />
+          <mat-icon matSuffix>search</mat-icon>
+          <mat-autocomplete #countryAuto="matAutocomplete" [displayWith]="displayCountry">
+            @for (country of filteredCountries(); track country.code) {
+              <mat-option [value]="country">
+                <span class="country-option">
+                  <span class="flag">{{ country.flag }}</span>
+                  <span class="name">{{ country.name }}</span>
+                  <span class="code">({{ country.code }})</span>
+                </span>
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- User Autocomplete -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>people</mat-icon>
+          User Selection
+        </mat-card-title>
+        <mat-card-subtitle>Search users by name or email</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select a user</mat-label>
+          <input
+            matInput
+            [formControl]="userControl"
+            [matAutocomplete]="userAuto"
+            placeholder="Search by name or email..."
+          />
+          <mat-icon matSuffix>person_search</mat-icon>
+          <mat-autocomplete #userAuto="matAutocomplete" [displayWith]="displayUser">
+            @for (user of filteredUsers(); track user.id) {
+              <mat-option [value]="user">
+                <div class="user-option">
+                  <div class="avatar">{{ user.avatar }}</div>
+                  <div class="user-info">
+                    <div class="name">{{ user.name }}</div>
+                    <div class="email">{{ user.email }}</div>
+                  </div>
+                </div>
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Skills Autocomplete with Chips -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>code</mat-icon>
+          Skills Selection
+        </mat-card-title>
+        <mat-card-subtitle>Add multiple skills with chips</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="skills-section">
+          <div class="selected-skills">
+            @if (selectedSkills().length > 0) {
+              <h4>Selected Skills:</h4>
+              <div class="chips-container">
+                @for (skill of selectedSkills(); track skill) {
+                  <mat-chip-row (removed)="removeSkill(skill)">
+                    {{ skill }}
+                    <button matChipRemove>
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                }
+              </div>
+            }
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Add skills</mat-label>
+            <input
+              matInput
+              [formControl]="skillControl"
+              [matAutocomplete]="skillAuto"
+              placeholder="Type to search skills..."
+            />
+            <mat-icon matSuffix>add</mat-icon>
+            <mat-autocomplete
+              #skillAuto="matAutocomplete"
+              (optionSelected)="addSkill($event.option.value)"
+            >
+              @for (skill of filteredSkills(); track skill) {
+                <mat-option [value]="skill">
+                  <mat-icon>code</mat-icon>
+                  {{ skill }}
+                </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Advanced Autocomplete -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>tune</mat-icon>
+          Advanced Features
+        </mat-card-title>
+        <mat-card-subtitle>Autocomplete with custom options</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Search anything</mat-label>
+          <input matInput placeholder="Start typing..." />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>Real-time filtering</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>Custom display functions</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>Multi-selection with chips</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>Keyboard navigation</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

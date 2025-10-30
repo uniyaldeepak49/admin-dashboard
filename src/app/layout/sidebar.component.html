@@ -1,0 +1,456 @@
+<div class="sidebar-content">
+  <!-- Brand Header -->
+  <div class="sidebar-header">
+    <div class="brand-logo">
+      <mat-icon class="brand-icon">dashboard</mat-icon>
+      <div class="brand-text">
+        <h2>AdminPro</h2>
+        <span>Dashboard</span>
+      </div>
+    </div>
+    <button
+      mat-icon-button
+      class="collapse-btn"
+      (click)="toggleSidebar()"
+      [attr.aria-label]="'Toggle sidebar'"
+    >
+      <mat-icon>{{ isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+    </button>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="sidebar-nav">
+    <!-- Main Navigation -->
+    <div class="nav-section">
+      <h3 class="nav-title">Main</h3>
+      <div class="nav-items">
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/users"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>people</mat-icon>
+          <span>Users</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/analytics"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>analytics</mat-icon>
+          <span>Analytics</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Business Section -->
+    <div class="nav-section">
+      <h3 class="nav-title">Business</h3>
+      <div class="nav-items">
+        <a
+          *hasRole="['admin', 'editor']"
+          routerLink="/dashboard/reports"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>assessment</mat-icon>
+          <span>Reports</span>
+        </a>
+
+        <a
+          *hasRole="['admin', 'editor']"
+          routerLink="/dashboard/products"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>inventory</mat-icon>
+          <span>Products</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- System Section -->
+    <div class="nav-section">
+      <h3 class="nav-title">System</h3>
+      <div class="nav-items">
+        <a
+          *hasRole="'admin'"
+          routerLink="/dashboard/system-logs"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>bug_report</mat-icon>
+          <span>System Logs</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- File Management -->
+    <div class="nav-section">
+      <h3 class="nav-title">File Management</h3>
+      <div class="nav-items">
+        <a
+          routerLink="/dashboard/file-manager"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>folder</mat-icon>
+          <span>File Manager</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- CRM Section -->
+    <div class="nav-section">
+      <h3 class="nav-title">CRM</h3>
+      <div class="nav-items">
+        <a
+          routerLink="/dashboard/crm"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>people</mat-icon>
+          <span>CRM</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Pages Section -->
+    <div class="nav-section">
+      <h3 class="nav-title">Pages</h3>
+      <div class="nav-items">
+        <a
+          routerLink="/dashboard/pages/not-found"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>error_outline</mat-icon>
+          <span>Not Found</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/pages/signin"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>login</mat-icon>
+          <span>Sign In</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/pages/change-password"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>lock</mat-icon>
+          <span>Change Password</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/pages/forgot-password"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>help_outline</mat-icon>
+          <span>Forgot Password</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/pages/user-profile"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>account_circle</mat-icon>
+          <span>User Profile</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/pages/timeline"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>timeline</mat-icon>
+          <span>Timeline</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/pages/email-inbox"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>mail</mat-icon>
+          <span>Email Inbox</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Components Section -->
+    <div class="nav-section">
+      <h3 class="nav-title">Components</h3>
+      <div class="nav-items">
+        <a
+          routerLink="/dashboard/components/forms"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>edit</mat-icon>
+          <span>Forms</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/alerts"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>notifications</mat-icon>
+          <span>Alerts</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/cards"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>view_module</mat-icon>
+          <span>Cards</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/tables"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>table_view</mat-icon>
+          <span>Tables</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/buttons"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>touch_app</mat-icon>
+          <span>Buttons</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/loaders"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>hourglass_empty</mat-icon>
+          <span>Loaders</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/accordion"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>expand_more</mat-icon>
+          <span>Accordion</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/autocomplete"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>search</mat-icon>
+          <span>Autocomplete</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/chips"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>label</mat-icon>
+          <span>Chips</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/select"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>arrow_drop_down_circle</mat-icon>
+          <span>Select</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/multiselect-tree"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>account_tree</mat-icon>
+          <span>Multiselect Tree</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/calendar"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>calendar_month</mat-icon>
+          <span>Calendar</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/file-uploads"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>cloud_upload</mat-icon>
+          <span>File Uploads</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/drag-drop"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>open_with</mat-icon>
+          <span>Drag & Drop</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/grids"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>grid_view</mat-icon>
+          <span>Grids</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/modal-popup"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>open_in_new</mat-icon>
+          <span>Modal Popup</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/headers"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>view_headline</mat-icon>
+          <span>Headers</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/footers"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>horizontal_rule</mat-icon>
+          <span>Footers</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/sliders"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>tune</mat-icon>
+          <span>Sliders</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/carousel-sliders"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>view_carousel</mat-icon>
+          <span>Carousel Sliders</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/gallery"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>photo_library</mat-icon>
+          <span>Gallery</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/portfolio"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>work</mat-icon>
+          <span>Portfolio</span>
+        </a>
+
+        <a
+          routerLink="/dashboard/components/editors"
+          routerLinkActive="active"
+          (click)="onNavClick()"
+          class="nav-item"
+        >
+          <mat-icon>edit</mat-icon>
+          <span>Editors</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Footer -->
+  <div class="sidebar-footer">
+    <div class="version-info">
+      <span>Version 1.0.0</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+<div class="carousel-container">
+  <h1>Carousel Sliders</h1>
+  <p>Interactive carousel components with various styles and configurations.</p>
+
+  <!-- Feature Carousel -->
+  <mat-card class="carousel-section">
+    <mat-card-header>
+      <mat-card-title>Feature Carousel</mat-card-title>
+      <mat-card-subtitle>Showcase your main features</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="carousel-wrapper">
+        <div
+          class="carousel-track"
+          [style.transform]="'translateX(-' + currentSlide() * 100 + '%)'"
+        >
+          @for (slide of slides(); track slide.id) {
+            <div class="carousel-slide" [style.background-color]="slide.color">
+              <div class="slide-content">
+                <div class="slide-icon">{{ slide.image }}</div>
+                <h3>{{ slide.title }}</h3>
+                <p>{{ slide.description }}</p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <button mat-icon-button class="nav-btn prev" (click)="prevSlide()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <button mat-icon-button class="nav-btn next" (click)="nextSlide()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+
+      <div class="carousel-indicators">
+        @for (slide of slides(); track slide.id; let i = $index) {
+          <button
+            class="indicator"
+            [class.active]="i === currentSlide()"
+            (click)="goToSlide(i)"
+          ></button>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Testimonial Carousel -->
+  <mat-card class="carousel-section">
+    <mat-card-header>
+      <mat-card-title>Testimonial Carousel</mat-card-title>
+      <mat-card-subtitle>Customer feedback slider</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="testimonial-carousel">
+        @if (testimonials()[currentTestimonial()]; as testimonial) {
+          <div class="testimonial-slide">
+            <div class="testimonial-content">
+              <p>"{{ testimonial.message }}"</p>
+              <div class="testimonial-author">
+                <div class="avatar">{{ testimonial.avatar }}</div>
+                <div class="author-info">
+                  <h4>{{ testimonial.name }}</h4>
+                  <span>{{ testimonial.role }} at {{ testimonial.company }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        <div class="testimonial-controls">
+          <button mat-icon-button (click)="prevTestimonial()">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <button mat-icon-button (click)="nextTestimonial()">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Product Carousel -->
+  <mat-card class="carousel-section">
+    <mat-card-header>
+      <mat-card-title>Product Carousel</mat-card-title>
+      <mat-card-subtitle>Product showcase slider</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="product-carousel">
+        @if (products()[currentProduct()]; as product) {
+          <div class="product-slide" [style.border-color]="product.color">
+            <div class="product-content">
+              <h3 [style.color]="product.color">{{ product.name }}</h3>
+              <div class="price">{{ product.price }}</div>
+              <ul class="features">
+                @for (feature of product.features; track feature) {
+                  <li>{{ feature }}</li>
+                }
+              </ul>
+              <button mat-raised-button [style.background-color]="product.color" color="primary">
+                Choose Plan
+              </button>
+            </div>
+          </div>
+        }
+
+        <div class="product-controls">
+          <button mat-icon-button (click)="prevProduct()">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <button mat-icon-button (click)="nextProduct()">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

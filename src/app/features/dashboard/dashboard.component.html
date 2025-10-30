@@ -1,0 +1,242 @@
+<mat-toolbar class="dashboard-toolbar">
+  <mat-toolbar-row>
+    <span class="toolbar-title">
+      <mat-icon>dashboard</mat-icon>
+      Dashboard Overview
+    </span>
+    <span class="toolbar-spacer"></span>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Date Range</mat-label>
+      <mat-select value="7days">
+        <mat-option value="7days">Last 7 days</mat-option>
+        <mat-option value="30days">Last 30 days</mat-option>
+        <mat-option value="90days">Last 90 days</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="accent" [matMenuTriggerFor]="exportMenu">
+      <mat-icon>download</mat-icon>
+      Export
+    </button>
+    <mat-menu #exportMenu="matMenu">
+      <button mat-menu-item (click)="exportReport()">
+        <mat-icon>picture_as_pdf</mat-icon>
+        Export as PDF
+      </button>
+      <button mat-menu-item (click)="exportExcel()">
+        <mat-icon>table_chart</mat-icon>
+        Export as Excel
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="dashboard-content">
+  <div class="kpi-grid">
+    <mat-card
+      appearance="outlined"
+      class="kpi-card"
+      (click)="navigateToRevenue()"
+      tabindex="0"
+      role="button"
+    >
+      <mat-card-header>
+        <div mat-card-avatar class="kpi-avatar revenue">
+          <mat-icon>attach_money</mat-icon>
+        </div>
+        <mat-card-title>${{ stats().revenue }}</mat-card-title>
+        <mat-card-subtitle>Total Revenue</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="kpi-trend positive">
+          <mat-icon>trending_up</mat-icon>
+          <span>+12.5% from last month</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-progress-bar mode="determinate" value="75" color="primary"></mat-progress-bar>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card
+      appearance="outlined"
+      class="kpi-card"
+      (click)="navigateToUsers()"
+      tabindex="0"
+      role="button"
+    >
+      <mat-card-header>
+        <div mat-card-avatar class="kpi-avatar users">
+          <mat-icon>people</mat-icon>
+        </div>
+        <mat-card-title>{{ stats().totalUsers }}</mat-card-title>
+        <mat-card-subtitle>Active Users</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="kpi-trend positive">
+          <mat-icon>trending_up</mat-icon>
+          <span>+8.2% from last month</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-progress-bar mode="determinate" value="60" color="accent"></mat-progress-bar>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card
+      appearance="outlined"
+      class="kpi-card"
+      (click)="navigateToOrders()"
+      tabindex="0"
+      role="button"
+    >
+      <mat-card-header>
+        <div mat-card-avatar class="kpi-avatar orders">
+          <mat-icon>shopping_cart</mat-icon>
+        </div>
+        <mat-card-title>856</mat-card-title>
+        <mat-card-subtitle>Total Orders</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="kpi-trend negative">
+          <mat-icon>trending_down</mat-icon>
+          <span>-3.1% from last month</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-progress-bar mode="determinate" value="45" color="warn"></mat-progress-bar>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card
+      appearance="outlined"
+      class="kpi-card"
+      (click)="navigateToConversion()"
+      tabindex="0"
+      role="button"
+    >
+      <mat-card-header>
+        <div mat-card-avatar class="kpi-avatar conversion">
+          <mat-icon>analytics</mat-icon>
+        </div>
+        <mat-card-title>3.2%</mat-card-title>
+        <mat-card-subtitle>Conversion Rate</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="kpi-trend positive">
+          <mat-icon>trending_up</mat-icon>
+          <span>+5.4% from last month</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-progress-bar mode="determinate" value="85" color="primary"></mat-progress-bar>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="charts-section">
+    <mat-card appearance="outlined" class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Revenue Analytics</mat-card-title>
+        <mat-card-subtitle>Monthly revenue trend</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas #revenueChart></canvas>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="chart-card">
+      <mat-card-header>
+        <mat-card-title>User Distribution</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas #userChart></canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card appearance="outlined" class="data-table-card">
+    <mat-card-header>
+      <mat-card-title>Recent Users</mat-card-title>
+      <mat-card-subtitle>Latest user registrations</mat-card-subtitle>
+      <div class="header-actions">
+        <button mat-button color="primary" (click)="navigateToUsers()">
+          View All
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <app-data-table
+        [data]="users()"
+        [columns]="userColumns"
+        [actions]="userActions"
+        [showSelection]="false"
+        [showPagination]="true"
+        [(pageIndex)]="pageIndex"
+        [(pageSize)]="pageSize"
+        (actionClick)="onUserAction($event)"
+      >
+      </app-data-table>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="analytics-grid">
+    <mat-card appearance="outlined" class="analytics-card">
+      <mat-card-header>
+        <mat-card-title>Live Statistics</mat-card-title>
+        <div class="live-indicator"></div>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon>visibility</mat-icon>
+            <div matListItemTitle>{{ liveStats().visitors }}</div>
+            <div matListItemLine>Active Visitors</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>pageview</mat-icon>
+            <div matListItemTitle>{{ liveStats().pageViews }}</div>
+            <div matListItemLine>Page Views</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>exit_to_app</mat-icon>
+            <div matListItemTitle>{{ liveStats().bounceRate }}%</div>
+            <div matListItemLine>Bounce Rate</div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="analytics-card performance-card">
+      <mat-card-header>
+        <mat-card-title>Performance Metrics</mat-card-title>
+        <mat-card-subtitle>System performance overview</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="metrics-grid">
+          @for (metric of metrics(); track metric.name) {
+            <div class="metric-item">
+              <div class="metric-header">
+                <div class="metric-icon" [class]="getMetricIconClass(metric.value)">
+                  <mat-icon>{{ getMetricIcon(metric.name) }}</mat-icon>
+                </div>
+                <div class="metric-details">
+                  <span class="metric-name">{{ metric.name }}</span>
+                  <span class="metric-value">{{ metric.value }}%</span>
+                </div>
+              </div>
+              <div class="metric-progress">
+                <mat-progress-bar
+                  mode="determinate"
+                  [value]="metric.value"
+                  [color]="getMetricColor(metric.value)"
+                ></mat-progress-bar>
+                <span class="metric-status">{{ getMetricStatus(metric.value) }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

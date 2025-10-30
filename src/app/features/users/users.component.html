@@ -1,0 +1,164 @@
+<mat-toolbar class="users-toolbar">
+  <mat-toolbar-row>
+    <span class="toolbar-title">
+      <mat-icon>people</mat-icon>
+      User Management
+    </span>
+    <span class="toolbar-spacer"></span>
+    <button mat-raised-button color="accent">
+      <mat-icon>add</mat-icon>
+      Add User
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="users-content">
+  <div class="stats-grid">
+    <mat-card appearance="outlined" class="stat-card">
+      <mat-card-header>
+        <div mat-card-avatar class="stat-avatar total">
+          <mat-icon>people</mat-icon>
+        </div>
+        <mat-card-title>{{ userStats().total }}</mat-card-title>
+        <mat-card-subtitle>Total Users</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="growth positive">
+          <mat-icon>trending_up</mat-icon>
+          <span>+8.2% growth</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="stat-card">
+      <mat-card-header>
+        <div mat-card-avatar class="stat-avatar active">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <mat-card-title>{{ userStats().active }}</mat-card-title>
+        <mat-card-subtitle>Active Users</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-chip-set>
+          <mat-chip color="primary">{{ userStats().activePercentage }}% Active</mat-chip>
+        </mat-chip-set>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="stat-card">
+      <mat-card-header>
+        <div mat-card-avatar class="stat-avatar inactive">
+          <mat-icon>pause_circle</mat-icon>
+        </div>
+        <mat-card-title>{{ userStats().inactive }}</mat-card-title>
+        <mat-card-subtitle>Inactive Users</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="stat-card">
+      <mat-card-header>
+        <div mat-card-avatar class="stat-avatar engagement">
+          <mat-icon>analytics</mat-icon>
+        </div>
+        <mat-card-title>{{ userStats().activePercentage }}%</mat-card-title>
+        <mat-card-subtitle>Engagement Rate</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+
+  <div class="analytics-section">
+    <mat-card appearance="outlined" class="roles-card">
+      <mat-card-header>
+        <mat-card-title>User Roles Distribution</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="warn">admin_panel_settings</mat-icon>
+            <div matListItemTitle>Admin Users</div>
+            <div matListItemLine>{{ userStats().admin }} users</div>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="(userStats().admin / userStats().total) * 100"
+              color="warn"
+            >
+            </mat-progress-bar>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="primary">edit</mat-icon>
+            <div matListItemTitle>Editor Users</div>
+            <div matListItemLine>{{ userStats().editor }} users</div>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="(userStats().editor / userStats().total) * 100"
+              color="primary"
+            >
+            </mat-progress-bar>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="accent">visibility</mat-icon>
+            <div matListItemTitle>Viewer Users</div>
+            <div matListItemLine>{{ userStats().viewer }} users</div>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="(userStats().viewer / userStats().total) * 100"
+              color="accent"
+            >
+            </mat-progress-bar>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="activity-card">
+      <mat-card-header>
+        <mat-card-title>Recent User Activity</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          @for (activity of recentActivity(); track activity.user) {
+            <mat-list-item>
+              <mat-icon matListItemIcon>person</mat-icon>
+              <div matListItemTitle>{{ activity.user }}</div>
+              <div matListItemLine>{{ activity.action }}</div>
+              <div class="activity-meta">
+                <mat-chip [color]="activity.type === 'success' ? 'primary' : 'accent'">
+                  {{ activity.type }}
+                </mat-chip>
+                <span class="activity-time">{{ activity.time }}</span>
+              </div>
+            </mat-list-item>
+          }
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card appearance="outlined" class="users-table-card">
+    <mat-card-header>
+      <mat-card-title>All Users</mat-card-title>
+      <mat-card-subtitle>Manage user accounts and permissions</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <app-data-table
+        [data]="users()"
+        [columns]="columns"
+        [actions]="actions"
+        [showSelection]="true"
+        [showPagination]="true"
+        [showAdvancedFilter]="true"
+        [quickFilters]="quickFilters"
+        [multiSort]="true"
+        [showGrouping]="true"
+        [groupBy]="'role'"
+        [showExport]="true"
+        [exportFormats]="['pdf']"
+        [(pageIndex)]="pageIndex"
+        [(pageSize)]="pageSize"
+        (actionClick)="onTableAction($event)"
+        (selectionChange)="onSelectionChange($event)"
+      >
+      </app-data-table>
+    </mat-card-content>
+  </mat-card>
+</div>

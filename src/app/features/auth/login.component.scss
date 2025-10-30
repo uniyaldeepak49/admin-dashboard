@@ -1,0 +1,334 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(135deg, rgba(63, 81, 181, 0.9) 0%, rgba(103, 58, 183, 0.9) 100%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient><pattern id="b" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="30" fill="url(%23a)"/></pattern></defs><rect width="1000" height="1000" fill="url(%23b)"/><circle cx="200" cy="200" r="150" fill="%23ffffff" opacity="0.05"/><circle cx="800" cy="300" r="100" fill="%23ffffff" opacity="0.03"/><circle cx="300" cy="700" r="120" fill="%23ffffff" opacity="0.04"/><circle cx="700" cy="800" r="80" fill="%23ffffff" opacity="0.06"/></svg>'),
+    linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+  background-size:
+    cover,
+    200px 200px,
+    cover;
+  background-attachment: fixed;
+  padding: 20px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+    animation: backgroundFloat 20s ease-in-out infinite;
+  }
+}
+
+@keyframes backgroundFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+}
+
+.login-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1200px;
+  width: 100%;
+  min-height: 600px;
+  background: var(--mat-sys-surface);
+  border-radius: 16px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+}
+
+.branding-section {
+  background:
+    linear-gradient(135deg, rgba(63, 81, 181, 0.95) 0%, rgba(103, 58, 183, 0.95) 100%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="grid" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0.05"/></linearGradient></defs><rect width="400" height="400" fill="url(%23grid)"/><path d="M0,200 Q100,150 200,200 T400,200" stroke="%23ffffff" stroke-width="2" fill="none" opacity="0.1"/><path d="M0,250 Q150,200 300,250 T400,250" stroke="%23ffffff" stroke-width="1" fill="none" opacity="0.08"/><circle cx="100" cy="100" r="50" fill="%23ffffff" opacity="0.05"/><circle cx="300" cy="300" r="30" fill="%23ffffff" opacity="0.07"/></svg>');
+  background-size:
+    cover,
+    300px 300px;
+  color: var(--mat-sys-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+    animation: floatingOrbs 15s ease-in-out infinite;
+  }
+}
+
+@keyframes floatingOrbs {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+}
+
+.brand-content {
+  text-align: center;
+  z-index: 1;
+  position: relative;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
+
+  .brand-logo {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.5px;
+  }
+}
+
+.brand-content h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  opacity: 0.9;
+}
+
+.brand-content p {
+  font-size: 16px;
+  opacity: 0.8;
+  margin: 0 0 40px 0;
+  line-height: 1.5;
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 16px;
+
+  mat-icon {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 20px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.form-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: var(--mat-sys-surface);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 0;
+  border-radius: 12px;
+  box-shadow: none;
+  border: 1px solid var(--mat-sys-outline-variant);
+}
+
+.card-header {
+  text-align: center;
+  padding: 32px 32px 24px;
+
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--mat-sys-on-surface);
+  }
+
+  p {
+    color: var(--mat-sys-on-surface-variant);
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+mat-card-content {
+  padding: 0 32px 32px !important;
+}
+
+.demo-accounts {
+  margin-bottom: 24px;
+
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: var(--mat-sys-on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.demo-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.demo-btn {
+  width: 100%;
+  padding: 12px 16px;
+  text-align: left;
+  border-radius: 8px;
+
+  .demo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .demo-role {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .demo-email {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  }
+}
+
+.divider {
+  margin: 24px 0;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  .forgot-password {
+    color: var(--mat-sys-primary);
+    font-size: 14px;
+    padding: 0;
+    min-width: auto;
+  }
+}
+
+.login-button {
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-bottom: 24px;
+
+  .spinner {
+    margin-right: 8px;
+  }
+
+  mat-icon {
+    margin-left: 8px;
+    font-size: 18px;
+  }
+}
+
+.login-footer {
+  text-align: center;
+
+  p {
+    font-size: 14px;
+    color: var(--mat-sys-on-surface-variant);
+    margin: 0;
+  }
+
+  button {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-wrapper {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+
+  .branding-section {
+    padding: 40px 20px;
+
+    .logo-section h1 {
+      font-size: 24px;
+    }
+
+    .brand-content h2 {
+      font-size: 20px;
+    }
+
+    .features-list {
+      display: none;
+    }
+  }
+
+  .form-section {
+    padding: 20px;
+  }
+}

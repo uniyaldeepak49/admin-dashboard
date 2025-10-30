@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>Assign Permissions - {{ data.user.name }}</h2>
+
+<mat-dialog-content>
+  <div class="permissions-container">
+    <!-- Role Selection -->
+    <div class="role-section">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>User Role</mat-label>
+        <mat-select [(value)]="selectedRole" (selectionChange)="onRoleChange()">
+          <mat-option value="admin">Admin</mat-option>
+          <mat-option value="editor">Editor</mat-option>
+          <mat-option value="viewer">Viewer</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p class="role-description">{{ getRoleDescription(selectedRole) }}</p>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- Custom Permissions -->
+    <div class="custom-permissions">
+      <h3>Custom Permissions</h3>
+      <p>Override default role permissions with custom settings</p>
+
+      @for (group of permissionGroups; track group.category) {
+        <div class="permission-group">
+          <h4>{{ group.category }}</h4>
+          <div class="permissions-grid">
+            @for (permission of group.permissions; track permission.key) {
+              <div class="permission-item">
+                <mat-checkbox
+                  [checked]="isPermissionSelected(permission.key)"
+                  (change)="togglePermission(permission.key, $event.checked)"
+                >
+                  <div class="permission-info">
+                    <span class="permission-label">{{ permission.label }}</span>
+                    <span class="permission-desc">{{ permission.description }}</span>
+                  </div>
+                </mat-checkbox>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Selected Permissions Summary -->
+    <div class="permissions-summary">
+      <h4>Selected Permissions ({{ selectedPermissions.length }})</h4>
+      <div class="permissions-chips">
+        @for (permission of selectedPermissions; track permission) {
+          <mat-chip (removed)="removePermission(permission)">
+            {{ getPermissionLabel(permission) }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        }
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save Permissions</button>
+</mat-dialog-actions>

@@ -1,0 +1,99 @@
+<div class="portfolio-container">
+  <h1>Portfolio</h1>
+  <p>Showcase of projects and applications built with modern technologies.</p>
+
+  <!-- Category Filter -->
+  <mat-card class="filter-section">
+    <mat-card-content>
+      <h3>Filter by Category</h3>
+      <div class="category-buttons">
+        @for (category of categories(); track category.value) {
+          <button
+            mat-raised-button
+            [color]="selectedCategory() === category.value ? 'primary' : ''"
+            (click)="selectCategory(category.value)"
+          >
+            {{ category.label }}
+          </button>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Portfolio Grid -->
+  <div class="portfolio-grid">
+    @for (project of filteredItems(); track project.id) {
+      <mat-card class="portfolio-item" (click)="openProjectDetails(project)">
+        <div class="project-image">
+          <img [src]="project.imageUrl" [alt]="project.title" loading="lazy" />
+          <div class="overlay">
+            <mat-icon>visibility</mat-icon>
+          </div>
+        </div>
+        <mat-card-content>
+          <h4>{{ project.title }}</h4>
+          <p>{{ project.description }}</p>
+          <div class="tech-stack">
+            @for (tech of project.technologies.slice(0, 3); track tech) {
+              <mat-chip>{{ tech }}</mat-chip>
+            }
+            @if (project.technologies.length > 3) {
+              <span class="more-tech">+{{ project.technologies.length - 3 }} more</span>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  @if (filteredItems().length === 0) {
+    <div class="empty-state">
+      <mat-icon>work_outline</mat-icon>
+      <h3>No projects found</h3>
+      <p>Try selecting a different category.</p>
+    </div>
+  }
+
+  <!-- Project Details Modal -->
+  @if (selectedProject(); as project) {
+    <div class="project-modal" (click)="closeProjectDetails()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button mat-icon-button class="close-btn" (click)="closeProjectDetails()">
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <div class="project-header">
+          <img [src]="project.imageUrl" [alt]="project.title" class="project-image-large" />
+          <div class="project-info">
+            <h2>{{ project.title }}</h2>
+            <p>{{ project.description }}</p>
+
+            <div class="project-actions">
+              @if (project.demoUrl) {
+                <button mat-raised-button color="primary">
+                  <mat-icon>launch</mat-icon>
+                  Live Demo
+                </button>
+              }
+              @if (project.githubUrl) {
+                <button mat-outlined-button>
+                  <mat-icon>code</mat-icon>
+                  View Code
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="tech-details">
+          <h3>Technologies Used</h3>
+          <div class="tech-chips">
+            @for (tech of project.technologies; track tech) {
+              <mat-chip>{{ tech }}</mat-chip>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,197 @@
+<div class="tree-container">
+  <div class="tree-header">
+    <h1>Multiselect Tree</h1>
+    <p>Hierarchical selection with parent-child relationships</p>
+  </div>
+
+  <div class="tree-grid">
+    <!-- Dropdown Tree Selection -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>arrow_drop_down_circle</mat-icon>
+          Dropdown Tree Select
+        </mat-card-title>
+        <mat-card-subtitle>Hierarchical selection in dropdown format</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select technologies</mat-label>
+          <mat-select
+            [formControl]="dropdownControl"
+            multiple
+            (selectionChange)="onDropdownSelectionChange($event.value)"
+          >
+            <div class="dropdown-tree">
+              @for (category of treeData; track category.name) {
+                <div class="tree-category">
+                  <mat-option [value]="category.name" class="category-option">
+                    <mat-checkbox
+                      [checked]="isCategorySelected(category)"
+                      [indeterminate]="isCategoryIndeterminate(category)"
+                      (change)="onCategoryToggle(category, $event.checked)"
+                      (click)="$event.stopPropagation()"
+                    >
+                      {{ category.name }}
+                    </mat-checkbox>
+                  </mat-option>
+                  @if (category.children) {
+                    @for (subcategory of category.children; track subcategory.name) {
+                      <div class="tree-subcategory">
+                        <mat-option [value]="subcategory.name" class="subcategory-option">
+                          <mat-checkbox
+                            [checked]="isSubcategorySelected(subcategory)"
+                            [indeterminate]="isSubcategoryIndeterminate(subcategory)"
+                            (change)="onSubcategoryToggle(subcategory, $event.checked)"
+                            (click)="$event.stopPropagation()"
+                          >
+                            {{ subcategory.name }}
+                          </mat-checkbox>
+                        </mat-option>
+                        @if (subcategory.children) {
+                          @for (item of subcategory.children; track item.name) {
+                            <mat-option
+                              [value]="getFullPath(category.name, subcategory.name, item.name)"
+                              class="item-option"
+                            >
+                              <mat-checkbox
+                                [checked]="isItemSelected(item)"
+                                (change)="onItemToggle(item, $event.checked)"
+                                (click)="$event.stopPropagation()"
+                              >
+                                {{ item.name }}
+                              </mat-checkbox>
+                            </mat-option>
+                          }
+                        }
+                      </div>
+                    }
+                  }
+                </div>
+              }
+            </div>
+          </mat-select>
+          <mat-icon matSuffix>code</mat-icon>
+        </mat-form-field>
+
+        @if (dropdownSelectedItems().length > 0) {
+          <div class="selected-chips">
+            <h4>Selected from Dropdown:</h4>
+            <mat-chip-set>
+              @for (item of dropdownSelectedItems(); track item) {
+                <mat-chip>{{ item }}</mat-chip>
+              }
+            </mat-chip-set>
+            <button mat-button color="warn" (click)="clearDropdownSelection()">
+              <mat-icon>clear</mat-icon>
+              Clear Selection
+            </button>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Tree Selection -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>account_tree</mat-icon>
+          Technology Stack
+        </mat-card-title>
+        <mat-card-subtitle>Select technologies by category</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="tree-actions">
+          <button mat-button color="primary" (click)="selectAll()">
+            <mat-icon>select_all</mat-icon>
+            Select All
+          </button>
+          <button mat-button color="warn" (click)="clearAll()">
+            <mat-icon>clear</mat-icon>
+            Clear All
+          </button>
+        </div>
+
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+            <li class="mat-tree-node">
+              <div class="node-content leaf-node">
+                <mat-checkbox
+                  [checked]="node.selected"
+                  [indeterminate]="node.indeterminate"
+                  (change)="onNodeToggle(node)"
+                >
+                  {{ node.name }}
+                </mat-checkbox>
+              </div>
+            </li>
+          </mat-tree-node>
+
+          <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+            <li>
+              <div class="mat-tree-node">
+                <div class="node-content parent-node">
+                  <button mat-icon-button matTreeNodeToggle>
+                    <mat-icon>
+                      {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                    </mat-icon>
+                  </button>
+                  <mat-checkbox
+                    [checked]="node.selected"
+                    [indeterminate]="node.indeterminate"
+                    (change)="onNodeToggle(node)"
+                  >
+                    {{ node.name }}
+                  </mat-checkbox>
+                </div>
+              </div>
+              @if (treeControl.isExpanded(node)) {
+                <ul>
+                  <ng-container matTreeNodeOutlet></ng-container>
+                </ul>
+              }
+            </li>
+          </mat-nested-tree-node>
+        </mat-tree>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Selected Items -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>checklist</mat-icon>
+          Selected Items
+        </mat-card-title>
+        <mat-card-subtitle>{{ selectedItems().length }} items selected</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        @if (selectedItems().length > 0) {
+          <div class="selected-chips">
+            <mat-chip-set>
+              @for (item of selectedItems(); track item) {
+                <mat-chip>{{ item }}</mat-chip>
+              }
+            </mat-chip-set>
+          </div>
+        } @else {
+          <div class="empty-state">
+            <mat-icon>info</mat-icon>
+            <p>No items selected</p>
+          </div>
+        }
+
+        <div class="tree-features">
+          <h4>Features:</h4>
+          <ul>
+            <li>Hierarchical selection</li>
+            <li>Parent-child relationships</li>
+            <li>Indeterminate states</li>
+            <li>Expand/collapse nodes</li>
+            <li>Select/clear all options</li>
+          </ul>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

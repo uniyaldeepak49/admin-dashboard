@@ -1,0 +1,223 @@
+<div class="profile-container">
+  <h1>User Profile</h1>
+  <p>Manage your personal information and account settings.</p>
+
+  <mat-tab-group>
+    <!-- Profile Information Tab -->
+    <mat-tab label="Profile Information">
+      <div class="tab-content">
+        <mat-card class="profile-card">
+          <mat-card-header>
+            <div class="profile-header">
+              <div class="avatar-section">
+                <img [src]="userProfile().avatar" [alt]="userProfile().firstName" class="avatar" />
+                @if (isEditing()) {
+                  <button mat-icon-button class="avatar-edit" (click)="fileInput.click()">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <input
+                    #fileInput
+                    type="file"
+                    accept="image/*"
+                    (change)="onAvatarChange($event)"
+                    style="display: none"
+                  />
+                }
+              </div>
+              <div class="profile-info">
+                <h2>{{ userProfile().firstName }} {{ userProfile().lastName }}</h2>
+                <p>{{ userProfile().role }} • {{ userProfile().department }}</p>
+              </div>
+              <div class="profile-actions">
+                @if (!isEditing()) {
+                  <button mat-raised-button color="primary" (click)="toggleEdit()">
+                    <mat-icon>edit</mat-icon>
+                    Edit Profile
+                  </button>
+                } @else {
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="saveProfile()"
+                    [disabled]="profileForm.invalid"
+                  >
+                    <mat-icon>save</mat-icon>
+                    Save
+                  </button>
+                  <button mat-button (click)="cancelEdit()">Cancel</button>
+                }
+              </div>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <form [formGroup]="profileForm" class="profile-form">
+              <div class="form-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input matInput formControlName="firstName" [readonly]="!isEditing()" />
+                  @if (
+                    profileForm.get('firstName')?.hasError('required') &&
+                    profileForm.get('firstName')?.touched
+                  ) {
+                    <mat-error>First name is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput formControlName="lastName" [readonly]="!isEditing()" />
+                  @if (
+                    profileForm.get('lastName')?.hasError('required') &&
+                    profileForm.get('lastName')?.touched
+                  ) {
+                    <mat-error>Last name is required</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="email" formControlName="email" [readonly]="!isEditing()" />
+                  @if (
+                    profileForm.get('email')?.hasError('required') &&
+                    profileForm.get('email')?.touched
+                  ) {
+                    <mat-error>Email is required</mat-error>
+                  }
+                  @if (
+                    profileForm.get('email')?.hasError('email') && profileForm.get('email')?.touched
+                  ) {
+                    <mat-error>Please enter a valid email</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Phone</mat-label>
+                  <input matInput formControlName="phone" [readonly]="!isEditing()" />
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Department</mat-label>
+                  @if (isEditing()) {
+                    <mat-select formControlName="department">
+                      @for (dept of departments(); track dept) {
+                        <mat-option [value]="dept">{{ dept }}</mat-option>
+                      }
+                    </mat-select>
+                  } @else {
+                    <input matInput formControlName="department" readonly />
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Role</mat-label>
+                  @if (isEditing()) {
+                    <mat-select formControlName="role">
+                      @for (role of roles(); track role) {
+                        <mat-option [value]="role">{{ role }}</mat-option>
+                      }
+                    </mat-select>
+                  } @else {
+                    <input matInput formControlName="role" readonly />
+                  }
+                </mat-form-field>
+              </div>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Bio</mat-label>
+                <textarea
+                  matInput
+                  rows="4"
+                  formControlName="bio"
+                  [readonly]="!isEditing()"
+                ></textarea>
+              </mat-form-field>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Account Settings Tab -->
+    <mat-tab label="Account Settings">
+      <div class="tab-content">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Security Settings</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="settings-section">
+              <h3>Password</h3>
+              <p>Last changed 30 days ago</p>
+              <button mat-raised-button color="primary">
+                <mat-icon>lock</mat-icon>
+                Change Password
+              </button>
+            </div>
+
+            <div class="settings-section">
+              <h3>Two-Factor Authentication</h3>
+              <p>Add an extra layer of security to your account</p>
+              <button mat-raised-button>
+                <mat-icon>security</mat-icon>
+                Enable 2FA
+              </button>
+            </div>
+
+            <div class="settings-section">
+              <h3>Login Sessions</h3>
+              <p>Manage your active login sessions</p>
+              <button mat-outlined-button>
+                <mat-icon>devices</mat-icon>
+                View Sessions
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Preferences Tab -->
+    <mat-tab label="Preferences">
+      <div class="tab-content">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Application Preferences</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="settings-section">
+              <h3>Theme</h3>
+              <p>Choose your preferred theme</p>
+              <button mat-raised-button>
+                <mat-icon>palette</mat-icon>
+                Theme Settings
+              </button>
+            </div>
+
+            <div class="settings-section">
+              <h3>Notifications</h3>
+              <p>Manage your notification preferences</p>
+              <button mat-raised-button>
+                <mat-icon>notifications</mat-icon>
+                Notification Settings
+              </button>
+            </div>
+
+            <div class="settings-section">
+              <h3>Language</h3>
+              <p>Select your preferred language</p>
+              <button mat-outlined-button>
+                <mat-icon>language</mat-icon>
+                Language Settings
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

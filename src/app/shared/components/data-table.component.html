@@ -1,0 +1,467 @@
+<div class="table-container mat-elevation-2">
+  @if (showGlobalSearch()) {
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search all columns</mat-label>
+        <input
+          matInput
+          [ngModel]="globalSearchTerm()"
+          (ngModelChange)="onGlobalSearch($event)"
+          placeholder="Type to search..."
+        />
+        <mat-icon matSuffix>search</mat-icon>
+        @if (globalSearchTerm()) {
+          <button matSuffix mat-icon-button (click)="clearGlobalSearch()" aria-label="Clear search">
+            <mat-icon>clear</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+    </div>
+  }
+  @if (showQuickFilters() || multiSort() || showGrouping() || hierarchical() || showExport()) {
+    <app-table-toolbar
+      [quickFilters]="quickFilters()"
+      [activeQuickFilter]="activeQuickFilter()"
+      [sortColumns]="sortColumns()"
+      [multiSort]="multiSort()"
+      [showGrouping]="showGrouping()"
+      [groupBy]="groupBy()"
+      [hierarchical]="hierarchical()"
+      [showExport]="showExport()"
+      [exportFormats]="exportFormats()"
+      (quickFilterClick)="onQuickFilterClick($event)"
+      (clearAllFilters)="clearAllFilters()"
+      (clearSort)="clearSort()"
+      (expandAllGroups)="expandAllGroups()"
+      (collapseAllGroups)="collapseAllGroups()"
+      (expandAllNodes)="expandAllNodes()"
+      (collapseAllNodes)="collapseAllNodes()"
+      (exportData)="exportData($event)"
+    >
+    </app-table-toolbar>
+  }
+  @if (showColumnFilters()) {
+    <div class="filters-container">
+      @for (column of columns(); track column.key) {
+        @if (column.filterable) {
+          <div class="filter-field">
+            @switch (column.filterType) {
+              @case ('text') {
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ column.label }}</mat-label>
+                  <input
+                    matInput
+                    (input)="onColumnFilter(column.key, 'text', $any($event.target).value)"
+                  />
+                </mat-form-field>
+              }
+              @case ('dropdown') {
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ column.label }}</mat-label>
+                  <mat-select
+                    (selectionChange)="onColumnFilter(column.key, 'dropdown', $event.value)"
+                  >
+                    <mat-option value="">All</mat-option>
+                    @for (option of column.filterOptions; track option) {
+                      <mat-option [value]="option">{{ option }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              }
+              @case ('number-range') {
+                <div class="range-filter">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Min {{ column.label }}</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      #minInput
+                      (input)="
+                        onColumnFilter(column.key, 'number-range', {
+                          min: minInput.value,
+                          max: maxInput.value,
+                        })
+                      "
+                    />
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Max {{ column.label }}</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      #maxInput
+                      (input)="
+                        onColumnFilter(column.key, 'number-range', {
+                          min: minInput.value,
+                          max: maxInput.value,
+                        })
+                      "
+                    />
+                  </mat-form-field>
+                </div>
+              }
+              @case ('date-range') {
+                <div class="range-filter">
+                  <mat-form-field appearance="outline">
+                    <mat-label>From {{ column.label }}</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="startPicker"
+                      #startDate
+                      (dateChange)="
+                        onColumnFilter(column.key, 'date-range', {
+                          startDate: startDate.value,
+                          endDate: endDate.value,
+                        })
+                      "
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startPicker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>To {{ column.label }}</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="endPicker"
+                      #endDate
+                      (dateChange)="
+                        onColumnFilter(column.key, 'date-range', {
+                          startDate: startDate.value,
+                          endDate: endDate.value,
+                        })
+                      "
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endPicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              }
+            }
+          </div>
+        }
+      }
+      <button mat-icon-button (click)="clearColumnFilters()" aria-label="Clear all filters">
+        <mat-icon>filter_list_off</mat-icon>
+      </button>
+    </div>
+  }
+  @if (showAdvancedFilter()) {
+    <div class="advanced-filter-container">
+      <app-filter-builder [columns]="columns()" (filterChange)="onAdvancedFilterChange($event)">
+      </app-filter-builder>
+    </div>
+  }
+  @if (showSelection() && hasSelectedRows() && bulkActions().length > 0) {
+    <div class="bulk-actions-container">
+      <div class="bulk-actions-info">
+        <mat-icon>info</mat-icon>
+        <span>{{ getSelectedCount() }} item(s) selected</span>
+      </div>
+      <div class="bulk-actions-buttons">
+        @for (action of bulkActions(); track action.action) {
+          <button
+            mat-raised-button
+            [color]="action.color || 'primary'"
+            (click)="onBulkActionClick(action.action)"
+            [attr.aria-label]="action.label + ' for ' + getSelectedCount() + ' items'"
+          >
+            <mat-icon>{{ action.icon }}</mat-icon>
+            {{ action.label }}
+          </button>
+        }
+        <button
+          mat-stroked-button
+          (click)="selection.clear(); selectionChange.emit([])"
+          aria-label="Clear selection"
+        >
+          <mat-icon>clear</mat-icon>
+          Clear
+        </button>
+      </div>
+    </div>
+  }
+  <div class="table-header" role="row">
+    @if (enableDragDrop()) {
+      <div class="table-cell header-cell" role="columnheader">
+        <mat-icon>reorder</mat-icon>
+      </div>
+    }
+    @if (showSelection()) {
+      <div class="table-cell header-cell" role="columnheader">
+        <mat-checkbox
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+          (change)="toggleAllRows()"
+          aria-label="Select all rows"
+        >
+        </mat-checkbox>
+      </div>
+    }
+    @for (column of columns(); track column.key) {
+      <div class="table-cell header-cell" role="columnheader">
+        @if (column.sortable) {
+          <button
+            mat-button
+            class="sort-button"
+            (click)="sort(column.key, $event)"
+            [attr.aria-label]="'Sort by ' + column.label"
+            [class.multi-sort]="multiSort()"
+          >
+            {{ column.label }}
+            <div class="sort-indicators">
+              <mat-icon>{{ getSortIcon(column.key) }}</mat-icon>
+              @if (getSortPriority(column.key)) {
+                <span class="sort-priority">{{ getSortPriority(column.key) }}</span>
+              }
+            </div>
+          </button>
+        } @else {
+          <span>{{ column.label }}</span>
+        }
+      </div>
+    }
+    @if (actions().length > 0) {
+      <div class="table-cell header-cell" role="columnheader">Actions</div>
+    }
+    @if (cacheKey()) {
+      <div class="table-cell header-cell" role="columnheader">
+        <button
+          mat-icon-button
+          (click)="refreshCache()"
+          [disabled]="!isOnline()"
+          [attr.aria-label]="isOnline() ? 'Refresh data' : 'Offline - cannot refresh'"
+        >
+          <mat-icon>{{ isOnline() ? 'refresh' : 'cloud_off' }}</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (virtualScrolling()) {
+    <cdk-virtual-scroll-viewport
+      [itemSize]="itemSize()"
+      class="virtual-scroll-viewport"
+      role="rowgroup"
+    >
+      @for (row of displayData(); track $index) {
+        <div class="table-row" role="row">
+          @if (showSelection()) {
+            <div class="table-cell" role="gridcell">
+              <mat-checkbox
+                [checked]="selection.isSelected(row)"
+                (change)="toggleRow(row)"
+                [attr.aria-label]="'Select row'"
+              >
+              </mat-checkbox>
+            </div>
+          }
+          @for (column of columns(); track column.key) {
+            <div class="table-cell" role="gridcell">
+              @switch (column.type) {
+                @case ('number') {
+                  {{ row[column.key] | number }}
+                }
+                @case ('date') {
+                  {{ row[column.key] | date }}
+                }
+                @default {
+                  {{ row[column.key] }}
+                }
+              }
+            </div>
+          }
+          @if (actions().length > 0) {
+            <div class="table-cell" role="gridcell">
+              @for (action of actions(); track action.action) {
+                <button
+                  mat-icon-button
+                  (click)="onActionClick(action.action, row)"
+                  [attr.aria-label]="action.label"
+                >
+                  <mat-icon>{{ action.icon }}</mat-icon>
+                </button>
+              }
+            </div>
+          }
+        </div>
+      }
+    </cdk-virtual-scroll-viewport>
+  } @else {
+    @if (loading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <span>Loading data...</span>
+      </div>
+      <div class="skeleton-table">
+        @for (i of Array(loadingRows()); track $index) {
+          <div class="skeleton-row">
+            @if (showSelection()) {
+              <div class="skeleton-cell skeleton-checkbox"></div>
+            }
+            @for (column of columns(); track column.key) {
+              <div class="skeleton-cell"></div>
+            }
+            @if (actions().length > 0) {
+              <div class="skeleton-cell skeleton-actions"></div>
+            }
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="table-body" role="rowgroup" cdkDropList (cdkDropListDropped)="onRowDrop($event)">
+        @for (row of displayData(); track $index) {
+          @if (row._isGroupHeader) {
+            <div class="group-header-row" role="row">
+              <div class="group-header-content">
+                <button
+                  mat-icon-button
+                  (click)="toggleGroup(row._groupValue)"
+                  [attr.aria-label]="'Toggle group ' + row._groupValue"
+                >
+                  <mat-icon>{{
+                    isGroupExpanded(row._groupValue) ? 'expand_less' : 'expand_more'
+                  }}</mat-icon>
+                </button>
+                <span class="group-title">{{ row._groupValue }} ({{ row._groupCount }} items)</span>
+              </div>
+            </div>
+          } @else {
+            <div
+              class="table-row"
+              [class.hierarchical-row]="hierarchical()"
+              [class.draggable-row]="enableDragDrop()"
+              [style.padding-left.px]="hierarchical() ? (row._level || 0) * 20 : 0"
+              cdkDrag
+              [cdkDragDisabled]="!enableDragDrop() || row._isGroupHeader"
+              role="row"
+            >
+              @if (enableDragDrop() && !row._isGroupHeader) {
+                <div class="table-cell drag-handle" role="gridcell">
+                  <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+                </div>
+              }
+              @if (showSelection()) {
+                <div class="table-cell" role="gridcell">
+                  <mat-checkbox
+                    [checked]="selection.isSelected(row)"
+                    (change)="toggleRow(row)"
+                    [attr.aria-label]="'Select row'"
+                  >
+                  </mat-checkbox>
+                </div>
+              }
+              @for (column of columns(); track column.key; let first = $first) {
+                <div class="table-cell" role="gridcell">
+                  @if (hierarchical() && first && row._hasChildren) {
+                    <div class="tree-node-content">
+                      <button
+                        mat-icon-button
+                        class="tree-toggle"
+                        (click)="toggleNode(row.id)"
+                        [attr.aria-label]="'Toggle node ' + row[column.key]"
+                      >
+                        <mat-icon>{{
+                          isNodeExpanded(row.id) ? 'expand_less' : 'expand_more'
+                        }}</mat-icon>
+                      </button>
+                      @switch (column.type) {
+                        @case ('number') {
+                          {{ row[column.key] | number }}
+                        }
+                        @case ('date') {
+                          {{ row[column.key] | date }}
+                        }
+                        @default {
+                          {{ row[column.key] }}
+                        }
+                      }
+                    </div>
+                  } @else {
+                    @if (hierarchical() && first) {
+                      <div class="tree-node-content">
+                        <span class="tree-spacer"></span>
+                        @switch (column.type) {
+                          @case ('number') {
+                            {{ row[column.key] | number }}
+                          }
+                          @case ('date') {
+                            {{ row[column.key] | date }}
+                          }
+                          @default {
+                            {{ row[column.key] }}
+                          }
+                        }
+                      </div>
+                    } @else {
+                      @switch (column.type) {
+                        @case ('number') {
+                          {{ row[column.key] | number }}
+                        }
+                        @case ('date') {
+                          {{ row[column.key] | date }}
+                        }
+                        @default {
+                          {{ row[column.key] }}
+                        }
+                      }
+                    }
+                  }
+                </div>
+              }
+              @if (actions().length > 0 || showRowMenu()) {
+                <div class="table-cell" role="gridcell">
+                  @if (showRowMenu() && rowMenuActions().length > 0) {
+                    <button
+                      mat-icon-button
+                      [matMenuTriggerFor]="rowMenu"
+                      [attr.aria-label]="'Row actions for row'"
+                    >
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #rowMenu="matMenu">
+                      @for (menuAction of rowMenuActions(); track menuAction.action) {
+                        <button
+                          mat-menu-item
+                          (click)="onRowMenuAction(menuAction.action, row)"
+                          [class]="'menu-item-' + (menuAction.color || 'default')"
+                        >
+                          <mat-icon>{{ menuAction.icon }}</mat-icon>
+                          <span>{{ menuAction.label }}</span>
+                        </button>
+                        @if (menuAction.divider) {
+                          <mat-divider></mat-divider>
+                        }
+                      }
+                    </mat-menu>
+                  }
+                  @for (action of actions(); track action.action) {
+                    <button
+                      mat-icon-button
+                      (click)="onActionClick(action.action, row)"
+                      [attr.aria-label]="action.label"
+                    >
+                      <mat-icon>{{ action.icon }}</mat-icon>
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+          }
+        }
+      </div>
+    }
+  }
+
+  @if (showPagination() && !virtualScrolling()) {
+    <mat-paginator
+      [length]="data().length"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="[5, 10, 20]"
+      [pageIndex]="pageIndex()"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  }
+</div>

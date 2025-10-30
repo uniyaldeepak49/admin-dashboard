@@ -1,0 +1,87 @@
+.permissions-container {
+  min-width: 600px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.role-section {
+  margin-bottom: 24px;
+}
+
+.role-description {
+  color: var(--mdc-theme-text-secondary, #666);
+  font-size: 14px;
+  margin: 8px 0 0 0;
+}
+
+.custom-permissions {
+  margin: 24px 0;
+}
+
+.permission-group {
+  margin-bottom: 24px;
+}
+
+.permission-group h4 {
+  color: var(--mdc-theme-text-primary, #333);
+  margin: 0 0 16px 0;
+  font-weight: 500;
+}
+
+.permissions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.permission-item {
+  padding: 8px;
+  border: 1px solid var(--mdc-theme-outline, #e0e0e0);
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  background-color: var(--mdc-theme-surface, #fff);
+}
+
+.permission-item:hover {
+  background-color: var(--mdc-theme-surface-variant, #f5f5f5);
+}
+
+.permission-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+}
+
+.permission-label {
+  font-weight: 500;
+  color: var(--mdc-theme-text-primary, #333);
+}
+
+.permission-desc {
+  font-size: 12px;
+  color: var(--mdc-theme-text-secondary, #666);
+  margin-top: 2px;
+}
+
+.permissions-summary {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: var(--mdc-theme-surface-variant, #f8f9fa);
+  border: 1px solid var(--mdc-theme-outline, #e0e0e0);
+}
+
+.permissions-summary h4 {
+  margin: 0 0 12px 0;
+  color: var(--mdc-theme-text-primary, #333);
+}
+
+.permissions-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

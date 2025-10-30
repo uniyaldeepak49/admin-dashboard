@@ -1,0 +1,205 @@
+<div class="loaders-container">
+  <div class="page-header">
+    <h1>Loader Components</h1>
+    <p>Various loading indicators and progress bars</p>
+  </div>
+
+  <div class="components-grid">
+    <!-- Spinners -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Progress Spinners</mat-card-title>
+        <mat-card-subtitle>Circular loading indicators</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="spinner-row">
+          <div class="spinner-item">
+            <mat-spinner diameter="40"></mat-spinner>
+            <span>Default</span>
+          </div>
+          <div class="spinner-item">
+            <mat-spinner diameter="40" color="primary"></mat-spinner>
+            <span>Primary</span>
+          </div>
+          <div class="spinner-item">
+            <mat-spinner diameter="40" color="accent"></mat-spinner>
+            <span>Accent</span>
+          </div>
+          <div class="spinner-item">
+            <mat-spinner diameter="40" color="warn"></mat-spinner>
+            <span>Warn</span>
+          </div>
+        </div>
+        <div class="spinner-row">
+          <div class="spinner-item">
+            <mat-spinner diameter="20"></mat-spinner>
+            <span>Small</span>
+          </div>
+          <div class="spinner-item">
+            <mat-spinner diameter="30"></mat-spinner>
+            <span>Medium</span>
+          </div>
+          <div class="spinner-item">
+            <mat-spinner diameter="50"></mat-spinner>
+            <span>Large</span>
+          </div>
+          <div class="spinner-item">
+            <mat-spinner diameter="60"></mat-spinner>
+            <span>Extra Large</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Progress Bars -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Progress Bars</mat-card-title>
+        <mat-card-subtitle>Linear progress indicators</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="progress-section">
+          <h4>Determinate Progress</h4>
+          <mat-progress-bar mode="determinate" [value]="progressValue()"></mat-progress-bar>
+          <p>{{ progressValue() }}% Complete</p>
+          <button mat-raised-button color="primary" (click)="simulateProgress()">
+            <mat-icon>play_arrow</mat-icon>
+            Start Progress
+          </button>
+        </div>
+
+        <div class="progress-section">
+          <h4>Indeterminate Progress</h4>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          <p>Loading...</p>
+        </div>
+
+        <div class="progress-section">
+          <h4>Buffer Progress</h4>
+          <mat-progress-bar mode="buffer" value="60" bufferValue="80"></mat-progress-bar>
+          <p>60% loaded, 80% buffered</p>
+        </div>
+
+        <div class="progress-section">
+          <h4>Query Progress</h4>
+          <mat-progress-bar mode="query"></mat-progress-bar>
+          <p>Querying data...</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Loading States -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Loading States</mat-card-title>
+        <mat-card-subtitle>Interactive loading examples</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="loading-section">
+          <h4>Button Loading</h4>
+          @if (isLoading()) {
+            <button mat-raised-button color="primary" [disabled]="true">
+              <mat-spinner diameter="20"></mat-spinner>
+              Loading...
+            </button>
+          } @else {
+            <button mat-raised-button color="primary" (click)="simulateLoading()">
+              <mat-icon>cloud_download</mat-icon>
+              Download Data
+            </button>
+          }
+        </div>
+
+        <div class="loading-section">
+          <h4>Card Loading</h4>
+          @if (isLoading()) {
+            <div class="loading-card">
+              <mat-spinner diameter="30"></mat-spinner>
+              <p>Loading content...</p>
+            </div>
+          } @else {
+            <div class="content-card">
+              <h3>Data Loaded</h3>
+              <p>Your content has been successfully loaded and is ready to view.</p>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Custom Loaders -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Custom Loaders</mat-card-title>
+        <mat-card-subtitle>Styled loading animations</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="custom-loaders">
+          <div class="loader-item">
+            <div class="dots-loader">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <span>Dots Loader</span>
+          </div>
+
+          <div class="loader-item">
+            <div class="pulse-loader"></div>
+            <span>Pulse Loader</span>
+          </div>
+
+          <div class="loader-item">
+            <div class="wave-loader">
+              <div class="wave"></div>
+              <div class="wave"></div>
+              <div class="wave"></div>
+              <div class="wave"></div>
+            </div>
+            <span>Wave Loader</span>
+          </div>
+
+          <div class="loader-item">
+            <div class="ring-loader"></div>
+            <span>Ring Loader</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Skeleton Loaders -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Skeleton Loaders</mat-card-title>
+        <mat-card-subtitle>Content placeholder animations</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="skeleton-examples">
+          <div class="skeleton-card">
+            <div class="skeleton-avatar"></div>
+            <div class="skeleton-content">
+              <div class="skeleton-line skeleton-title"></div>
+              <div class="skeleton-line skeleton-text"></div>
+              <div class="skeleton-line skeleton-text short"></div>
+            </div>
+          </div>
+
+          <div class="skeleton-list">
+            <div class="skeleton-list-item">
+              <div class="skeleton-circle"></div>
+              <div class="skeleton-line"></div>
+            </div>
+            <div class="skeleton-list-item">
+              <div class="skeleton-circle"></div>
+              <div class="skeleton-line"></div>
+            </div>
+            <div class="skeleton-list-item">
+              <div class="skeleton-circle"></div>
+              <div class="skeleton-line"></div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

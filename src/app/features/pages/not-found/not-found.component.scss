@@ -1,0 +1,100 @@
+.not-found-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--mat-app-background);
+}
+
+.not-found-card {
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid var(--mat-divider);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.error-content {
+  padding: 40px 20px;
+
+  .error-icon {
+    margin-bottom: 24px;
+
+    mat-icon {
+      font-size: 80px;
+      width: 80px;
+      height: 80px;
+      color: #ef4444;
+    }
+  }
+
+  .error-code {
+    font-size: 72px;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    color: var(--mat-text-primary);
+    line-height: 1;
+  }
+
+  .error-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: var(--mat-text-primary);
+  }
+
+  .error-message {
+    font-size: 16px;
+    color: var(--mat-text-secondary);
+    margin: 0 0 32px 0;
+    line-height: 1.5;
+  }
+
+  .error-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .not-found-container {
+    padding: 16px;
+  }
+
+  .error-content {
+    padding: 32px 16px;
+
+    .error-icon mat-icon {
+      font-size: 60px;
+      width: 60px;
+      height: 60px;
+    }
+
+    .error-code {
+      font-size: 56px;
+    }
+
+    .error-title {
+      font-size: 20px;
+    }
+
+    .error-actions {
+      flex-direction: column;
+      align-items: center;
+
+      button {
+        width: 100%;
+        max-width: 200px;
+      }
+    }
+  }
+}

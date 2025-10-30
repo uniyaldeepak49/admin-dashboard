@@ -1,0 +1,276 @@
+.carousel-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h1 {
+    margin-bottom: 8px;
+    color: var(--mat-sys-on-surface);
+  }
+
+  p {
+    margin-bottom: 32px;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.carousel-section {
+  margin-bottom: 32px;
+}
+
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  height: 300px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease;
+  height: 100%;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+}
+
+.slide-content {
+  text-align: center;
+  padding: 40px;
+
+  .slide-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0;
+  }
+}
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--mat-sys-primary);
+  z-index: 2;
+
+  &:hover {
+    background: white;
+  }
+
+  &.prev {
+    left: 16px;
+  }
+
+  &.next {
+    right: 16px;
+  }
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+
+  .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: var(--mat-sys-outline);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: var(--mat-sys-primary);
+    }
+
+    &.active {
+      background: var(--mat-sys-primary);
+    }
+  }
+}
+
+.testimonial-carousel {
+  position: relative;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+}
+
+.testimonial-slide {
+  width: 100%;
+  text-align: center;
+}
+
+.testimonial-content {
+  max-width: 600px;
+  margin: 0 auto;
+
+  p {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 24px;
+    color: var(--mat-sys-on-surface);
+  }
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--mat-sys-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+  }
+
+  .author-info {
+    text-align: left;
+
+    h4 {
+      margin: 0 0 4px 0;
+      color: var(--mat-sys-on-surface);
+    }
+
+    span {
+      color: var(--mat-sys-on-surface-variant);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.testimonial-controls {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+
+  button {
+    pointer-events: all;
+  }
+}
+
+.product-carousel {
+  position: relative;
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+}
+
+.product-slide {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  border: 2px solid;
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+}
+
+.product-content {
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  .price {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--mat-sys-on-surface);
+  }
+
+  .features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px 0;
+
+    li {
+      padding: 8px 0;
+      color: var(--mat-sys-on-surface-variant);
+      border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.product-controls {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+
+  button {
+    pointer-events: all;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+    padding: 16px;
+  }
+
+  .slide-content {
+    padding: 20px;
+
+    .slide-icon {
+      font-size: 3rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .testimonial-author {
+    flex-direction: column;
+    gap: 12px;
+
+    .author-info {
+      text-align: center;
+    }
+  }
+
+  .product-slide {
+    padding: 24px;
+  }
+}

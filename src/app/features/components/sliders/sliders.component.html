@@ -1,0 +1,157 @@
+<div class="sliders-container">
+  <div class="sliders-header">
+    <h1>Slider Components</h1>
+    <p>Various slider controls with different configurations</p>
+    <button mat-raised-button color="primary" (click)="resetValues()">
+      <mat-icon>refresh</mat-icon>
+      Reset Values
+    </button>
+  </div>
+
+  <div class="sliders-grid">
+    <!-- Basic Slider -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>tune</mat-icon>
+          Basic Slider
+        </mat-card-title>
+        <mat-card-subtitle>Simple value slider (0-100)</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="slider-section">
+          <div class="slider-info">
+            <span>Value: {{ basicValue() }}</span>
+          </div>
+          <mat-slider min="0" max="100" step="1">
+            <input matSliderThumb [(ngModel)]="basicValue" />
+          </mat-slider>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Range Slider -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>linear_scale</mat-icon>
+          Range Slider
+        </mat-card-title>
+        <mat-card-subtitle>Custom range with steps</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="slider-section">
+          <div class="slider-info">
+            <span>Range: {{ rangeValue() }}%</span>
+          </div>
+          <mat-slider min="0" max="100" step="5" color="accent">
+            <input matSliderThumb [(ngModel)]="rangeValue" />
+          </mat-slider>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Volume Slider -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>volume_up</mat-icon>
+          Volume Control
+        </mat-card-title>
+        <mat-card-subtitle>Audio volume with icon indicators</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="slider-section volume-slider">
+          <mat-icon class="volume-icon">
+            @if (volumeValue() === 0) {
+              volume_off
+            } @else if (volumeValue() < 30) {
+              volume_mute
+            } @else if (volumeValue() < 70) {
+              volume_down
+            } @else {
+              volume_up
+            }
+          </mat-icon>
+          <mat-slider min="0" max="100" step="1" class="flex-slider">
+            <input matSliderThumb [(ngModel)]="volumeValue" />
+          </mat-slider>
+          <span class="volume-value">{{ volumeValue() }}%</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Price Slider -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>attach_money</mat-icon>
+          Price Range
+        </mat-card-title>
+        <mat-card-subtitle>Currency value slider</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="slider-section">
+          <div class="slider-info">
+            <span class="price-display">${{ priceValue() }}</span>
+            <span class="price-range">($0 - $500)</span>
+          </div>
+          <mat-slider min="0" max="500" step="10" color="warn">
+            <input matSliderThumb [(ngModel)]="priceValue" />
+          </mat-slider>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Temperature Slider -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>thermostat</mat-icon>
+          Temperature Control
+        </mat-card-title>
+        <mat-card-subtitle>Temperature with color coding</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="slider-section">
+          <div class="temperature-display">
+            <span class="temp-value" [class]="getTemperatureClass()">
+              {{ temperatureValue() }}°C
+            </span>
+            <span class="temp-status">{{ getTemperatureStatus() }}</span>
+          </div>
+          <mat-slider min="0" max="40" step="1" [class]="getTemperatureClass()">
+            <input matSliderThumb [(ngModel)]="temperatureValue" />
+          </mat-slider>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Progress Slider -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>trending_up</mat-icon>
+          Progress Indicator
+        </mat-card-title>
+        <mat-card-subtitle>Progress with status indicators</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="slider-section">
+          <div class="progress-info">
+            <span>Progress: {{ progressValue() }}%</span>
+            <span class="progress-status" [class]="getProgressClass()">
+              {{ getProgressStatus() }}
+            </span>
+          </div>
+          <mat-slider min="0" max="100" step="1" [class]="getProgressClass()">
+            <input matSliderThumb [(ngModel)]="progressValue" />
+          </mat-slider>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="progressValue()"></div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

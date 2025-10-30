@@ -1,0 +1,121 @@
+<div class="alerts-container">
+  <div class="alerts-header">
+    <h1>Alert Components</h1>
+    <p>Various alert types and notification examples</p>
+  </div>
+
+  <div class="alerts-grid">
+    <!-- Static Alerts -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>notifications</mat-icon>
+          Static Alerts
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @for (alert of alerts(); track $index) {
+          <div class="alert alert-{{ alert.type }}">
+            <mat-icon class="alert-icon">{{ alert.icon }}</mat-icon>
+            <span class="alert-message">{{ alert.message }}</span>
+            <button mat-icon-button class="alert-close" (click)="dismissAlert($index)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Interactive Alerts -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>touch_app</mat-icon>
+          Interactive Alerts
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="button-group">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="showSnackbar('Success message!', 'success')"
+          >
+            Success Snackbar
+          </button>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="showSnackbar('Warning message!', 'warning')"
+          >
+            Warning Snackbar
+          </button>
+          <button mat-raised-button color="warn" (click)="showSnackbar('Error message!', 'error')">
+            Error Snackbar
+          </button>
+          <button mat-raised-button (click)="showSnackbar('Info message!', 'info')">
+            Info Snackbar
+          </button>
+          <button mat-raised-button color="primary" (click)="showDialog()">Show Dialog</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Toast Notifications -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>campaign</mat-icon>
+          Toast Examples
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="toast-examples">
+          <div class="toast toast-success">
+            <mat-icon>check_circle</mat-icon>
+            <div class="toast-content">
+              <strong>Success!</strong>
+              <p>Your changes have been saved successfully.</p>
+            </div>
+          </div>
+          <div class="toast toast-warning">
+            <mat-icon>warning</mat-icon>
+            <div class="toast-content">
+              <strong>Warning!</strong>
+              <p>Please check your internet connection.</p>
+            </div>
+          </div>
+          <div class="toast toast-error">
+            <mat-icon>error</mat-icon>
+            <div class="toast-content">
+              <strong>Error!</strong>
+              <p>Failed to upload file. Please try again.</p>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Banner Alerts -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>flag</mat-icon>
+          Banner Alerts
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="banner banner-info">
+          <mat-icon>info</mat-icon>
+          <span>System maintenance scheduled for tonight at 2:00 AM EST.</span>
+          <button mat-button>Learn More</button>
+        </div>
+        <div class="banner banner-warning">
+          <mat-icon>warning</mat-icon>
+          <span>Your subscription expires in 7 days.</span>
+          <button mat-button>Renew Now</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

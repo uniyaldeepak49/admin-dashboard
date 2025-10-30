@@ -1,0 +1,209 @@
+.drag-drop-container {
+  padding: 24px;
+  background: var(--mat-app-background);
+  min-height: calc(100vh - 64px);
+}
+
+.drag-drop-header {
+  margin-bottom: 32px;
+  text-align: center;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--mat-text-primary);
+  }
+
+  p {
+    font-size: 16px;
+    color: var(--mat-text-secondary);
+    margin: 0 0 16px 0;
+  }
+}
+
+.drag-drop-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+}
+
+.sortable-list {
+  min-height: 200px;
+  padding: 8px;
+  border: 2px dashed var(--mat-divider);
+  border-radius: 8px;
+}
+
+.sortable-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: var(--mat-surface);
+  border: 1px solid var(--mat-divider);
+  border-radius: 8px;
+  cursor: move;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &.cdk-drag-preview {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .drag-handle {
+    color: var(--mat-text-secondary);
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  .item-text {
+    flex: 1;
+    font-weight: 500;
+  }
+
+  .item-index {
+    font-size: 12px;
+    color: var(--mat-text-secondary);
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+}
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.kanban-column {
+  border: 1px solid var(--mat-divider);
+  min-height: 500px;
+
+  .column-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+
+    &.todo {
+      color: #ef4444;
+    }
+
+    &.progress {
+      color: #f59e0b;
+    }
+
+    &.done {
+      color: #10b981;
+    }
+  }
+}
+
+.task-list {
+  min-height: 400px;
+  padding: 8px;
+}
+
+.task-card {
+  background: var(--mat-surface);
+  border: 1px solid var(--mat-divider);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: move;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &.cdk-drag-preview {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: rotate(2deg);
+  }
+
+  .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .task-title {
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+
+  .task-description {
+    font-size: 13px;
+    color: var(--mat-text-secondary);
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+  }
+
+  .task-priority {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--mat-text-secondary);
+  }
+}
+
+.priority-high {
+  color: #ef4444;
+}
+
+.priority-medium {
+  color: #f59e0b;
+}
+
+.priority-low {
+  color: #10b981;
+}
+
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@media (max-width: 1024px) {
+  .drag-drop-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .drag-drop-container {
+    padding: 16px;
+  }
+
+  .drag-drop-header h1 {
+    font-size: 24px;
+  }
+
+  .kanban-column {
+    min-height: 300px;
+  }
+
+  .task-list {
+    min-height: 200px;
+  }
+}

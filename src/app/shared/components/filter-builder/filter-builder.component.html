@@ -1,0 +1,109 @@
+<div class="filter-builder">
+  <div class="filter-group" [attr.data-group-id]="rootGroup().id">
+    <div class="group-header">
+      <mat-form-field appearance="outline">
+        <mat-select
+          [value]="rootGroup().logic"
+          (selectionChange)="onLogicChange(rootGroup(), $event.value)"
+        >
+          <mat-option value="AND">AND</mat-option>
+          <mat-option value="OR">OR</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button (click)="addCondition(rootGroup())">
+        <mat-icon>add</mat-icon> Add Condition
+      </button>
+      <button mat-button (click)="addGroup(rootGroup())">
+        <mat-icon>add_circle</mat-icon> Add Group
+      </button>
+      <button mat-button (click)="clear()"><mat-icon>clear</mat-icon> Clear All</button>
+    </div>
+
+    @for (condition of rootGroup().conditions; track condition.id) {
+      <div class="condition-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Column</mat-label>
+          <mat-select [(value)]="condition.column" (selectionChange)="onConditionChange()">
+            @for (column of columns(); track column.key) {
+              <mat-option [value]="column.key">{{ column.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Operator</mat-label>
+          <mat-select [(value)]="condition.operator" (selectionChange)="onConditionChange()">
+            @for (op of operators; track op.value) {
+              <mat-option [value]="op.value">{{ op.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Value</mat-label>
+          <input matInput [(ngModel)]="condition.value" (ngModelChange)="onConditionChange()" />
+        </mat-form-field>
+
+        <button mat-icon-button (click)="removeCondition(rootGroup(), condition.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    }
+
+    @for (group of rootGroup().groups; track group.id) {
+      <div class="nested-group">
+        <div class="group-header">
+          <mat-form-field appearance="outline">
+            <mat-select
+              [value]="group.logic"
+              (selectionChange)="onLogicChange(group, $event.value)"
+            >
+              <mat-option value="AND">AND</mat-option>
+              <mat-option value="OR">OR</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-button (click)="addCondition(group)">
+            <mat-icon>add</mat-icon> Add Condition
+          </button>
+          <button mat-button (click)="addGroup(group)">
+            <mat-icon>add_circle</mat-icon> Add Group
+          </button>
+          <button mat-icon-button (click)="removeGroup(rootGroup(), group.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        @for (condition of group.conditions; track condition.id) {
+          <div class="condition-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Column</mat-label>
+              <mat-select [(value)]="condition.column" (selectionChange)="onConditionChange()">
+                @for (column of columns(); track column.key) {
+                  <mat-option [value]="column.key">{{ column.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Operator</mat-label>
+              <mat-select [(value)]="condition.operator" (selectionChange)="onConditionChange()">
+                @for (op of operators; track op.value) {
+                  <mat-option [value]="op.value">{{ op.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Value</mat-label>
+              <input matInput [(ngModel)]="condition.value" (ngModelChange)="onConditionChange()" />
+            </mat-form-field>
+
+            <button mat-icon-button (click)="removeCondition(group, condition.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

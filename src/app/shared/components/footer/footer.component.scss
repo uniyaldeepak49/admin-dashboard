@@ -1,0 +1,23 @@
+.footer-toolbar {
+  min-height: 48px;
+  background: var(--mat-toolbar-container-background-color);
+  border-top: 1px solid var(--mat-divider-color);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.footer-left {
+  font-size: 14px;
+  color: var(--mat-toolbar-container-text-color);
+}
+
+.footer-right {
+  display: flex;
+  gap: 8px;
+}

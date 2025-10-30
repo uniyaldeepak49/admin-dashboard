@@ -1,0 +1,267 @@
+<div class="editors-container">
+  <h1>Text Editors</h1>
+  <p>Various text editor components for different use cases.</p>
+
+  <div class="editors-grid">
+    <!-- Basic Text Editor -->
+    <mat-card class="editor-card">
+      <mat-card-header>
+        <mat-card-title>Basic Text Editor</mat-card-title>
+        <mat-card-subtitle>Simple textarea with basic formatting</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Basic Text</mat-label>
+          <textarea matInput rows="8" [(ngModel)]="basicText" placeholder="Enter your text here...">
+          </textarea>
+        </mat-form-field>
+        <div class="editor-actions">
+          <button mat-button (click)="saveContent()">
+            <mat-icon>save</mat-icon>
+            Save
+          </button>
+          <button mat-button (click)="basicText.set('')">
+            <mat-icon>clear</mat-icon>
+            Clear
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Rich Text Editor -->
+    <mat-card class="editor-card">
+      <mat-card-header>
+        <mat-card-title>Rich Text Editor</mat-card-title>
+        <mat-card-subtitle>WYSIWYG editor with formatting tools</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="rich-editor">
+          <mat-toolbar class="editor-toolbar">
+            <button mat-icon-button (click)="formatText('bold')" title="Bold">
+              <mat-icon>format_bold</mat-icon>
+            </button>
+            <button mat-icon-button (click)="formatText('italic')" title="Italic">
+              <mat-icon>format_italic</mat-icon>
+            </button>
+            <button mat-icon-button (click)="formatText('underline')" title="Underline">
+              <mat-icon>format_underlined</mat-icon>
+            </button>
+            <mat-divider vertical></mat-divider>
+            <button mat-icon-button (click)="formatText('justifyLeft')" title="Align Left">
+              <mat-icon>format_align_left</mat-icon>
+            </button>
+            <button mat-icon-button (click)="formatText('justifyCenter')" title="Align Center">
+              <mat-icon>format_align_center</mat-icon>
+            </button>
+            <button mat-icon-button (click)="formatText('justifyRight')" title="Align Right">
+              <mat-icon>format_align_right</mat-icon>
+            </button>
+            <mat-divider vertical></mat-divider>
+            <button mat-icon-button (click)="formatText('insertUnorderedList')" title="Bullet List">
+              <mat-icon>format_list_bulleted</mat-icon>
+            </button>
+            <button mat-icon-button (click)="formatText('insertOrderedList')" title="Numbered List">
+              <mat-icon>format_list_numbered</mat-icon>
+            </button>
+            <mat-divider vertical></mat-divider>
+            <button mat-icon-button (click)="insertLink()" title="Insert Link">
+              <mat-icon>link</mat-icon>
+            </button>
+            <button mat-icon-button (click)="insertImage()" title="Insert Image">
+              <mat-icon>image</mat-icon>
+            </button>
+          </mat-toolbar>
+
+          <div
+            class="rich-editor-content"
+            contenteditable="true"
+            [innerHTML]="richText()"
+            (input)="onRichTextInput($event)"
+          ></div>
+        </div>
+
+        <div class="editor-actions">
+          <button mat-button (click)="saveContent()">
+            <mat-icon>save</mat-icon>
+            Save
+          </button>
+          <button mat-button (click)="exportContent('html')">
+            <mat-icon>download</mat-icon>
+            Export HTML
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Code Editor -->
+    <mat-card class="editor-card">
+      <mat-card-header>
+        <mat-card-title>Code Editor</mat-card-title>
+        <mat-card-subtitle>Syntax highlighting for programming languages</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="code-editor-header">
+          <mat-form-field appearance="outline">
+            <mat-label>Language</mat-label>
+            <mat-select [(ngModel)]="selectedLanguage" (selectionChange)="onLanguageChange()">
+              @for (lang of languages(); track lang.value) {
+                <mat-option [value]="lang.value">{{ lang.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="code-editor">
+          <div class="line-numbers">
+            @for (line of codeText().split('\n'); track $index; let i = $index) {
+              <div class="line-number">{{ i + 1 }}</div>
+            }
+          </div>
+          <textarea
+            class="code-textarea"
+            [(ngModel)]="codeText"
+            spellcheck="false"
+            placeholder="Enter your code here..."
+          >
+          </textarea>
+        </div>
+
+        <div class="editor-actions">
+          <button mat-button (click)="saveContent()">
+            <mat-icon>save</mat-icon>
+            Save
+          </button>
+          <button mat-button (click)="exportContent('txt')">
+            <mat-icon>download</mat-icon>
+            Export Code
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Markdown Editor -->
+    <mat-card class="editor-card">
+      <mat-card-header>
+        <mat-card-title>Markdown Editor</mat-card-title>
+        <mat-card-subtitle>Write in Markdown with live preview</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="markdown-editor">
+          <div class="markdown-input">
+            <h4>Markdown Input</h4>
+            <textarea
+              class="markdown-textarea"
+              [(ngModel)]="markdownText"
+              placeholder="# Enter Markdown here..."
+            >
+            </textarea>
+          </div>
+
+          <div class="markdown-preview">
+            <h4>Preview</h4>
+            <div class="preview-content" [innerHTML]="markdownText()"></div>
+          </div>
+        </div>
+
+        <div class="editor-actions">
+          <button mat-button (click)="saveContent()">
+            <mat-icon>save</mat-icon>
+            Save
+          </button>
+          <button mat-button (click)="exportContent('md')">
+            <mat-icon>download</mat-icon>
+            Export Markdown
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Form Editor -->
+    <mat-card class="editor-card">
+      <mat-card-header>
+        <mat-card-title>Form Editor</mat-card-title>
+        <mat-card-subtitle>Reactive form with validation</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="editorForm" class="form-editor">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Document Title</mat-label>
+            <input matInput formControlName="title" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Content</mat-label>
+            <textarea
+              matInput
+              rows="10"
+              formControlName="content"
+              placeholder="Enter document content..."
+            >
+            </textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Document Type</mat-label>
+            <mat-select formControlName="language">
+              <mat-option value="text">Plain Text</mat-option>
+              <mat-option value="html">HTML</mat-option>
+              <mat-option value="markdown">Markdown</mat-option>
+              <mat-option value="json">JSON</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+
+        <div class="editor-actions">
+          <button mat-raised-button color="primary" (click)="saveContent()">
+            <mat-icon>save</mat-icon>
+            Save Document
+          </button>
+          <button mat-button>
+            <mat-icon>preview</mat-icon>
+            Preview
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Quick Notes Editor -->
+    <mat-card class="editor-card">
+      <mat-card-header>
+        <mat-card-title>Quick Notes</mat-card-title>
+        <mat-card-subtitle>Simple note-taking interface</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="notes-editor">
+          <div class="notes-toolbar">
+            <button mat-icon-button title="Add Bullet Point">
+              <mat-icon>fiber_manual_record</mat-icon>
+            </button>
+            <button mat-icon-button title="Add Checkbox">
+              <mat-icon>check_box_outline_blank</mat-icon>
+            </button>
+            <button mat-icon-button title="Add Date">
+              <mat-icon>today</mat-icon>
+            </button>
+            <button mat-icon-button title="Add Time">
+              <mat-icon>access_time</mat-icon>
+            </button>
+          </div>
+
+          <textarea class="notes-textarea" placeholder="Quick notes and reminders..." rows="8">
+          </textarea>
+        </div>
+
+        <div class="editor-actions">
+          <button mat-button>
+            <mat-icon>save</mat-icon>
+            Save Note
+          </button>
+          <button mat-button>
+            <mat-icon>share</mat-icon>
+            Share
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

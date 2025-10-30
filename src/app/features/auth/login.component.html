@@ -1,0 +1,135 @@
+<div class="login-container">
+  <div class="login-wrapper">
+    <!-- Left Side - Branding -->
+    <div class="branding-section">
+      <div class="brand-content">
+        <div class="logo-section">
+          <mat-icon class="brand-logo">dashboard</mat-icon>
+          <h1>AdminPro</h1>
+        </div>
+        <h2>Enterprise Dashboard</h2>
+        <p>Powerful analytics and management tools for modern businesses</p>
+
+        <div class="features-list">
+          <div class="feature-item">
+            <mat-icon>analytics</mat-icon>
+            <span>Advanced Analytics</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>security</mat-icon>
+            <span>Enterprise Security</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>speed</mat-icon>
+            <span>Real-time Performance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="form-section">
+      <mat-card class="login-card">
+        <div class="card-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in to your account to continue</p>
+        </div>
+
+        <mat-card-content>
+          <!-- Demo Accounts -->
+          <div class="demo-accounts">
+            <h3>Demo Accounts</h3>
+            <div class="demo-buttons">
+              @for (user of demoUsers; track user.email) {
+                <button
+                  mat-stroked-button
+                  class="demo-btn"
+                  (click)="fillDemoCredentials(user.email)"
+                >
+                  <div class="demo-info">
+                    <span class="demo-role">{{ user.role }}</span>
+                    <span class="demo-email">{{ user.email }}</span>
+                  </div>
+                </button>
+              }
+            </div>
+          </div>
+
+          <mat-divider class="divider"></mat-divider>
+
+          <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Email Address</mat-label>
+              <input matInput type="email" formControlName="email" required />
+              <mat-icon matSuffix>email</mat-icon>
+              @if (loginForm.get('email')?.hasError('required')) {
+                <mat-error>Email is required</mat-error>
+              }
+              @if (loginForm.get('email')?.hasError('email')) {
+                <mat-error>Please enter a valid email</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                [type]="hidePassword() ? 'password' : 'text'"
+                formControlName="password"
+                required
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="togglePasswordVisibility()"
+                [attr.aria-label]="'Hide password'"
+              >
+                <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              @if (loginForm.get('password')?.hasError('required')) {
+                <mat-error>Password is required</mat-error>
+              }
+              @if (loginForm.get('password')?.hasError('minlength')) {
+                <mat-error>Password must be at least 6 characters</mat-error>
+              }
+            </mat-form-field>
+
+            <div class="form-options">
+              <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
+              <button mat-button type="button" class="forgot-password">Forgot password?</button>
+            </div>
+
+            @if (isLoading()) {
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                class="full-width login-button"
+                [disabled]="true"
+              >
+                <mat-spinner diameter="20" class="spinner"></mat-spinner>
+                <span>Signing in...</span>
+              </button>
+            } @else {
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                class="full-width login-button"
+                [disabled]="!loginForm.valid"
+              >
+                <span>Sign In</span>
+                <mat-icon>arrow_forward</mat-icon>
+              </button>
+            }
+          </form>
+
+          <div class="login-footer">
+            <p>Don't have an account? <button mat-button color="primary">Contact Admin</button></p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

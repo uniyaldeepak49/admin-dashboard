@@ -1,0 +1,144 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h1>Modal & Popup Components</h1>
+    <p>Various dialog and modal examples with Material Design</p>
+  </div>
+
+  <div class="modal-grid">
+    <!-- Basic Dialog -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>open_in_new</mat-icon>
+          Basic Dialog
+        </mat-card-title>
+        <mat-card-subtitle>Simple dialog with content</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>A basic dialog with simple content and close button.</p>
+        <button mat-raised-button color="primary" (click)="openBasicDialog()">
+          <mat-icon>open_in_new</mat-icon>
+          Open Basic Dialog
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Confirmation Dialog -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>warning</mat-icon>
+          Confirmation Dialog
+        </mat-card-title>
+        <mat-card-subtitle>Dialog with action confirmation</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>A confirmation dialog for destructive actions with warning icon.</p>
+        <button mat-raised-button color="warn" (click)="openConfirmDialog()">
+          <mat-icon>delete</mat-icon>
+          Open Confirm Dialog
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Form Dialog -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>edit</mat-icon>
+          Form Dialog
+        </mat-card-title>
+        <mat-card-subtitle>Dialog with form inputs</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>A dialog containing a form with validation and input fields.</p>
+        <button mat-raised-button color="accent" (click)="openFormDialog()">
+          <mat-icon>person_add</mat-icon>
+          Open Form Dialog
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Fullscreen Dialog -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>fullscreen</mat-icon>
+          Fullscreen Dialog
+        </mat-card-title>
+        <mat-card-subtitle>Dialog that covers entire screen</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>A fullscreen dialog that takes up the entire viewport area.</p>
+        <button mat-raised-button (click)="openFullscreenDialog()">
+          <mat-icon>fullscreen</mat-icon>
+          Open Fullscreen Dialog
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Dialog Features -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>info</mat-icon>
+          Dialog Features
+        </mat-card-title>
+        <mat-card-subtitle>Available dialog capabilities</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="feature-list">
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>Customizable sizes</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>Form integration</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>Action buttons</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>Backdrop click to close</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>ESC key support</span>
+          </div>
+          <div class="feature-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>Fullscreen mode</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Usage Examples -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>code</mat-icon>
+          Usage Examples
+        </mat-card-title>
+        <mat-card-subtitle>Common dialog use cases</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="usage-list">
+          <div class="usage-item">
+            <strong>Basic Dialog:</strong> Information display, help content
+          </div>
+          <div class="usage-item">
+            <strong>Confirmation:</strong> Delete actions, destructive operations
+          </div>
+          <div class="usage-item">
+            <strong>Form Dialog:</strong> Quick data entry, user creation
+          </div>
+          <div class="usage-item"><strong>Fullscreen:</strong> Complex forms, detailed content</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

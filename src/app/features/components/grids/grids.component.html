@@ -1,0 +1,132 @@
+<div class="grids-container">
+  <div class="grids-header">
+    <h1>Grid Components</h1>
+    <p>Material Design grid layouts with various configurations</p>
+  </div>
+
+  <div class="grids-section">
+    <!-- Basic Grid -->
+    <mat-card class="grid-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>grid_view</mat-icon>
+          Basic Grid (4 columns)
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-grid-list cols="4" rowHeight="120px" gutterSize="16px">
+          @for (item of basicGridItems(); track item.title) {
+            <mat-grid-tile [colspan]="item.cols" [rowspan]="item.rows">
+              <div class="grid-item" [style.background-color]="item.color">
+                <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
+                <div class="item-content">
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.subtitle }}</p>
+                </div>
+              </div>
+            </mat-grid-tile>
+          }
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Dynamic Grid -->
+    <mat-card class="grid-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>dashboard</mat-icon>
+          Dynamic Grid (Variable sizes)
+        </mat-card-title>
+        <div class="header-actions">
+          <button mat-raised-button color="primary" (click)="addGridItem()">
+            <mat-icon>add</mat-icon>
+            Add Item
+          </button>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-grid-list cols="4" rowHeight="100px" gutterSize="12px">
+          @for (item of dynamicGridItems(); track item.title; let i = $index) {
+            <mat-grid-tile [colspan]="item.cols" [rowspan]="item.rows">
+              <div class="grid-item dynamic" [style.background-color]="item.color">
+                <button mat-icon-button class="remove-btn" (click)="removeGridItem(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
+                <div class="item-content">
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.subtitle }}</p>
+                </div>
+              </div>
+            </mat-grid-tile>
+          }
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Responsive Grid -->
+    <mat-card class="grid-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>responsive_layout</mat-icon>
+          Responsive Grid
+        </mat-card-title>
+        <mat-card-subtitle>Adapts to screen size</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-grid-list cols="3" rowHeight="140px" gutterSize="16px" class="responsive-grid">
+          @for (item of responsiveItems(); track item.title) {
+            <mat-grid-tile>
+              <div class="grid-item responsive">
+                <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
+                <div class="item-content">
+                  <h3>{{ item.title }}</h3>
+                  <div class="item-value">{{ item.value }}</div>
+                </div>
+              </div>
+            </mat-grid-tile>
+          }
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- CSS Grid Example -->
+    <mat-card class="grid-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>view_module</mat-icon>
+          CSS Grid Layout
+        </mat-card-title>
+        <mat-card-subtitle>Custom CSS grid implementation</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="css-grid">
+          <div class="grid-item-css header">
+            <mat-icon>trending_up</mat-icon>
+            <span>Header Section</span>
+          </div>
+          <div class="grid-item-css sidebar">
+            <mat-icon>menu</mat-icon>
+            <span>Sidebar</span>
+          </div>
+          <div class="grid-item-css main">
+            <mat-icon>dashboard</mat-icon>
+            <span>Main Content Area</span>
+          </div>
+          <div class="grid-item-css widget1">
+            <mat-icon>bar_chart</mat-icon>
+            <span>Widget 1</span>
+          </div>
+          <div class="grid-item-css widget2">
+            <mat-icon>pie_chart</mat-icon>
+            <span>Widget 2</span>
+          </div>
+          <div class="grid-item-css footer">
+            <mat-icon>info</mat-icon>
+            <span>Footer</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

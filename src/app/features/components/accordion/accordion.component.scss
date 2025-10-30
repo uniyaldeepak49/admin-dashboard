@@ -1,0 +1,128 @@
+.accordion-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 32px;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--mat-text-primary);
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--mat-text-secondary);
+  }
+}
+
+.components-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.component-card {
+  mat-card-header {
+    margin-bottom: 16px;
+
+    mat-card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--mat-primary-color);
+    }
+
+    mat-card-subtitle {
+      font-size: 0.875rem;
+      color: var(--mat-text-secondary);
+    }
+  }
+}
+
+mat-accordion {
+  .mat-expansion-panel {
+    margin-bottom: 8px;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .mat-expansion-panel-header {
+      padding: 16px 24px;
+
+      .mat-expansion-panel-header-title {
+        font-weight: 500;
+        color: var(--mat-text-primary);
+      }
+
+      .mat-expansion-panel-header-description {
+        color: var(--mat-text-secondary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
+    .mat-expansion-panel-content {
+      .mat-expansion-panel-body {
+        padding: 16px 24px;
+
+        p {
+          margin: 0 0 16px 0;
+          line-height: 1.5;
+          color: var(--mat-text-primary);
+        }
+      }
+    }
+
+    .mat-action-row {
+      padding: 16px 24px;
+      border-top: 1px solid var(--mat-divider-color);
+
+      button {
+        margin-left: 8px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .accordion-container {
+    padding: 16px;
+  }
+
+  .components-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+
+  mat-accordion .mat-expansion-panel {
+    .mat-expansion-panel-header,
+    .mat-expansion-panel-content .mat-expansion-panel-body,
+    .mat-action-row {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+}

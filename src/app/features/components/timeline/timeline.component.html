@@ -1,0 +1,71 @@
+<div class="timeline-container">
+  <h1>Timeline</h1>
+  <p>Activity timeline showing system events and user actions.</p>
+
+  <!-- Filter Section -->
+  <mat-card class="filter-section">
+    <mat-card-content>
+      <h3>Filter by Type</h3>
+      <div class="filter-buttons">
+        @for (type of eventTypes(); track type.value) {
+          <button
+            mat-raised-button
+            [color]="selectedType() === type.value ? 'primary' : ''"
+            (click)="selectType(type.value)"
+            class="filter-btn"
+          >
+            {{ type.label }}
+          </button>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Timeline -->
+  <div class="timeline-wrapper">
+    <div class="timeline-line"></div>
+
+    @for (event of filteredEvents(); track event.id; let i = $index) {
+      <div class="timeline-item" [class]="'timeline-' + event.type">
+        <div class="timeline-marker" [style.background-color]="getTypeColor(event.type)">
+          <mat-icon>{{ event.icon }}</mat-icon>
+        </div>
+
+        <mat-card class="timeline-content">
+          <mat-card-header>
+            <div class="event-header">
+              <div class="event-info">
+                <h4>{{ event.title }}</h4>
+                <div class="event-meta">
+                  <span class="event-date">{{ event.date }}</span>
+                  <span class="event-time">{{ event.time }}</span>
+                  @if (event.user) {
+                    <span class="event-user">by {{ event.user }}</span>
+                  }
+                </div>
+              </div>
+              @if (event.avatar) {
+                <div class="user-avatar">{{ event.avatar }}</div>
+              }
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p>{{ event.description }}</p>
+            <mat-chip [style.background-color]="getTypeColor(event.type)" class="event-type-chip">
+              {{ event.type | titlecase }}
+            </mat-chip>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+  </div>
+
+  @if (filteredEvents().length === 0) {
+    <div class="empty-state">
+      <mat-icon>timeline</mat-icon>
+      <h3>No events found</h3>
+      <p>Try selecting a different filter.</p>
+    </div>
+  }
+</div>

@@ -1,0 +1,146 @@
+<div class="uploads-container">
+  <div class="uploads-header">
+    <h1>File Upload Components</h1>
+    <p>Drag and drop file uploads with progress tracking</p>
+  </div>
+
+  <div class="uploads-grid">
+    <!-- Drag & Drop Upload -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>cloud_upload</mat-icon>
+          Drag & Drop Upload
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div
+          class="drop-zone"
+          [class.drag-over]="dragOver()"
+          (drop)="onDrop($event)"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+        >
+          <mat-icon class="upload-icon">cloud_upload</mat-icon>
+          <h3>Drop files here</h3>
+          <p>or click to browse</p>
+          <input
+            type="file"
+            multiple
+            (change)="onFileSelected($event)"
+            class="file-input"
+            accept="*/*"
+          />
+          <button mat-raised-button color="primary">
+            <mat-icon>folder_open</mat-icon>
+            Browse Files
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Image Upload -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>image</mat-icon>
+          Image Upload
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="drop-zone image-upload">
+          <mat-icon class="upload-icon">add_photo_alternate</mat-icon>
+          <h3>Upload Images</h3>
+          <p>PNG, JPG, GIF up to 10MB</p>
+          <input
+            type="file"
+            multiple
+            (change)="onFileSelected($event)"
+            class="file-input"
+            accept="image/*"
+          />
+          <button mat-raised-button color="accent">
+            <mat-icon>image</mat-icon>
+            Select Images
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Document Upload -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>description</mat-icon>
+          Document Upload
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="drop-zone document-upload">
+          <mat-icon class="upload-icon">upload_file</mat-icon>
+          <h3>Upload Documents</h3>
+          <p>PDF, DOC, XLS files only</p>
+          <input
+            type="file"
+            multiple
+            (change)="onFileSelected($event)"
+            class="file-input"
+            accept=".pdf,.doc,.docx,.xls,.xlsx"
+          />
+          <button mat-raised-button>
+            <mat-icon>description</mat-icon>
+            Select Documents
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Upload Progress -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>file_copy</mat-icon>
+          Uploaded Files ({{ uploadedFiles().length }})
+        </mat-card-title>
+        @if (uploadedFiles().length > 0) {
+          <button mat-button color="warn" (click)="clearAllFiles()">
+            <mat-icon>clear_all</mat-icon>
+            Clear All
+          </button>
+        }
+      </mat-card-header>
+      <mat-card-content>
+        @if (uploadedFiles().length === 0) {
+          <div class="empty-state">
+            <mat-icon>cloud_off</mat-icon>
+            <p>No files uploaded yet</p>
+          </div>
+        } @else {
+          <mat-list>
+            @for (file of uploadedFiles(); track file.name) {
+              <mat-list-item class="file-item">
+                <mat-icon matListItemIcon [class]="file.uploaded ? 'success' : 'uploading'">
+                  {{ getFileIcon(file.type) }}
+                </mat-icon>
+                <div matListItemTitle class="file-info">
+                  <div class="file-name">{{ file.name }}</div>
+                  <div class="file-details">{{ formatFileSize(file.size) }} • {{ file.type }}</div>
+                  @if (!file.uploaded) {
+                    <mat-progress-bar
+                      mode="determinate"
+                      [value]="file.progress"
+                      class="upload-progress"
+                    ></mat-progress-bar>
+                  }
+                </div>
+                <button mat-icon-button matListItemMeta (click)="removeFile(file)" color="warn">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-list-item>
+            }
+          </mat-list>
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

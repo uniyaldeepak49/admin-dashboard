@@ -1,0 +1,13 @@
+.layout-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.main-content {
+  padding: 24px;
+}

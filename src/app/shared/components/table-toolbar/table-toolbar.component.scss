@@ -1,0 +1,17 @@
+.table-toolbar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--mat-divider-color, rgba(0, 0, 0, 0.12));
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.table-toolbar button.active {
+  background-color: var(--mat-primary);
+  color: var(--mat-primary-contrast);
+}

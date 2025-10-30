@@ -1,0 +1,80 @@
+<div class="signin-container">
+  <mat-card class="signin-card">
+    <mat-card-header>
+      <div class="signin-header">
+        <mat-icon class="signin-icon">login</mat-icon>
+        <h1>Sign In</h1>
+        <p>Access your admin dashboard</p>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email Address</mat-label>
+          <input matInput type="email" formControlName="email" required />
+          <mat-icon matSuffix>email</mat-icon>
+          @if (signinForm.get('email')?.hasError('required') && signinForm.get('email')?.touched) {
+            <mat-error>Email is required</mat-error>
+          }
+          @if (signinForm.get('email')?.hasError('email') && signinForm.get('email')?.touched) {
+            <mat-error>Please enter a valid email</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="hidePassword() ? 'password' : 'text'"
+            formControlName="password"
+            required
+          />
+          <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (
+            signinForm.get('password')?.hasError('required') && signinForm.get('password')?.touched
+          ) {
+            <mat-error>Password is required</mat-error>
+          }
+          @if (
+            signinForm.get('password')?.hasError('minlength') && signinForm.get('password')?.touched
+          ) {
+            <mat-error>Password must be at least 6 characters</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-options">
+          <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
+          <button mat-button type="button" class="forgot-link">Forgot password?</button>
+        </div>
+
+        @if (isLoading()) {
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="full-width signin-btn"
+            [disabled]="true"
+          >
+            <span>Signing in...</span>
+          </button>
+        } @else {
+          <button mat-raised-button color="primary" type="submit" class="full-width signin-btn">
+            <mat-icon>login</mat-icon>
+            <span>Sign In</span>
+          </button>
+        }
+      </form>
+
+      <div class="signin-footer">
+        <p>Demo page component</p>
+        <button mat-button color="primary" (click)="goToDashboard()">
+          <mat-icon>dashboard</mat-icon>
+          Go to Dashboard
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

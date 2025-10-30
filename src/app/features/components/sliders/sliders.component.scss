@@ -1,0 +1,244 @@
+.sliders-container {
+  padding: 24px;
+  background: var(--mat-app-background);
+  min-height: calc(100vh - 64px);
+}
+
+.sliders-header {
+  margin-bottom: 32px;
+  text-align: center;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--mat-text-primary);
+  }
+
+  p {
+    font-size: 16px;
+    color: var(--mat-text-secondary);
+    margin: 0 0 16px 0;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto;
+  }
+}
+
+.sliders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+mat-card {
+  border: 1px solid var(--mat-divider);
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  mat-card-header {
+    margin-bottom: 16px;
+
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    mat-card-subtitle {
+      margin-top: 4px;
+      font-size: 14px;
+    }
+  }
+}
+
+.slider-section {
+  padding: 16px 0;
+
+  .slider-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  mat-slider {
+    width: 100%;
+  }
+}
+
+.volume-slider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .volume-icon {
+    color: var(--mat-text-secondary);
+    font-size: 24px;
+  }
+
+  .flex-slider {
+    flex: 1;
+  }
+
+  .volume-value {
+    min-width: 40px;
+    text-align: right;
+    font-weight: 500;
+  }
+}
+
+.price-display {
+  font-size: 20px;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.price-range {
+  font-size: 12px;
+  color: var(--mat-text-secondary);
+}
+
+.temperature-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .temp-value {
+    font-size: 24px;
+    font-weight: 700;
+
+    &.cold {
+      color: #3b82f6;
+    }
+
+    &.warm {
+      color: #f59e0b;
+    }
+
+    &.hot {
+      color: #ef4444;
+    }
+  }
+
+  .temp-status {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .progress-status {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+
+    &.low {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    &.medium {
+      background: rgba(245, 158, 11, 0.1);
+      color: #f59e0b;
+    }
+
+    &.high {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+    }
+  }
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-top: 16px;
+  overflow: hidden;
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+}
+
+// Temperature slider colors
+mat-slider.cold {
+  --mdc-slider-active-track-color: #3b82f6;
+  --mdc-slider-handle-color: #3b82f6;
+}
+
+mat-slider.warm {
+  --mdc-slider-active-track-color: #f59e0b;
+  --mdc-slider-handle-color: #f59e0b;
+}
+
+mat-slider.hot {
+  --mdc-slider-active-track-color: #ef4444;
+  --mdc-slider-handle-color: #ef4444;
+}
+
+// Progress slider colors
+mat-slider.low {
+  --mdc-slider-active-track-color: #ef4444;
+  --mdc-slider-handle-color: #ef4444;
+}
+
+mat-slider.medium {
+  --mdc-slider-active-track-color: #f59e0b;
+  --mdc-slider-handle-color: #f59e0b;
+}
+
+mat-slider.high {
+  --mdc-slider-active-track-color: #10b981;
+  --mdc-slider-handle-color: #10b981;
+}
+
+@media (max-width: 768px) {
+  .sliders-container {
+    padding: 16px;
+  }
+
+  .sliders-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .sliders-header h1 {
+    font-size: 24px;
+  }
+
+  .volume-slider {
+    flex-direction: column;
+    gap: 12px;
+
+    .flex-slider {
+      width: 100%;
+    }
+  }
+}

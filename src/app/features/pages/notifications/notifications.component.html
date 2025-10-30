@@ -1,0 +1,168 @@
+<div class="notifications-container">
+  <h1>Notifications</h1>
+  <p>Manage and view all your system notifications and alerts.</p>
+
+  <!-- Filters and Actions -->
+  <mat-card class="actions-card">
+    <mat-card-content>
+      <div class="actions-header">
+        <div class="filters">
+          @for (filter of filters(); track filter.value) {
+            <button
+              mat-raised-button
+              [color]="selectedFilter() === filter.value ? 'primary' : ''"
+              (click)="selectFilter(filter.value)"
+              class="filter-btn"
+            >
+              {{ filter.label }}
+              @if (filter.value === 'unread') {
+                <mat-chip class="unread-count">{{ getUnreadCount() }}</mat-chip>
+              }
+            </button>
+          }
+        </div>
+
+        <div class="bulk-actions">
+          @if (selectedNotifications().length > 0) {
+            <span class="selection-count">{{ selectedNotifications().length }} selected</span>
+            <button mat-button (click)="deleteSelected()">
+              <mat-icon>delete</mat-icon>
+              Delete Selected
+            </button>
+            <button mat-button (click)="clearSelection()">Clear Selection</button>
+          } @else {
+            <button mat-button (click)="markAllAsRead()">
+              <mat-icon>mark_email_read</mat-icon>
+              Mark All Read
+            </button>
+            <button mat-button (click)="selectAll()">
+              <mat-icon>select_all</mat-icon>
+              Select All
+            </button>
+          }
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Notifications List -->
+  <mat-card class="notifications-card">
+    <mat-card-content>
+      <div class="notifications-list">
+        @for (notification of getFilteredNotifications(); track notification.id) {
+          <div class="notification-item" [class.unread]="!notification.read">
+            <div class="notification-checkbox">
+              <mat-checkbox
+                [checked]="selectedNotifications().includes(notification.id)"
+                (change)="toggleSelection(notification.id)"
+              >
+              </mat-checkbox>
+            </div>
+
+            <div class="notification-icon" [class]="'type-' + notification.type">
+              @switch (notification.type) {
+                @case ('info') {
+                  <mat-icon>info</mat-icon>
+                }
+                @case ('success') {
+                  <mat-icon>check_circle</mat-icon>
+                }
+                @case ('warning') {
+                  <mat-icon>warning</mat-icon>
+                }
+                @case ('error') {
+                  <mat-icon>error</mat-icon>
+                }
+              }
+            </div>
+
+            <div class="notification-content" (click)="markAsRead(notification.id)">
+              <div class="notification-header">
+                <h4 class="notification-title">{{ notification.title }}</h4>
+                <div class="notification-meta">
+                  <mat-chip class="category-chip">{{ notification.category }}</mat-chip>
+                  <span class="notification-time">{{ notification.time }}</span>
+                </div>
+              </div>
+              <p class="notification-message">{{ notification.message }}</p>
+              <div class="notification-footer">
+                <span class="notification-date">{{ notification.date }}</span>
+                @if (!notification.read) {
+                  <mat-chip class="unread-indicator">New</mat-chip>
+                }
+              </div>
+            </div>
+
+            <div class="notification-actions">
+              @if (!notification.read) {
+                <button mat-icon-button (click)="markAsRead(notification.id)" title="Mark as read">
+                  <mat-icon>mark_email_read</mat-icon>
+                </button>
+              }
+              <button mat-icon-button (click)="deleteNotification(notification.id)" title="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-state">
+            <mat-icon>notifications_none</mat-icon>
+            <h3>No notifications</h3>
+            <p>You're all caught up! No notifications to display.</p>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Statistics -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon class="stat-icon">notifications</mat-icon>
+          <div class="stat-info">
+            <h3>{{ notifications().length }}</h3>
+            <p>Total Notifications</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon class="stat-icon unread">mark_email_unread</mat-icon>
+          <div class="stat-info">
+            <h3>{{ getUnreadCount() }}</h3>
+            <p>Unread</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon class="stat-icon success">check_circle</mat-icon>
+          <div class="stat-info">
+            <h3>{{ getSuccessCount() }}</h3>
+            <p>Success</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon class="stat-icon error">error</mat-icon>
+          <div class="stat-info">
+            <h3>{{ getErrorCount() }}</h3>
+            <p>Errors</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

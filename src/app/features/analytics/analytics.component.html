@@ -1,0 +1,251 @@
+<mat-toolbar class="analytics-toolbar">
+  <mat-toolbar-row>
+    <span class="toolbar-title">
+      <mat-icon>analytics</mat-icon>
+      Analytics Dashboard
+    </span>
+    <span class="toolbar-spacer"></span>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Time Period</mat-label>
+      <mat-select [value]="selectedPeriod()" (selectionChange)="onPeriodChange($event.value)">
+        <mat-option value="7days">Last 7 days</mat-option>
+        <mat-option value="30days">Last 30 days</mat-option>
+        <mat-option value="90days">Last 90 days</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="exportReport()">
+      <mat-icon>download</mat-icon>
+      Export Report
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="analytics-content">
+  <div class="metrics-grid">
+    @for (metric of metrics(); track metric.title) {
+      <mat-card appearance="outlined" class="metric-card">
+        <mat-card-header>
+          <div mat-card-avatar [class]="'metric-avatar ' + metric.trend">
+            <mat-icon>{{ metric.icon }}</mat-icon>
+          </div>
+          <mat-card-title>{{ metric.value }}{{ metric.unit || '' }}</mat-card-title>
+          <mat-card-subtitle>{{ metric.title }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="metric-change" [class]="metric.trend">
+            <mat-icon>{{ metric.trend === 'up' ? 'trending_up' : 'trending_down' }}</mat-icon>
+            <span>{{ metric.change > 0 ? '+' : '' }}{{ metric.change }}%</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  <mat-card appearance="outlined" class="charts-card">
+    <mat-card-header>
+      <mat-card-title>Analytics Overview</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="Traffic Analysis">
+          <div class="tab-content">
+            <div class="charts-grid">
+              <mat-card appearance="outlined" class="chart-card">
+                <mat-card-header>
+                  <mat-card-title>Traffic Overview</mat-card-title>
+                  <mat-card-subtitle>Visitor trends over time</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <canvas #trafficChart></canvas>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card appearance="outlined" class="sources-card">
+                <mat-card-header>
+                  <mat-card-title>Traffic Sources</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <mat-list>
+                    @for (source of trafficSources(); track source.source) {
+                      <mat-list-item>
+                        <mat-icon matListItemIcon>{{ getSourceIcon(source.source) }}</mat-icon>
+                        <div matListItemTitle>{{ source.source }}</div>
+                        <div matListItemLine>{{ source.visitors | number }} visitors</div>
+                        <div class="source-metrics">
+                          <mat-chip color="primary">{{ source.percentage }}%</mat-chip>
+                          <mat-chip [color]="source.change > 0 ? 'accent' : 'warn'">
+                            {{ source.change > 0 ? '+' : '' }}{{ source.change }}%
+                          </mat-chip>
+                        </div>
+                      </mat-list-item>
+                    }
+                  </mat-list>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Revenue Analytics">
+          <div class="tab-content">
+            <mat-card appearance="outlined" class="chart-card">
+              <mat-card-header>
+                <mat-card-title>Revenue Trends</mat-card-title>
+                <mat-card-subtitle>Monthly revenue performance</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <canvas #revenueChart></canvas>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="User Behavior">
+          <div class="tab-content">
+            <div class="behavior-grid">
+              <mat-card appearance="outlined" class="device-card">
+                <mat-card-header>
+                  <mat-card-title>Device Breakdown</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <canvas #deviceChart></canvas>
+                  <mat-list>
+                    @for (device of deviceBreakdown(); track device.device) {
+                      <mat-list-item>
+                        <mat-icon matListItemIcon>{{ getDeviceIcon(device.device) }}</mat-icon>
+                        <div matListItemTitle>{{ device.device }}</div>
+                        <div matListItemLine>{{ device.users | number }} users</div>
+                        <mat-chip color="primary">{{ device.percentage }}%</mat-chip>
+                      </mat-list-item>
+                    }
+                  </mat-list>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card appearance="outlined" class="pages-card">
+                <mat-card-header>
+                  <mat-card-title>Top Pages</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <mat-list>
+                    @for (page of topPages(); track page.page) {
+                      <mat-list-item>
+                        <mat-icon matListItemIcon>web</mat-icon>
+                        <div matListItemTitle>{{ page.page }}</div>
+                        <div matListItemLine>{{ page.views | number }} views</div>
+                        <div class="page-metrics">
+                          <mat-chip color="accent">{{ page.time }}</mat-chip>
+                          <mat-chip [color]="page.bounce > 40 ? 'warn' : 'primary'">
+                            {{ page.bounce }}% bounce
+                          </mat-chip>
+                        </div>
+                      </mat-list-item>
+                    }
+                  </mat-list>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Geography">
+          <div class="tab-content">
+            <div class="geography-grid">
+              <mat-card appearance="outlined" class="map-card">
+                <mat-card-header>
+                  <mat-card-title>Geographic Distribution</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <canvas #geographyChart></canvas>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card appearance="outlined" class="countries-card">
+                <mat-card-header>
+                  <mat-card-title>Top Countries</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <mat-list>
+                    @for (country of geographyData(); track country.country) {
+                      <mat-list-item>
+                        <mat-icon matListItemIcon>public</mat-icon>
+                        <div matListItemTitle>{{ country.country }}</div>
+                        <div matListItemLine>{{ country.users | number }} users</div>
+                        <div class="country-progress">
+                          <mat-progress-bar
+                            mode="determinate"
+                            [value]="country.percentage"
+                            color="primary"
+                          ></mat-progress-bar>
+                          <span class="country-percentage">{{ country.percentage }}%</span>
+                        </div>
+                      </mat-list-item>
+                    }
+                  </mat-list>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="bottom-section">
+    <mat-card appearance="outlined" class="realtime-card">
+      <mat-card-header>
+        <mat-card-title>Real-time Analytics</mat-card-title>
+        <div class="live-indicator"></div>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="primary">visibility</mat-icon>
+            <div matListItemTitle>{{ realTimeStats().activeUsers }}</div>
+            <div matListItemLine>Active Users</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="accent">pageview</mat-icon>
+            <div matListItemTitle>{{ realTimeStats().pageViews }}</div>
+            <div matListItemLine>Page Views</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="warn">mouse</mat-icon>
+            <div matListItemTitle>{{ realTimeStats().events }}</div>
+            <div matListItemLine>Events</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="primary">shopping_cart</mat-icon>
+            <div matListItemTitle>{{ realTimeStats().conversions }}</div>
+            <div matListItemLine>Conversions</div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="funnel-card">
+      <mat-card-header>
+        <mat-card-title>Conversion Funnel</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          @for (stage of conversionFunnel(); track stage.stage) {
+            <mat-list-item>
+              <mat-icon matListItemIcon>{{ getFunnelIcon($index) }}</mat-icon>
+              <div matListItemTitle>{{ stage.stage }}</div>
+              <div matListItemLine>{{ stage.count | number }} users</div>
+              <div class="funnel-metrics">
+                <mat-chip color="primary">{{ stage.rate }}%</mat-chip>
+                <mat-progress-bar
+                  mode="determinate"
+                  [value]="stage.rate"
+                  color="primary"
+                ></mat-progress-bar>
+              </div>
+            </mat-list-item>
+          }
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

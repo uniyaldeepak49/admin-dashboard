@@ -1,0 +1,71 @@
+<div class="logs-container">
+  <div class="page-header">
+    <h1>System Logs</h1>
+    <p>Monitor system activities and errors</p>
+  </div>
+
+  <mat-card class="logs-card">
+    <mat-card-header>
+      <mat-card-title>Activity Logs</mat-card-title>
+      <div class="header-actions">
+        <mat-form-field appearance="outline">
+          <mat-label>Log Level</mat-label>
+          <mat-select [value]="selectedLevel()" (selectionChange)="selectedLevel.set($event.value)">
+            @for (level of logLevels; track level) {
+              <mat-option [value]="level">{{ level }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-icon-button (click)="refreshLogs()" matTooltip="Refresh">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-button (click)="exportLogs()">
+          <mat-icon>download</mat-icon>
+          Export
+        </button>
+        <button mat-button color="warn" (click)="clearLogs()">
+          <mat-icon>clear_all</mat-icon>
+          Clear
+        </button>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="logs-list">
+        @for (log of logs(); track log.id) {
+          <div class="log-entry" [class]="'log-' + log.level">
+            <div class="log-header">
+              <mat-chip
+                [color]="
+                  log.level === 'error' ? 'warn' : log.level === 'warning' ? 'accent' : 'primary'
+                "
+                class="level-chip"
+              >
+                {{ log.level.toUpperCase() }}
+              </mat-chip>
+              <span class="timestamp">{{ log.timestamp }}</span>
+              <span class="source">{{ log.source }}</span>
+            </div>
+
+            <div class="log-message">{{ log.message }}</div>
+
+            @if (log.user) {
+              <div class="log-user">
+                <mat-icon>person</mat-icon>
+                {{ log.user }}
+              </div>
+            }
+          </div>
+        }
+
+        @if (logs().length === 0) {
+          <div class="no-logs">
+            <mat-icon>info</mat-icon>
+            <p>No logs available</p>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

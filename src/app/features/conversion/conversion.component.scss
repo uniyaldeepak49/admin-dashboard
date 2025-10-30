@@ -1,0 +1,265 @@
+.conversion-container {
+  padding: 32px;
+  min-height: 100vh;
+}
+
+.conversion-header {
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 500;
+    color: #1a202c;
+    margin: 0 0 8px 0;
+  }
+
+  p {
+    color: #64748b;
+    margin: 0;
+  }
+}
+
+.overview-card {
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  margin-bottom: 32px;
+}
+
+.overview-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+.conversion-rate {
+  h2 {
+    font-size: 64px;
+    font-weight: 600;
+    color: #10b981;
+    margin: 0 0 8px 0;
+  }
+
+  .growth {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &.positive {
+      color: #10b981;
+    }
+  }
+}
+
+.conversion-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 12px;
+  min-width: 250px;
+
+  .label {
+    font-weight: 500;
+    color: #374151;
+  }
+
+  .value {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 18px;
+  }
+}
+
+.conversion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.funnel-card,
+.channels-card {
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.funnel-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.funnel-stage {
+  .stage-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .stage-metrics {
+      display: flex;
+      gap: 12px;
+
+      .count {
+        font-weight: 600;
+        color: #1f2937;
+      }
+
+      .rate {
+        color: #10b981;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .stage-bar {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+      transition: width 0.3s ease;
+    }
+  }
+}
+
+.channel-item {
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .channel-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .channel-metrics {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+
+      .conversions {
+        font-weight: 600;
+        color: #1f2937;
+        font-size: 14px;
+      }
+
+      .rate {
+        color: #10b981;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .channel-progress {
+    mat-progress-bar {
+      height: 6px;
+      border-radius: 3px;
+    }
+  }
+}
+
+.insights-card {
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.insight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 16px;
+  border-left: 4px solid;
+
+  &.opportunity {
+    background: rgba(16, 185, 129, 0.05);
+    border-left-color: #10b981;
+
+    mat-icon {
+      color: #10b981;
+    }
+  }
+
+  &.warning {
+    background: rgba(239, 68, 68, 0.05);
+    border-left-color: #ef4444;
+
+    mat-icon {
+      color: #ef4444;
+    }
+  }
+
+  &.trend {
+    background: rgba(59, 130, 246, 0.05);
+    border-left-color: #3b82f6;
+
+    mat-icon {
+      color: #3b82f6;
+    }
+  }
+
+  .insight-content {
+    h4 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    p {
+      margin: 0;
+      color: #64748b;
+      line-height: 1.5;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .conversion-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

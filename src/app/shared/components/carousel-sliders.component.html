@@ -1,0 +1,72 @@
+<div class="carousel-container" role="region" aria-label="Image carousel">
+  <mat-card class="carousel-card">
+    <div class="carousel-wrapper">
+      <!-- Main slide display -->
+      <div class="slide-container">
+        @if (currentSlide(); as slide) {
+          <div
+            class="slide"
+            [attr.aria-label]="'Slide ' + (currentIndex() + 1) + ' of ' + totalSlides()"
+          >
+            <img [src]="slide.imageUrl" [alt]="slide.title" class="slide-image" loading="lazy" />
+            <div class="slide-content">
+              <h3 class="slide-title">{{ slide.title }}</h3>
+              @if (slide.description) {
+                <p class="slide-description">{{ slide.description }}</p>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Navigation buttons -->
+      @if (showNavigation() && totalSlides() > 1) {
+        <button
+          mat-icon-button
+          class="nav-button nav-prev"
+          (click)="previousSlide()"
+          aria-label="Previous slide"
+        >
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          class="nav-button nav-next"
+          (click)="nextSlide()"
+          aria-label="Next slide"
+        >
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      }
+
+      <!-- Play/Pause button -->
+      @if (autoPlay()) {
+        <button
+          mat-icon-button
+          class="play-pause-button"
+          (click)="togglePlayPause()"
+          [attr.aria-label]="isPlaying() ? 'Pause slideshow' : 'Play slideshow'"
+        >
+          <mat-icon>{{ isPlaying() ? 'pause' : 'play_arrow' }}</mat-icon>
+        </button>
+      }
+    </div>
+
+    <!-- Indicators -->
+    @if (showIndicators() && totalSlides() > 1) {
+      <div class="indicators" role="tablist" aria-label="Slide indicators">
+        @for (slide of slides(); track slide.id; let i = $index) {
+          <button
+            class="indicator"
+            [class.active]="i === currentIndex()"
+            (click)="goToSlide(i)"
+            [attr.aria-label]="'Go to slide ' + (i + 1)"
+            [attr.aria-selected]="i === currentIndex()"
+            role="tab"
+          ></button>
+        }
+      </div>
+    }
+  </mat-card>
+</div>

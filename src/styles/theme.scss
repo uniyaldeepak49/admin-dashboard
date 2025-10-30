@@ -1,0 +1,58 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+// Define palettes
+$primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+$warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+// Light theme
+$light-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+  )
+);
+
+// Dark theme
+$dark-theme: mat.m2-define-dark-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+  )
+);
+
+// Apply light theme by default
+@include mat.all-component-themes($light-theme);
+
+// Dark theme styles
+.dark {
+  @include mat.all-component-themes($dark-theme);
+
+  // Custom dark theme variables
+  --mat-text-primary: #ffffff;
+  --mat-text-secondary: rgba(255, 255, 255, 0.7);
+  --mat-surface: #121212;
+  --mat-surface-variant: #1e1e1e;
+  --mat-divider-color: rgba(255, 255, 255, 0.12);
+  --mat-primary-rgb: 121, 134, 203;
+
+  background-color: var(--mat-surface);
+  color: var(--mat-text-primary);
+}
+
+// Light theme variables
+:root {
+  --mat-text-primary: rgba(0, 0, 0, 0.87);
+  --mat-text-secondary: rgba(0, 0, 0, 0.6);
+  --mat-surface: #ffffff;
+  --mat-surface-variant: #f5f5f5;
+  --mat-divider-color: rgba(0, 0, 0, 0.12);
+  --mat-primary-rgb: 63, 81, 181;
+}

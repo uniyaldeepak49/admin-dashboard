@@ -1,0 +1,120 @@
+<div class="conversion-container">
+  <div class="conversion-header">
+    <h1>Conversion Rate Analytics</h1>
+    <p>Track and optimize your conversion funnel</p>
+  </div>
+
+  <div class="conversion-overview">
+    <mat-card class="overview-card">
+      <div class="overview-content">
+        <div class="conversion-rate">
+          <h2>{{ conversionData().rate }}%</h2>
+          <div class="growth positive">
+            <mat-icon>trending_up</mat-icon>
+            <span>+{{ conversionData().growth }}%</span>
+          </div>
+        </div>
+        <div class="conversion-stats">
+          <div class="stat-item">
+            <span class="label">Total Visitors</span>
+            <span class="value">{{ conversionData().visitors | number }}</span>
+          </div>
+          <div class="stat-item">
+            <span class="label">Conversions</span>
+            <span class="value">{{ conversionData().conversions | number }}</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="conversion-grid">
+    <mat-card class="funnel-card">
+      <mat-card-header>
+        <mat-card-title>Conversion Funnel</mat-card-title>
+        <mat-icon>filter_list</mat-icon>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="funnel-stages">
+          @for (stage of conversionData().funnel; track stage.stage) {
+            <div class="funnel-stage">
+              <div class="stage-info">
+                <h4>{{ stage.stage }}</h4>
+                <div class="stage-metrics">
+                  <span class="count">{{ stage.count | number }}</span>
+                  <span class="rate">{{ stage.rate }}%</span>
+                </div>
+              </div>
+              <div class="stage-bar">
+                <div class="bar-fill" [style.width.%]="stage.rate"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="channels-card">
+      <mat-card-header>
+        <mat-card-title>Conversion by Channel</mat-card-title>
+        <mat-icon>trending_up</mat-icon>
+      </mat-card-header>
+      <mat-card-content>
+        @for (channel of conversionData().channels; track channel.name) {
+          <div class="channel-item">
+            <div class="channel-info">
+              <h4>{{ channel.name }}</h4>
+              <div class="channel-metrics">
+                <span class="conversions">{{ channel.conversions }} conversions</span>
+                <span class="rate">{{ channel.rate }}% rate</span>
+              </div>
+            </div>
+            <div class="channel-progress">
+              <mat-progress-bar
+                mode="determinate"
+                [value]="(channel.conversions / totalConversions()) * 100"
+                color="primary"
+              >
+              </mat-progress-bar>
+            </div>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="insights-card">
+    <mat-card-header>
+      <mat-card-title>Conversion Insights</mat-card-title>
+      <mat-icon color="accent">lightbulb</mat-icon>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="insights-grid">
+        <div class="insight-item opportunity">
+          <mat-icon>trending_up</mat-icon>
+          <div class="insight-content">
+            <h4>Email Campaign Performance</h4>
+            <p>
+              Email campaigns show highest conversion rate at 6.1%. Consider increasing email
+              marketing budget.
+            </p>
+          </div>
+        </div>
+        <div class="insight-item warning">
+          <mat-icon>warning</mat-icon>
+          <div class="insight-content">
+            <h4>Cart Abandonment</h4>
+            <p>60% drop-off from cart to checkout. Implement cart recovery strategies.</p>
+          </div>
+        </div>
+        <div class="insight-item trend">
+          <mat-icon>analytics</mat-icon>
+          <div class="insight-content">
+            <h4>Mobile Optimization</h4>
+            <p>Mobile traffic shows lower conversion. Optimize mobile checkout experience.</p>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

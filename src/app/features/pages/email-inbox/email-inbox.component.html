@@ -1,0 +1,332 @@
+<div class="email-app">
+  <!-- Top Toolbar -->
+  <mat-toolbar class="email-toolbar">
+    <div class="toolbar-left">
+      <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h2>Mail</h2>
+    </div>
+
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          placeholder="Search mail"
+          [(ngModel)]="searchQuery"
+          (input)="searchEmails()"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="toolbar-right">
+      <button mat-icon-button>
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>help_outline</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <div class="email-content">
+    <!-- Sidebar -->
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav mode="side" opened class="email-sidenav">
+        <div class="sidenav-content">
+          <button mat-fab color="primary" class="compose-fab" (click)="composeEmail()">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <mat-list class="folder-nav">
+            @for (folder of folders(); track folder.name) {
+              <mat-list-item
+                [class.active]="currentView() === folder.name"
+                (click)="selectFolder(folder.name)"
+              >
+                <mat-icon matListItemIcon>{{ folder.icon }}</mat-icon>
+                <span matListItemTitle>{{ folder.label }}</span>
+                @if (folder.count > 0) {
+                  <span class="folder-count">{{ folder.count }}</span>
+                }
+              </mat-list-item>
+            }
+          </mat-list>
+
+          <mat-divider></mat-divider>
+
+          <div class="labels-section">
+            <h4>Labels</h4>
+            <mat-list>
+              <mat-list-item>
+                <mat-icon matListItemIcon style="color: #f44336">label</mat-icon>
+                <span matListItemTitle>Important</span>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListItemIcon style="color: #4caf50">label</mat-icon>
+                <span matListItemTitle>Work</span>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListItemIcon style="color: #2196f3">label</mat-icon>
+                <span matListItemTitle>Personal</span>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </mat-sidenav>
+
+      <mat-sidenav-content class="main-content">
+        <!-- Compose Email -->
+        @if (isComposing()) {
+          <div class="compose-container">
+            <mat-card class="compose-card">
+              <mat-card-header class="compose-header">
+                <mat-card-title>New Message</mat-card-title>
+                <button mat-icon-button (click)="isComposing.set(false)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-card-header>
+
+              <mat-card-content>
+                <form [formGroup]="composeForm" class="compose-form">
+                  <div class="compose-fields">
+                    <mat-form-field appearance="outline">
+                      <mat-label>To</mat-label>
+                      <input matInput formControlName="to" placeholder="Recipients" />
+                      @if (
+                        composeForm.get('to')?.hasError('required') &&
+                        composeForm.get('to')?.touched
+                      ) {
+                        <mat-error>Email is required</mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>Subject</mat-label>
+                      <input matInput formControlName="subject" placeholder="Subject" />
+                    </mat-form-field>
+
+                    <div class="compose-editor">
+                      <div class="editor-toolbar">
+                        <button mat-icon-button type="button">
+                          <mat-icon>format_bold</mat-icon>
+                        </button>
+                        <button mat-icon-button type="button">
+                          <mat-icon>format_italic</mat-icon>
+                        </button>
+                        <button mat-icon-button type="button">
+                          <mat-icon>format_underlined</mat-icon>
+                        </button>
+                        <button mat-icon-button type="button">
+                          <mat-icon>format_list_bulleted</mat-icon>
+                        </button>
+                        <button mat-icon-button type="button"><mat-icon>link</mat-icon></button>
+                        <button mat-icon-button type="button">
+                          <mat-icon>attach_file</mat-icon>
+                        </button>
+                      </div>
+
+                      <mat-form-field appearance="outline" class="editor-field">
+                        <textarea
+                          matInput
+                          rows="12"
+                          formControlName="body"
+                          placeholder="Compose your message..."
+                        ></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="compose-actions">
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      (click)="sendEmail()"
+                      [disabled]="composeForm.invalid"
+                    >
+                      <mat-icon>send</mat-icon>
+                      Send
+                    </button>
+                    <button mat-button (click)="saveDraft()">
+                      <mat-icon>save</mat-icon>
+                      Save Draft
+                    </button>
+                    <button mat-icon-button [matMenuTriggerFor]="moreMenu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #moreMenu="matMenu">
+                      <button mat-menu-item>
+                        <mat-icon>schedule</mat-icon>
+                        Schedule Send
+                      </button>
+                      <button mat-menu-item>
+                        <mat-icon>attach_file</mat-icon>
+                        Add Attachment
+                      </button>
+                    </mat-menu>
+                  </div>
+                </form>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        }
+
+        <!-- Email List View -->
+        @if (!isComposing() && !selectedEmail()) {
+          <div class="email-list-container">
+            <!-- List Header -->
+            <div class="list-header">
+              <div class="header-left">
+                <mat-checkbox
+                  [checked]="
+                    selectedEmails().length === getCurrentEmails().length &&
+                    getCurrentEmails().length > 0
+                  "
+                  [indeterminate]="
+                    selectedEmails().length > 0 &&
+                    selectedEmails().length < getCurrentEmails().length
+                  "
+                  (change)="$event.checked ? selectAllEmails() : clearSelection()"
+                >
+                </mat-checkbox>
+
+                @if (selectedEmails().length > 0) {
+                  <span class="selection-count">{{ selectedEmails().length }} selected</span>
+                  <button mat-icon-button><mat-icon>delete</mat-icon></button>
+                  <button mat-icon-button><mat-icon>archive</mat-icon></button>
+                  <button mat-icon-button><mat-icon>mark_email_read</mat-icon></button>
+                } @else {
+                  <h3>{{ getCurrentFolderLabel() }}</h3>
+                }
+              </div>
+
+              <div class="header-right">
+                <button mat-icon-button><mat-icon>refresh</mat-icon></button>
+                <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+              </div>
+            </div>
+
+            <!-- Email List -->
+            <div class="email-list">
+              @for (email of getCurrentEmails(); track email.id) {
+                <div
+                  class="email-row"
+                  [class.unread]="!email.read"
+                  [class.selected]="selectedEmails().includes(email.id)"
+                  (click)="selectEmail(email)"
+                >
+                  <div class="email-checkbox" (click)="$event.stopPropagation()">
+                    <mat-checkbox
+                      [checked]="selectedEmails().includes(email.id)"
+                      (change)="toggleEmailSelection(email.id)"
+                    >
+                    </mat-checkbox>
+                  </div>
+
+                  <div class="email-star" (click)="$event.stopPropagation(); toggleStar(email)">
+                    <mat-icon [class.starred]="email.starred">
+                      {{ email.starred ? 'star' : 'star_border' }}
+                    </mat-icon>
+                  </div>
+
+                  <div class="email-avatar">
+                    <div class="avatar-circle">{{ getEmailInitials(email.from) }}</div>
+                  </div>
+
+                  <div class="email-content">
+                    <div class="email-header">
+                      <span class="email-sender">{{ email.from.split('<')[0].trim() }}</span>
+                      <span class="email-date">{{ formatDate(email.date) }}</span>
+                    </div>
+                    <div class="email-subject">{{ email.subject }}</div>
+                    <div class="email-preview">{{ getEmailPreview(email.body) }}</div>
+                  </div>
+
+                  <div class="email-actions" (click)="$event.stopPropagation()">
+                    <button mat-icon-button (click)="deleteEmail(email)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              } @empty {
+                <div class="empty-state">
+                  <mat-icon>mail_outline</mat-icon>
+                  <h3>No emails</h3>
+                  <p>Your {{ getCurrentFolderLabel().toLowerCase() }} is empty</p>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Email Detail View -->
+        @if (selectedEmail(); as email) {
+          <div class="email-detail-container">
+            <div class="detail-header">
+              <div class="header-left">
+                <button mat-icon-button (click)="selectedEmail.set(null)">
+                  <mat-icon>arrow_back</mat-icon>
+                </button>
+                <div class="email-labels">
+                  <mat-chip>{{ currentView() }}</mat-chip>
+                </div>
+              </div>
+
+              <div class="header-actions">
+                <button mat-icon-button (click)="toggleStar(email)">
+                  <mat-icon [class.starred]="email.starred">
+                    {{ email.starred ? 'star' : 'star_border' }}
+                  </mat-icon>
+                </button>
+                <button mat-icon-button><mat-icon>reply</mat-icon></button>
+                <button mat-icon-button><mat-icon>forward</mat-icon></button>
+                <button mat-icon-button (click)="deleteEmail(email)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+              </div>
+            </div>
+
+            <div class="email-detail-content">
+              <div class="email-meta">
+                <div class="sender-info">
+                  <div class="sender-avatar">{{ getEmailInitials(email.from) }}</div>
+                  <div class="sender-details">
+                    <h3>{{ email.subject }}</h3>
+                    <div class="sender-line">
+                      <span class="sender-name">{{ email.from.split('<')[0].trim() }}</span>
+                      <span class="sender-email">{{ getEmailAddress(email.from) }}</span>
+                    </div>
+                    <div class="email-timestamp">{{ email.date }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <mat-divider></mat-divider>
+
+              <div class="email-body-content">
+                <pre>{{ email.body }}</pre>
+              </div>
+
+              <div class="reply-section">
+                <button mat-raised-button color="primary">
+                  <mat-icon>reply</mat-icon>
+                  Reply
+                </button>
+                <button mat-button>
+                  <mat-icon>reply_all</mat-icon>
+                  Reply All
+                </button>
+                <button mat-button>
+                  <mat-icon>forward</mat-icon>
+                  Forward
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>

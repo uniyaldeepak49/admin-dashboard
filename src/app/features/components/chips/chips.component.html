@@ -1,0 +1,134 @@
+<div class="chips-container">
+  <div class="chips-header">
+    <h1>Chips Components</h1>
+    <p>Interactive chip examples with add/remove functionality</p>
+  </div>
+
+  <div class="chips-grid">
+    <!-- Basic Chips -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>label</mat-icon>
+          Basic Chips
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chip-section">
+          <h3>Tags</h3>
+          <mat-chip-set>
+            @for (tag of tags(); track tag) {
+              <mat-chip-row (removed)="removeTag(tag)">
+                {{ tag }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-set>
+
+          <div class="add-chip">
+            <mat-form-field appearance="outline">
+              <mat-label>Add tag</mat-label>
+              <input matInput [formControl]="newTagControl" (keyup.enter)="addTag()" />
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="addTag()">
+              <mat-icon>add</mat-icon>
+              Add
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- User Chips -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>people</mat-icon>
+          User Chips
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chip-section">
+          <h3>Team Members</h3>
+          <mat-chip-set>
+            @for (user of users(); track user) {
+              <mat-chip-row (removed)="removeUser(user)" class="user-chip">
+                <mat-icon matChipAvatar>person</mat-icon>
+                {{ user }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-set>
+
+          <div class="add-chip">
+            <mat-form-field appearance="outline">
+              <mat-label>Add user</mat-label>
+              <input matInput [formControl]="newUserControl" (keyup.enter)="addUser()" />
+            </mat-form-field>
+            <button mat-raised-button color="accent" (click)="addUser()">
+              <mat-icon>person_add</mat-icon>
+              Add
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Category Chips -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>category</mat-icon>
+          Category Chips
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chip-section">
+          <h3>Categories (Read-only)</h3>
+          <mat-chip-set>
+            @for (category of categories(); track category) {
+              <mat-chip-row (removed)="removeCategory(category)" class="category-chip">
+                <mat-icon matChipAvatar>folder</mat-icon>
+                {{ category }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-set>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Styled Chips -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>palette</mat-icon>
+          Styled Chips
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chip-section">
+          <h3>Status Chips</h3>
+          <mat-chip-set>
+            <mat-chip class="status-active">Active</mat-chip>
+            <mat-chip class="status-pending">Pending</mat-chip>
+            <mat-chip class="status-inactive">Inactive</mat-chip>
+          </mat-chip-set>
+
+          <h3>Priority Chips</h3>
+          <mat-chip-set>
+            <mat-chip class="priority-high">High Priority</mat-chip>
+            <mat-chip class="priority-medium">Medium Priority</mat-chip>
+            <mat-chip class="priority-low">Low Priority</mat-chip>
+          </mat-chip-set>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

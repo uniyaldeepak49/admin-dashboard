@@ -1,0 +1,148 @@
+<div class="select-container">
+  <div class="select-header">
+    <h1>Select Components</h1>
+    <p>Single and multi-select examples with various options</p>
+  </div>
+
+  <div class="select-grid">
+    <!-- Single Select -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>radio_button_checked</mat-icon>
+          Single Select
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Choose a country</mat-label>
+          <mat-select [formControl]="countryControl">
+            @for (country of countries; track country.value) {
+              <mat-option [value]="country.value">
+                <span class="country-option">
+                  <span class="flag">{{ country.flag }}</span>
+                  {{ country.viewValue }}
+                </span>
+              </mat-option>
+            }
+          </mat-select>
+          <mat-icon matSuffix>public</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select priority</mat-label>
+          <mat-select [formControl]="singleSelectControl">
+            @for (priority of priorities; track priority) {
+              <mat-option [value]="priority">{{ priority }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon matSuffix>flag</mat-icon>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Multi Select -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>checklist</mat-icon>
+          Multi Select
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select skills</mat-label>
+          <mat-select
+            [formControl]="multiSelectControl"
+            multiple
+            (selectionChange)="onSelectionChange($event.value)"
+          >
+            @for (skill of skills; track skill) {
+              <mat-option [value]="skill">{{ skill }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon matSuffix>code</mat-icon>
+        </mat-form-field>
+
+        @if (selectedValues().length > 0) {
+          <div class="selected-chips">
+            <h4>Selected Skills:</h4>
+            <mat-chip-set>
+              @for (skill of selectedValues(); track skill) {
+                <mat-chip>{{ skill }}</mat-chip>
+              }
+            </mat-chip-set>
+            <button mat-button color="warn" (click)="clearSelection()">
+              <mat-icon>clear</mat-icon>
+              Clear All
+            </button>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <!-- User Multi Select -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>people</mat-icon>
+          User Multi Select
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select team members</mat-label>
+          <mat-select [formControl]="userControl" multiple>
+            @for (user of users; track user.id) {
+              <mat-option [value]="user.name">
+                <div class="user-option">
+                  <div class="user-avatar">{{ user.name.charAt(0) }}</div>
+                  <div class="user-info">
+                    <span class="name">{{ user.name }}</span>
+                    <span class="role">{{ user.role }}</span>
+                  </div>
+                </div>
+              </mat-option>
+            }
+          </mat-select>
+          <mat-icon matSuffix>group</mat-icon>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Category Multi Select -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>category</mat-icon>
+          Category Select
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select categories</mat-label>
+          <mat-select multiple>
+            @for (category of categories; track category) {
+              <mat-option [value]="category">
+                <mat-icon>folder</mat-icon>
+                {{ category }}
+              </mat-option>
+            }
+          </mat-select>
+          <mat-icon matSuffix>category</mat-icon>
+        </mat-form-field>
+
+        <div class="select-info">
+          <h4>Features:</h4>
+          <ul>
+            <li>Single and multiple selection</li>
+            <li>Custom option templates</li>
+            <li>Icons and avatars</li>
+            <li>Form control integration</li>
+            <li>Keyboard navigation</li>
+          </ul>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

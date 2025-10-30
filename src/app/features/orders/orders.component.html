@@ -1,0 +1,102 @@
+<div class="orders-container">
+  <div class="orders-header">
+    <h1>Total Orders Management</h1>
+    <p>Track and manage all customer orders</p>
+  </div>
+
+  <div class="orders-stats">
+    <mat-card class="stat-card total">
+      <div class="stat-content">
+        <mat-icon>shopping_cart</mat-icon>
+        <div class="stat-info">
+          <h3>{{ getOrdersData().total }}</h3>
+          <p>Total Orders</p>
+          <div class="growth" [class]="getOrdersData().growth > 0 ? 'positive' : 'negative'">
+            <mat-icon>{{ getOrdersData().growth > 0 ? 'trending_up' : 'trending_down' }}</mat-icon>
+            <span>{{ getOrdersData().growth }}%</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card pending">
+      <div class="stat-content">
+        <mat-icon>schedule</mat-icon>
+        <div class="stat-info">
+          <h3>{{ getOrdersData().pending }}</h3>
+          <p>Pending Orders</p>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card completed">
+      <div class="stat-content">
+        <mat-icon>check_circle</mat-icon>
+        <div class="stat-info">
+          <h3>{{ getOrdersData().completed }}</h3>
+          <p>Completed Orders</p>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card avg-value">
+      <div class="stat-content">
+        <mat-icon>attach_money</mat-icon>
+        <div class="stat-info">
+          <h3>${{ getOrdersData().avgValue }}</h3>
+          <p>Average Order Value</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="orders-details">
+    <mat-card class="completion-card">
+      <mat-card-header>
+        <mat-card-title>Order Completion Rate</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="completion-info">
+          <div class="completion-rate">
+            <h2>{{ completionRate() }}%</h2>
+            <p>Orders successfully completed</p>
+          </div>
+          <div class="completion-breakdown">
+            <div class="breakdown-item">
+              <span class="label">Completed</span>
+              <span class="value">{{ getOrdersData().completed }}</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="label">Cancelled</span>
+              <span class="value">{{ getOrdersData().cancelled }}</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="label">Pending</span>
+              <span class="value">{{ getOrdersData().pending }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="orders-table-card">
+    <mat-card-header>
+      <mat-card-title>Recent Orders</mat-card-title>
+      <button mat-button color="primary">View All Orders</button>
+    </mat-card-header>
+    <mat-card-content>
+      <app-data-table
+        [data]="getRecentOrders()"
+        [columns]="orderColumns"
+        [actions]="orderActions"
+        [showSelection]="true"
+        [showPagination]="true"
+        [(pageIndex)]="pageIndex"
+        [(pageSize)]="pageSize"
+        (actionClick)="onOrderAction($event)"
+      >
+      </app-data-table>
+    </mat-card-content>
+  </mat-card>
+</div>

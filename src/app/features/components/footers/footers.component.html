@@ -1,0 +1,189 @@
+<div class="footers-container">
+  <div class="footers-header">
+    <h1>Footer Components</h1>
+    <p>Various footer layouts and styles for web applications</p>
+  </div>
+
+  <div class="footers-section">
+    <!-- Simple Footer -->
+    <mat-card class="footer-card">
+      <mat-card-header>
+        <mat-card-title>Simple Footer</mat-card-title>
+        <mat-card-subtitle>Basic copyright footer</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <footer class="simple-footer">
+          <p>&copy; {{ currentYear() }} {{ companyInfo().name }}. All rights reserved.</p>
+        </footer>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Footer with Links -->
+    <mat-card class="footer-card">
+      <mat-card-header>
+        <mat-card-title>Footer with Links</mat-card-title>
+        <mat-card-subtitle>Navigation links and copyright</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <footer class="links-footer">
+          <div class="footer-links">
+            @for (link of footerLinks(); track link.label) {
+              <a href="{{ link.url }}" class="footer-link">{{ link.label }}</a>
+            }
+          </div>
+          <div class="footer-copyright">
+            <p>&copy; {{ currentYear() }} {{ companyInfo().name }}. All rights reserved.</p>
+          </div>
+        </footer>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Footer with Social Media -->
+    <mat-card class="footer-card">
+      <mat-card-header>
+        <mat-card-title>Footer with Social Media</mat-card-title>
+        <mat-card-subtitle>Social icons and company info</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <footer class="social-footer">
+          <div class="footer-content">
+            <div class="company-info">
+              <h3>{{ companyInfo().name }}</h3>
+              <p>{{ companyInfo().description }}</p>
+            </div>
+            <div class="social-links">
+              @for (social of socialLinks(); track social.label) {
+                <button mat-icon-button class="social-btn">
+                  <mat-icon>{{ social.icon }}</mat-icon>
+                </button>
+              }
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="footer-bottom">
+            <p>&copy; {{ currentYear() }} {{ companyInfo().name }}. All rights reserved.</p>
+            <span class="version">{{ companyInfo().version }}</span>
+          </div>
+        </footer>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Multi-Column Footer -->
+    <mat-card class="footer-card">
+      <mat-card-header>
+        <mat-card-title>Multi-Column Footer</mat-card-title>
+        <mat-card-subtitle>Organized content in columns</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <footer class="multi-column-footer">
+          <div class="footer-columns">
+            <div class="footer-column">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4>Products</h4>
+              <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">API</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4>Support</h4>
+              <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Documentation</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Status</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+                <li><a href="#">GDPR</a></li>
+              </ul>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="footer-bottom">
+            <p>&copy; {{ currentYear() }} {{ companyInfo().name }}. All rights reserved.</p>
+            <div class="footer-actions">
+              <button mat-button>Privacy</button>
+              <button mat-button>Terms</button>
+              <button mat-button>Cookies</button>
+            </div>
+          </div>
+        </footer>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Sticky Footer -->
+    <mat-card class="footer-card">
+      <mat-card-header>
+        <mat-card-title>Sticky Footer</mat-card-title>
+        <mat-card-subtitle>Footer that sticks to bottom</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="sticky-demo">
+          <div class="demo-content">
+            <p>This demonstrates a sticky footer that stays at the bottom of the viewport.</p>
+            <p>The footer remains at the bottom even with minimal content.</p>
+          </div>
+          <footer class="sticky-footer">
+            <div class="footer-content">
+              <span>&copy; {{ currentYear() }} {{ companyInfo().name }}</span>
+              <div class="footer-links">
+                <a href="#" class="footer-link">Help</a>
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Terms</a>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Admin Footer -->
+    <mat-card class="footer-card">
+      <mat-card-header>
+        <mat-card-title>Admin Dashboard Footer</mat-card-title>
+        <mat-card-subtitle>Footer designed for admin panels</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <footer class="admin-footer">
+          <div class="admin-footer-content">
+            <div class="footer-left">
+              <span class="app-name">{{ companyInfo().name }}</span>
+              <span class="version-badge">{{ companyInfo().version }}</span>
+            </div>
+            <div class="footer-center">
+              <span class="status-indicator online">
+                <mat-icon>circle</mat-icon>
+                System Online
+              </span>
+            </div>
+            <div class="footer-right">
+              <button mat-icon-button>
+                <mat-icon>help_outline</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>settings</mat-icon>
+              </button>
+              <span class="copyright">&copy; {{ currentYear() }}</span>
+            </div>
+          </div>
+        </footer>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

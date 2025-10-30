@@ -1,0 +1,169 @@
+<div class="buttons-container">
+  <div class="page-header">
+    <h1>Button Components</h1>
+    <p>Explore different button styles and variations</p>
+  </div>
+
+  <div class="components-grid">
+    <!-- Basic Buttons -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Basic Buttons</mat-card-title>
+        <mat-card-subtitle>Standard button variations</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="button-row">
+          <button mat-button>Basic</button>
+          <button mat-raised-button>Raised</button>
+          <button mat-flat-button>Flat</button>
+          <button mat-stroked-button>Stroked</button>
+        </div>
+        <div class="button-row">
+          <button mat-raised-button color="primary">Primary</button>
+          <button mat-raised-button color="accent">Accent</button>
+          <button mat-raised-button color="warn">Warn</button>
+          <button mat-raised-button disabled>Disabled</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Icon Buttons -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Icon Buttons</mat-card-title>
+        <mat-card-subtitle>Buttons with icons</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="button-row">
+          <button mat-icon-button><mat-icon>favorite</mat-icon></button>
+          <button mat-icon-button color="primary"><mat-icon>bookmark</mat-icon></button>
+          <button mat-icon-button color="accent"><mat-icon>home</mat-icon></button>
+          <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+        </div>
+        <div class="button-row">
+          <button mat-raised-button><mat-icon>add</mat-icon> Add</button>
+          <button mat-raised-button color="primary"><mat-icon>save</mat-icon> Save</button>
+          <button mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- FAB Buttons -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Floating Action Buttons</mat-card-title>
+        <mat-card-subtitle>FAB and Mini FAB buttons</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="fab-section">
+          <h4>Regular FABs</h4>
+          <div class="fab-row">
+            <button mat-fab color="primary"><mat-icon>add</mat-icon></button>
+            <button mat-fab color="accent"><mat-icon>edit</mat-icon></button>
+            <button mat-fab color="warn"><mat-icon>delete</mat-icon></button>
+          </div>
+        </div>
+        <div class="fab-section">
+          <h4>Mini FABs</h4>
+          <div class="fab-row">
+            <button mat-mini-fab color="primary"><mat-icon>add</mat-icon></button>
+            <button mat-mini-fab color="accent"><mat-icon>edit</mat-icon></button>
+            <button mat-mini-fab color="warn"><mat-icon>delete</mat-icon></button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Button Toggle -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Button Toggle</mat-card-title>
+        <mat-card-subtitle>Toggle button groups</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="toggle-section">
+          <h4>Text Alignment</h4>
+          <mat-button-toggle-group
+            [value]="selectedAlignment()"
+            (change)="selectedAlignment.set($event.value)"
+          >
+            <mat-button-toggle value="left"
+              ><mat-icon>format_align_left</mat-icon></mat-button-toggle
+            >
+            <mat-button-toggle value="center"
+              ><mat-icon>format_align_center</mat-icon></mat-button-toggle
+            >
+            <mat-button-toggle value="right"
+              ><mat-icon>format_align_right</mat-icon></mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        </div>
+        <div class="toggle-section">
+          <h4>Text Formatting</h4>
+          <mat-button-toggle-group multiple>
+            <mat-button-toggle value="bold"><mat-icon>format_bold</mat-icon></mat-button-toggle>
+            <mat-button-toggle value="italic"><mat-icon>format_italic</mat-icon></mat-button-toggle>
+            <mat-button-toggle value="underline"
+              ><mat-icon>format_underlined</mat-icon></mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Badge Buttons -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Badge Buttons</mat-card-title>
+        <mat-card-subtitle>Buttons with notification badges</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="button-row">
+          <button mat-icon-button matBadge="4" matBadgeColor="warn">
+            <mat-icon>notifications</mat-icon>
+          </button>
+          <button mat-icon-button matBadge="22" matBadgeColor="accent">
+            <mat-icon>mail</mat-icon>
+          </button>
+          <button mat-raised-button matBadge="8" matBadgePosition="before" matBadgeColor="warn">
+            Messages
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Loading States -->
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>Loading States</mat-card-title>
+        <mat-card-subtitle>Buttons with loading indicators</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="button-row">
+          @if (isLoading()) {
+            <button mat-raised-button color="primary" [disabled]="true">
+              <mat-spinner diameter="20"></mat-spinner>
+              Loading...
+            </button>
+          } @else {
+            <button mat-raised-button color="primary" (click)="simulateLoading()">
+              <mat-icon>upload</mat-icon>
+              Upload File
+            </button>
+          }
+          @if (isLoading()) {
+            <button mat-raised-button color="accent" [disabled]="true">
+              <mat-spinner diameter="20"></mat-spinner>
+              Saving...
+            </button>
+          } @else {
+            <button mat-raised-button color="accent">
+              <mat-icon>save</mat-icon>
+              Save Changes
+            </button>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

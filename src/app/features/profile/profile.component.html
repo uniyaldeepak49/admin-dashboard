@@ -1,0 +1,185 @@
+<div class="profile-container">
+  <!-- Header Section -->
+  <div class="profile-header">
+    <div class="profile-banner"></div>
+    <div class="profile-info">
+      <div class="avatar-section">
+        <div class="profile-avatar">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+        <button mat-mini-fab color="primary" class="edit-avatar-btn">
+          <mat-icon>camera_alt</mat-icon>
+        </button>
+      </div>
+      <div class="user-details">
+        <h1>{{ userProfile().name }}</h1>
+        <p class="user-role">{{ userProfile().role }} • {{ userProfile().department }}</p>
+        <div class="user-stats">
+          <div class="stat">
+            <span class="stat-value">2.5K</span>
+            <span class="stat-label">Connections</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">156</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">4.8</span>
+            <span class="stat-label">Rating</span>
+          </div>
+        </div>
+      </div>
+      <div class="profile-actions">
+        @if (!isEditing()) {
+          <button mat-raised-button color="primary" (click)="toggleEdit()">
+            <mat-icon>edit</mat-icon>
+            Edit Profile
+          </button>
+        } @else {
+          <button mat-button (click)="cancelEdit()">Cancel</button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="saveProfile()"
+            [disabled]="profileForm.invalid"
+          >
+            <mat-icon>save</mat-icon>
+            Save Changes
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="profile-content">
+    <div class="content-grid">
+      <!-- Personal Information -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>person</mat-icon>
+            Personal Information
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="profileForm">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Full Name</mat-label>
+                <input matInput formControlName="name" [readonly]="!isEditing()" />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Email Address</mat-label>
+                <input matInput type="email" formControlName="email" [readonly]="!isEditing()" />
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phone" [readonly]="!isEditing()" />
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Professional Information -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>work</mat-icon>
+            Professional Details
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="profileForm">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Role</mat-label>
+                @if (isEditing()) {
+                  <mat-select formControlName="role">
+                    @for (role of roles; track role) {
+                      <mat-option [value]="role">{{ role }}</mat-option>
+                    }
+                  </mat-select>
+                } @else {
+                  <input matInput formControlName="role" readonly />
+                }
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Department</mat-label>
+                @if (isEditing()) {
+                  <mat-select formControlName="department">
+                    @for (dept of departments; track dept) {
+                      <mat-option [value]="dept">{{ dept }}</mat-option>
+                    }
+                  </mat-select>
+                } @else {
+                  <input matInput formControlName="department" readonly />
+                }
+              </mat-form-field>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- About Section -->
+      <mat-card class="info-card bio-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>description</mat-icon>
+            About
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="profileForm">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Bio</mat-label>
+              <textarea
+                matInput
+                rows="6"
+                formControlName="bio"
+                [readonly]="!isEditing()"
+                placeholder="Tell us about yourself..."
+              ></textarea>
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Activity Summary -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>analytics</mat-icon>
+            Activity Summary
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="activity-grid">
+            <div class="activity-item">
+              <mat-icon color="primary">task_alt</mat-icon>
+              <div class="activity-info">
+                <span class="activity-value">24</span>
+                <span class="activity-label">Tasks Completed</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <mat-icon color="accent">schedule</mat-icon>
+              <div class="activity-info">
+                <span class="activity-value">8.5h</span>
+                <span class="activity-label">Avg. Daily Hours</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <mat-icon color="warn">trending_up</mat-icon>
+              <div class="activity-info">
+                <span class="activity-value">95%</span>
+                <span class="activity-label">Performance</span>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

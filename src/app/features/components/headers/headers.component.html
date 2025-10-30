@@ -1,0 +1,157 @@
+<div class="headers-container">
+  <div class="headers-header">
+    <h1>Header Components</h1>
+    <p>Various header and toolbar examples with Material Design</p>
+  </div>
+
+  <div class="headers-section">
+    <!-- Basic Header -->
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Basic Header</mat-card-title>
+        <mat-card-subtitle>Simple toolbar with title</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-toolbar color="primary">
+          <span>Basic Header</span>
+        </mat-toolbar>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Header with Actions -->
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Header with Actions</mat-card-title>
+        <mat-card-subtitle>Toolbar with action buttons</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-toolbar color="accent">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+          <span class="spacer"></span>
+          <button mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-icon-button [matBadge]="notificationCount()" matBadgeColor="warn">
+            <mat-icon>notifications</mat-icon>
+          </button>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            @for (item of menuItems(); track item.label) {
+              <button mat-menu-item>
+                <mat-icon>{{ item.icon }}</mat-icon>
+                <span>{{ item.label }}</span>
+              </button>
+            }
+          </mat-menu>
+        </mat-toolbar>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Header with Breadcrumbs -->
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Header with Breadcrumbs</mat-card-title>
+        <mat-card-subtitle>Navigation breadcrumb trail</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-toolbar>
+          <mat-icon>home</mat-icon>
+          <span>Navigation</span>
+          <span class="spacer"></span>
+          <div class="breadcrumbs">
+            @for (crumb of breadcrumbs(); track crumb.label; let last = $last) {
+              @if (!last) {
+                <span class="breadcrumb-item">{{ crumb.label }}</span>
+                <mat-icon class="breadcrumb-separator">chevron_right</mat-icon>
+              } @else {
+                <span class="breadcrumb-current">{{ crumb.label }}</span>
+              }
+            }
+          </div>
+        </mat-toolbar>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Header with Search -->
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Header with Search</mat-card-title>
+        <mat-card-subtitle>Integrated search functionality</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-toolbar color="primary">
+          <mat-icon>search</mat-icon>
+          <span>Search Header</span>
+          <span class="spacer"></span>
+          <div class="search-container">
+            <mat-icon class="search-icon">search</mat-icon>
+            <input type="text" placeholder="Search..." class="search-input" />
+          </div>
+          <button mat-icon-button>
+            <mat-icon>filter_list</mat-icon>
+          </button>
+        </mat-toolbar>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Header with Tabs -->
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Header with Navigation</mat-card-title>
+        <mat-card-subtitle>Tab-style navigation header</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-toolbar>
+          <mat-icon>apps</mat-icon>
+          <span>App Name</span>
+          <span class="spacer"></span>
+          <div class="nav-tabs">
+            <button mat-button class="nav-tab active">
+              <mat-icon>dashboard</mat-icon>
+              Dashboard
+            </button>
+            <button mat-button class="nav-tab">
+              <mat-icon>people</mat-icon>
+              Users
+            </button>
+            <button mat-button class="nav-tab">
+              <mat-icon>analytics</mat-icon>
+              Analytics
+            </button>
+          </div>
+        </mat-toolbar>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Header with Status -->
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Header with Status</mat-card-title>
+        <mat-card-subtitle>Status indicators and chips</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-toolbar>
+          <mat-icon>monitor</mat-icon>
+          <span>System Status</span>
+          <span class="spacer"></span>
+          <mat-chip-set>
+            <mat-chip class="status-chip online">
+              <mat-icon matChipAvatar>check_circle</mat-icon>
+              Online
+            </mat-chip>
+            <mat-chip class="status-chip">
+              <mat-icon matChipAvatar>people</mat-icon>
+              1,234 Users
+            </mat-chip>
+          </mat-chip-set>
+          <button mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </mat-toolbar>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
