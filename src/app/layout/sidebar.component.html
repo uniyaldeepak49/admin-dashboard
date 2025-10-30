@@ -24,36 +24,45 @@
     <div class="nav-section">
       <h3 class="nav-title">Main</h3>
       <div class="nav-items">
-        <a
-          routerLink="/dashboard"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>dashboard</mat-icon>
-          <span>Dashboard</span>
-        </a>
+        <ng-container *hasRole="['admin', 'editor', 'viewer']">
+          <a
+            *hasPermission="'dashboard'"
+            routerLink="/dashboard"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>dashboard</mat-icon>
+            <span>Dashboard</span>
+          </a>
+        </ng-container>
 
-        <a
-          routerLink="/dashboard/users"
-          routerLinkActive="active"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>people</mat-icon>
-          <span>Users</span>
-        </a>
+        <ng-container *hasRole="['admin', 'editor']">
+          <a
+            *hasPermission="'view-users'"
+            routerLink="/dashboard/users"
+            routerLinkActive="active"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>people</mat-icon>
+            <span>Users</span>
+          </a>
+        </ng-container>
 
-        <a
-          routerLink="/dashboard/analytics"
-          routerLinkActive="active"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>analytics</mat-icon>
-          <span>Analytics</span>
-        </a>
+        <ng-container *hasRole="['admin', 'editor', 'viewer']">
+          <a
+            *hasPermission="'view-analytics'"
+            routerLink="/dashboard/analytics"
+            routerLinkActive="active"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>analytics</mat-icon>
+            <span>Analytics</span>
+          </a>
+        </ng-container>
       </div>
     </div>
 
@@ -61,27 +70,31 @@
     <div class="nav-section">
       <h3 class="nav-title">Business</h3>
       <div class="nav-items">
-        <a
-          *hasRole="['admin', 'editor']"
-          routerLink="/dashboard/reports"
-          routerLinkActive="active"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>assessment</mat-icon>
-          <span>Reports</span>
-        </a>
+        <ng-container *hasRole="['admin', 'editor']">
+          <a
+            *hasPermission="'reports'"
+            routerLink="/dashboard/reports"
+            routerLinkActive="active"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>assessment</mat-icon>
+            <span>Reports</span>
+          </a>
+        </ng-container>
 
-        <a
-          *hasRole="['admin', 'editor']"
-          routerLink="/dashboard/products"
-          routerLinkActive="active"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>inventory</mat-icon>
-          <span>Products</span>
-        </a>
+        <ng-container *hasRole="['admin', 'editor']">
+          <a
+            *hasPermission="'products'"
+            routerLink="/dashboard/products"
+            routerLinkActive="active"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>inventory</mat-icon>
+            <span>Products</span>
+          </a>
+        </ng-container>
       </div>
     </div>
 
@@ -89,16 +102,18 @@
     <div class="nav-section">
       <h3 class="nav-title">System</h3>
       <div class="nav-items">
-        <a
-          *hasRole="'admin'"
-          routerLink="/dashboard/system-logs"
-          routerLinkActive="active"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>bug_report</mat-icon>
-          <span>System Logs</span>
-        </a>
+        <ng-container *hasRole="'admin'">
+          <a
+            *hasPermission="'system-logs'"
+            routerLink="/dashboard/system-logs"
+            routerLinkActive="active"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>bug_report</mat-icon>
+            <span>System Logs</span>
+          </a>
+        </ng-container>
       </div>
     </div>
 
@@ -106,15 +121,18 @@
     <div class="nav-section">
       <h3 class="nav-title">File Management</h3>
       <div class="nav-items">
-        <a
-          routerLink="/dashboard/file-manager"
-          routerLinkActive="active"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>folder</mat-icon>
-          <span>File Manager</span>
-        </a>
+        <ng-container *hasRole="['admin', 'editor']">
+          <a
+            *hasPermission="'file-manage'"
+            routerLink="/dashboard/file-manager"
+            routerLinkActive="active"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>folder</mat-icon>
+            <span>File Manager</span>
+          </a>
+        </ng-container>
       </div>
     </div>
 
@@ -122,15 +140,18 @@
     <div class="nav-section">
       <h3 class="nav-title">CRM</h3>
       <div class="nav-items">
-        <a
-          routerLink="/dashboard/crm"
-          routerLinkActive="active"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>people</mat-icon>
-          <span>CRM</span>
-        </a>
+        <ng-container *hasRole="['admin', 'editor']">
+          <a
+            *hasPermission="'crm-view'"
+            routerLink="/dashboard/crm"
+            routerLinkActive="active"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>people</mat-icon>
+            <span>CRM</span>
+          </a>
+        </ng-container>
       </div>
     </div>
 
@@ -139,6 +160,7 @@
       <h3 class="nav-title">Pages</h3>
       <div class="nav-items">
         <a
+          *hasPermission="'not-found-page'"
           routerLink="/dashboard/pages/not-found"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -149,6 +171,7 @@
         </a>
 
         <a
+          *hasPermission="'signin-page'"
           routerLink="/dashboard/pages/signin"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -159,6 +182,7 @@
         </a>
 
         <a
+          *hasPermission="'change-password'"
           routerLink="/dashboard/pages/change-password"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -169,6 +193,7 @@
         </a>
 
         <a
+          *hasPermission="'forgot-password'"
           routerLink="/dashboard/pages/forgot-password"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -179,6 +204,7 @@
         </a>
 
         <a
+          *hasPermission="'user-profile-page'"
           routerLink="/dashboard/pages/user-profile"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -189,6 +215,7 @@
         </a>
 
         <a
+          *hasPermission="'timeline-page'"
           routerLink="/dashboard/pages/timeline"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -198,15 +225,18 @@
           <span>Timeline</span>
         </a>
 
-        <a
-          routerLink="/dashboard/pages/email-inbox"
-          routerLinkActive="active"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>mail</mat-icon>
-          <span>Email Inbox</span>
-        </a>
+        <ng-container *hasRole="['admin', 'editor']">
+          <a
+            *hasPermission="'email-inbox'"
+            routerLink="/dashboard/pages/email-inbox"
+            routerLinkActive="active"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>mail</mat-icon>
+            <span>Email Inbox</span>
+          </a>
+        </ng-container>
       </div>
     </div>
 
@@ -214,17 +244,21 @@
     <div class="nav-section">
       <h3 class="nav-title">Components</h3>
       <div class="nav-items">
-        <a
-          routerLink="/dashboard/components/forms"
-          routerLinkActive="active"
-          (click)="onNavClick()"
-          class="nav-item"
-        >
-          <mat-icon>edit</mat-icon>
-          <span>Forms</span>
-        </a>
+        <ng-container *hasRole="['admin', 'editor', 'viewer']">
+          <a
+            *hasPermission="'forms-access'"
+            routerLink="/dashboard/components/forms"
+            routerLinkActive="active"
+            (click)="onNavClick()"
+            class="nav-item"
+          >
+            <mat-icon>edit</mat-icon>
+            <span>Forms</span>
+          </a>
+        </ng-container>
 
         <a
+          *hasPermission="'alerts-access'"
           routerLink="/dashboard/components/alerts"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -235,6 +269,7 @@
         </a>
 
         <a
+          *hasPermission="'cards-access'"
           routerLink="/dashboard/components/cards"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -245,6 +280,7 @@
         </a>
 
         <a
+          *hasPermission="'tables-access'"
           routerLink="/dashboard/components/tables"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -255,6 +291,7 @@
         </a>
 
         <a
+          *hasPermission="'buttons-access'"
           routerLink="/dashboard/components/buttons"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -265,6 +302,7 @@
         </a>
 
         <a
+          *hasPermission="'loaders-access'"
           routerLink="/dashboard/components/loaders"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -275,6 +313,7 @@
         </a>
 
         <a
+          *hasPermission="'accordion-access'"
           routerLink="/dashboard/components/accordion"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -285,6 +324,7 @@
         </a>
 
         <a
+          *hasPermission="'autocomplete-access'"
           routerLink="/dashboard/components/autocomplete"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -295,6 +335,7 @@
         </a>
 
         <a
+          *hasPermission="'chips-access'"
           routerLink="/dashboard/components/chips"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -305,6 +346,7 @@
         </a>
 
         <a
+          *hasPermission="'select-access'"
           routerLink="/dashboard/components/select"
           routerLinkActive="active"
           (click)="onNavClick()"
@@ -315,6 +357,7 @@
         </a>
 
         <a
+          *hasPermission="'multiselect-tree-access'"
           routerLink="/dashboard/components/multiselect-tree"
           routerLinkActive="active"
           (click)="onNavClick()"

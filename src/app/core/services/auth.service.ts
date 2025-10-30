@@ -28,6 +28,8 @@ export type Permission =
   | 'reports'
   | 'orders'
   | 'inventory'
+  | 'revenue'
+  | 'conversion'
   // Dashboard & Profile
   | 'dashboard'
   | 'profile'
@@ -63,11 +65,41 @@ export type Permission =
   | 'email-compose'
   | 'email-send'
   | 'email-delete'
+  | 'email-inbox'
   | 'notifications-manage'
+  | 'notifications-view'
+  // Pages Access
+  | 'pages-access'
+  | 'signin-page'
+  | 'change-password'
+  | 'forgot-password'
+  | 'user-profile-page'
+  | 'timeline-page'
+  | 'not-found-page'
   // Components Access
   | 'components-view'
   | 'forms-access'
+  | 'alerts-access'
+  | 'cards-access'
+  | 'tables-access'
+  | 'buttons-access'
+  | 'loaders-access'
+  | 'accordion-access'
+  | 'autocomplete-access'
+  | 'chips-access'
+  | 'select-access'
+  | 'multiselect-tree-access'
+  | 'calendar-access'
+  | 'file-uploads-access'
+  | 'drag-drop-access'
+  | 'grids-access'
+  | 'modal-popup-access'
+  | 'headers-access'
+  | 'footers-access'
+  | 'sliders-access'
+  | 'carousel-sliders-access'
   | 'gallery-access'
+  | 'portfolio-access'
   | 'editors-access';
 
 export interface AuthUser {
@@ -85,6 +117,7 @@ const DUMMY_USERS: AuthUser[] = [
     name: 'Admin User',
     role: 'admin',
     permissions: [
+      // Full access to everything
       'read',
       'write',
       'delete',
@@ -104,6 +137,8 @@ const DUMMY_USERS: AuthUser[] = [
       'reports',
       'orders',
       'inventory',
+      'revenue',
+      'conversion',
       'dashboard',
       'profile',
       'settings',
@@ -135,10 +170,39 @@ const DUMMY_USERS: AuthUser[] = [
       'email-compose',
       'email-send',
       'email-delete',
+      'email-inbox',
       'notifications-manage',
+      'notifications-view',
+      'pages-access',
+      'signin-page',
+      'change-password',
+      'forgot-password',
+      'user-profile-page',
+      'timeline-page',
+      'not-found-page',
       'components-view',
       'forms-access',
+      'alerts-access',
+      'cards-access',
+      'tables-access',
+      'buttons-access',
+      'loaders-access',
+      'accordion-access',
+      'autocomplete-access',
+      'chips-access',
+      'select-access',
+      'multiselect-tree-access',
+      'calendar-access',
+      'file-uploads-access',
+      'drag-drop-access',
+      'grids-access',
+      'modal-popup-access',
+      'headers-access',
+      'footers-access',
+      'sliders-access',
+      'carousel-sliders-access',
       'gallery-access',
+      'portfolio-access',
       'editors-access',
     ],
   },
@@ -148,6 +212,7 @@ const DUMMY_USERS: AuthUser[] = [
     name: 'Editor User',
     role: 'editor',
     permissions: [
+      // Business operations access (no admin-only features)
       'read',
       'write',
       'create',
@@ -160,6 +225,8 @@ const DUMMY_USERS: AuthUser[] = [
       'reports',
       'orders',
       'inventory',
+      'revenue',
+      'conversion',
       'dashboard',
       'profile',
       'settings',
@@ -184,9 +251,38 @@ const DUMMY_USERS: AuthUser[] = [
       'appointment-edit',
       'email-compose',
       'email-send',
+      'email-inbox',
+      'notifications-view',
+      'pages-access',
+      'signin-page',
+      'change-password',
+      'forgot-password',
+      'user-profile-page',
+      'timeline-page',
+      'not-found-page',
       'components-view',
       'forms-access',
+      'alerts-access',
+      'cards-access',
+      'tables-access',
+      'buttons-access',
+      'loaders-access',
+      'accordion-access',
+      'autocomplete-access',
+      'chips-access',
+      'select-access',
+      'multiselect-tree-access',
+      'calendar-access',
+      'file-uploads-access',
+      'drag-drop-access',
+      'grids-access',
+      'modal-popup-access',
+      'headers-access',
+      'footers-access',
+      'sliders-access',
+      'carousel-sliders-access',
       'gallery-access',
+      'portfolio-access',
       'editors-access',
     ],
   },
@@ -196,6 +292,7 @@ const DUMMY_USERS: AuthUser[] = [
     name: 'Viewer User',
     role: 'viewer',
     permissions: [
+      // Read-only access (no write/edit/delete permissions)
       'read',
       'dashboard',
       'profile',
@@ -204,8 +301,33 @@ const DUMMY_USERS: AuthUser[] = [
       'file-download',
       'crm-view',
       'customer-view',
+      'notifications-view',
+      'pages-access',
+      'signin-page',
+      'change-password',
+      'forgot-password',
+      'user-profile-page',
+      'timeline-page',
+      'not-found-page',
       'components-view',
+      'alerts-access',
+      'cards-access',
+      'tables-access',
+      'buttons-access',
+      'loaders-access',
+      'accordion-access',
+      'autocomplete-access',
+      'chips-access',
+      'select-access',
+      'multiselect-tree-access',
+      'calendar-access',
+      'grids-access',
+      'headers-access',
+      'footers-access',
+      'sliders-access',
+      'carousel-sliders-access',
       'gallery-access',
+      'portfolio-access',
     ],
   },
 ];

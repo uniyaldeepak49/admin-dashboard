@@ -1,22 +1,39 @@
-import { Directive, TemplateRef, ViewContainerRef, inject, OnInit, input } from '@angular/core';
+import { Directive, input, TemplateRef, ViewContainerRef, inject, effect } from '@angular/core';
 import { AuthService, Permission } from '../../core/services/auth.service';
 
 @Directive({
   selector: '[hasPermission]',
   standalone: true,
 })
-export class HasPermissionDirective implements OnInit {
+export class HasPermissionDirective {
   private authService = inject(AuthService);
   private templateRef = inject(TemplateRef<unknown>);
   private viewContainer = inject(ViewContainerRef);
 
-  hasPermission = input.required<Permission>();
+  hasPermission = input.required<Permission | Permission[]>();
 
-  ngOnInit(): void {
-    if (this.authService.hasPermission(this.hasPermission())) {
-      this.viewContainer.createEmbeddedView(this.templateRef);
-    } else {
-      this.viewContainer.clear();
-    }
+  constructor() {
+    effect(() => {
+      try {
+        const permissionInput = this.hasPermission();
+        debugger;
+        const permissions: Permission[] = Array.isArray(permissionInput)
+          ? permissionInput
+          : [permissionInput];
+
+        const hasAnyPermission = permissions.some((permission) =>
+          this.authService.hasPermission(permission),
+        );
+
+        if (hasAnyPermission) {
+          this.viewContainer.createEmbeddedView(this.templateRef);
+        } else {
+          this.viewContainer.clear();
+        }
+      } catch (error) {
+        console.error('Error in hasPermission directive:', error);
+        this.viewContainer.clear();
+      }
+    });
   }
 }
