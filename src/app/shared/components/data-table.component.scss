@@ -340,22 +340,163 @@
   border-radius: 4px;
 }
 
-/* Responsive design */
+/* Mobile responsive design */
 @media (max-width: 768px) {
+  .table-container {
+    border-radius: 8px;
+    margin: 0 -4px;
+  }
+  
+  .table-header,
+  .table-row {
+    min-height: 48px;
+  }
+  
   .table-cell {
     padding: 0.75rem 0.5rem;
     font-size: 0.8rem;
   }
 
   .header-cell {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .sort-button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
   }
 
+  .search-container,
   .filters-container {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
   }
 
   .filter-field {
-    min-width: 180px;
+    min-width: 160px;
+    flex: 1;
+  }
+  
+  .range-filter {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .bulk-actions-container {
+    padding: 0.75rem 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  
+  .bulk-actions-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .virtual-scroll-viewport {
+    height: 350px;
+  }
+  
+  // Hide less important columns on mobile
+  .table-cell:nth-child(n+4),
+  .header-cell:nth-child(n+4) {
+    display: none;
+  }
+  
+  // Show first 3 columns only
+  .table-cell:nth-child(-n+3),
+  .header-cell:nth-child(-n+3) {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-container {
+    border-radius: 6px;
+    margin: 0 -8px;
+  }
+  
+  .table-header,
+  .table-row {
+    min-height: 44px;
+  }
+  
+  .table-cell {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .header-cell {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.25rem;
+  }
+  
+  .search-container,
+  .filters-container,
+  .advanced-filter-container {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .filter-field {
+    min-width: 140px;
+  }
+  
+  .bulk-actions-container {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .virtual-scroll-viewport {
+    height: 300px;
+  }
+  
+  // Show only 2 columns on very small screens
+  .table-cell:nth-child(n+3),
+  .header-cell:nth-child(n+3) {
+    display: none;
+  }
+  
+  .table-cell:nth-child(-n+2),
+  .header-cell:nth-child(-n+2) {
+    display: flex;
+  }
+  
+  // Make action buttons smaller
+  .table-container .mat-mdc-icon-button {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .drag-handle {
+    padding: 0.25rem;
+  }
+}
+
+// Landscape mobile optimization
+@media (max-width: 768px) and (orientation: landscape) {
+  .virtual-scroll-viewport {
+    height: 250px;
+  }
+  
+  .search-container,
+  .filters-container {
+    padding: 0.75rem;
+  }
+}
+
+// Touch-friendly improvements
+@media (hover: none) and (pointer: coarse) {
+  .table-row:hover {
+    background: var(--mat-sys-surface);
+  }
+  
+  .table-container .mat-mdc-icon-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .sort-button {
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
   }
 }

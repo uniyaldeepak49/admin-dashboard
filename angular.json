@@ -38,6 +38,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/frontend/admin-dashboard/",
               "budgets": [
                 {
                   "type": "initial",
