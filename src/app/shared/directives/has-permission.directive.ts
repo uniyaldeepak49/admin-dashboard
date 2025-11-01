@@ -16,7 +16,6 @@ export class HasPermissionDirective {
     effect(() => {
       try {
         const permissionInput = this.hasPermission();
-        debugger;
         const permissions: Permission[] = Array.isArray(permissionInput)
           ? permissionInput
           : [permissionInput];
