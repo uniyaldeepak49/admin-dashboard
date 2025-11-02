@@ -201,13 +201,13 @@
     width: 280px;
     max-width: 85vw;
   }
-  
+
   .sidebar-header {
     padding: 16px 12px;
 
     .brand-logo {
       gap: 8px;
-      
+
       .brand-icon {
         width: 32px;
         height: 32px;
@@ -218,17 +218,17 @@
         h2 {
           font-size: 16px;
         }
-        
+
         span {
           font-size: 10px;
         }
       }
     }
-    
+
     .collapse-btn {
       width: 28px;
       height: 28px;
-      
+
       mat-icon {
         font-size: 16px;
       }
@@ -237,10 +237,10 @@
 
   .sidebar-nav {
     padding: 8px 0;
-    
+
     .nav-section {
       margin-bottom: 20px;
-      
+
       .nav-title {
         padding: 0 12px;
         font-size: 10px;
@@ -251,16 +251,16 @@
           padding: 12px 12px;
           margin: 0 6px;
           font-size: 13px;
-          
+
           mat-icon {
             width: 16px;
             height: 16px;
             font-size: 16px;
           }
-          
+
           // Better touch targets for mobile
           min-height: 44px;
-          
+
           &:hover {
             transform: none; // Remove transform on mobile
           }
@@ -276,17 +276,17 @@
     width: 260px;
     max-width: 90vw;
   }
-  
+
   .sidebar-header {
     padding: 12px 10px;
-    
+
     .brand-logo {
       .brand-text h2 {
         font-size: 15px;
       }
     }
   }
-  
+
   .sidebar-nav {
     .nav-section {
       .nav-items {

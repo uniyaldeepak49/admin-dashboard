@@ -27,13 +27,13 @@ body {
   background: var(--mat-app-background);
   max-width: 100%;
   overflow-x: hidden;
-  
+
   // Mobile responsive padding
   @media (max-width: 768px) {
     padding: 16px 12px;
     gap: 16px;
   }
-  
+
   @media (max-width: 480px) {
     padding: 12px 8px;
     gap: 12px;
@@ -57,12 +57,12 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 16px;
   }
-  
+
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -113,12 +113,12 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  
+
   @media (max-width: 480px) {
     gap: 12px;
   }
@@ -128,12 +128,12 @@ body {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  
+
   @media (max-width: 480px) {
     gap: 12px;
   }
@@ -144,12 +144,12 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 20px;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  
+
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -226,7 +226,7 @@ body {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   .mat-mdc-icon-button {
     width: 44px;
     height: 44px;
@@ -238,7 +238,7 @@ body {
   .mat-mdc-form-field {
     margin-bottom: 16px;
   }
-  
+
   .mat-mdc-card {
     margin: 8px 0;
   }
@@ -249,7 +249,7 @@ body {
   .mat-mdc-table {
     font-size: 14px;
   }
-  
+
   .mat-mdc-header-cell,
   .mat-mdc-cell {
     padding: 8px 4px;
@@ -265,7 +265,8 @@ body {
 }
 
 // Prevent horizontal scroll on mobile
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
@@ -275,13 +276,25 @@ html, body {
     font-size: 14px;
     line-height: 1.5;
   }
-  
-  h1 { font-size: 1.75rem; }
-  h2 { font-size: 1.5rem; }
-  h3 { font-size: 1.25rem; }
-  h4 { font-size: 1.125rem; }
-  h5 { font-size: 1rem; }
-  h6 { font-size: 0.875rem; }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+  h4 {
+    font-size: 1.125rem;
+  }
+  h5 {
+    font-size: 1rem;
+  }
+  h6 {
+    font-size: 0.875rem;
+  }
 }
 
 // Custom scrollbar for dark theme

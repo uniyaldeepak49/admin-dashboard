@@ -1,6 +1,7 @@
 # Angular Admin Dashboard - Component Style Guide
 
 ## Table of Contents
+
 1. [General Guidelines](#general-guidelines)
 2. [Shared Components](#shared-components)
 3. [Feature Components](#feature-components)
@@ -13,6 +14,7 @@
 ## General Guidelines
 
 ### Angular 20 Standards
+
 - ✅ Use **standalone components** with `standalone: true`
 - ✅ Use **inject()** function instead of constructor injection
 - ✅ Use **input()** and **output()** functions instead of decorators
@@ -21,6 +23,7 @@
 - ✅ Separate HTML and SCSS files (no inline templates/styles)
 
 ### File Structure
+
 ```
 component-name/
 ├── component-name.component.ts
@@ -29,6 +32,7 @@ component-name/
 ```
 
 ### Naming Conventions
+
 - **Components**: PascalCase (e.g., `DataTableComponent`)
 - **Files**: kebab-case (e.g., `data-table.component.ts`)
 - **Selectors**: kebab-case with `app-` prefix (e.g., `app-data-table`)
@@ -38,9 +42,11 @@ component-name/
 ## Shared Components
 
 ### 1. Data Table Component
+
 **Location**: `src/app/shared/components/data-table.component.ts`
 
 #### Usage
+
 ```typescript
 <app-data-table
   [data]="users()"
@@ -57,26 +63,29 @@ component-name/
 ```
 
 #### Configuration
+
 ```typescript
 columns = signal<TableColumn[]>([
   { key: 'name', label: 'Name', sortable: true, filterable: true },
   { key: 'email', label: 'Email', sortable: true, filterable: true },
   { key: 'role', label: 'Role', type: 'text' },
-  { key: 'actions', label: 'Actions', type: 'actions' }
+  { key: 'actions', label: 'Actions', type: 'actions' },
 ]);
 
 actions = signal<TableAction[]>([
   { icon: 'edit', label: 'Edit', action: 'edit' },
-  { icon: 'delete', label: 'Delete', action: 'delete' }
+  { icon: 'delete', label: 'Delete', action: 'delete' },
 ]);
 ```
 
 ### 2. Button Component
+
 **Location**: `src/app/shared/components/button.component.ts`
 
 #### Usage
+
 ```typescript
-<app-button 
+<app-button
   [variant]="'primary'"
   [disabled]="false"
   [type]="'button'"
@@ -86,9 +95,11 @@ actions = signal<TableAction[]>([
 ```
 
 ### 3. Card Component
+
 **Location**: `src/app/shared/components/card.component.ts`
 
 #### Usage
+
 ```typescript
 <app-card [title]="'Dashboard Stats'">
   <p>Card content goes here</p>
@@ -96,17 +107,21 @@ actions = signal<TableAction[]>([
 ```
 
 ### 4. Loader Component
+
 **Location**: `src/app/shared/components/loader.component.ts`
 
 #### Usage
+
 ```typescript
 <app-loader></app-loader>
 ```
 
 ### 5. Footer Component
+
 **Location**: `src/app/shared/components/footer/footer.component.ts`
 
 #### Usage
+
 ```typescript
 <app-footer></app-footer>
 ```
@@ -116,26 +131,29 @@ actions = signal<TableAction[]>([
 ## Feature Components
 
 ### 1. Buttons Component
+
 **Location**: `src/app/features/components/buttons/buttons.component.ts`
 
 #### Key Features
+
 - Material Design button variants
 - Loading states with spinners
 - Icon buttons with tooltips
 - Button toggles and badges
 
 #### Usage Pattern
+
 ```typescript
 @Component({
   selector: 'app-buttons',
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
   templateUrl: './buttons.component.html',
-  styleUrls: ['./buttons.component.scss']
+  styleUrls: ['./buttons.component.scss'],
 })
 export class ButtonsComponent {
   isLoading = signal(false);
-  
+
   simulateLoading() {
     this.isLoading.set(true);
     setTimeout(() => this.isLoading.set(false), 2000);
@@ -144,15 +162,18 @@ export class ButtonsComponent {
 ```
 
 ### 2. Cards Component
+
 **Location**: `src/app/features/components/cards/cards.component.ts`
 
 #### Key Features
+
 - Product cards with ratings
 - Team member cards with status
 - Statistics cards with trends
 - Project progress cards
 
 #### Data Structure
+
 ```typescript
 interface Product {
   id: number;
@@ -165,18 +186,22 @@ interface Product {
 ```
 
 ### 3. Forms Component
+
 **Location**: `src/app/features/components/forms/forms.component.ts`
 
 #### Key Features
+
 - Reactive forms with validation
 - Material Design form fields
 - File upload components
 - Date pickers and selects
 
 ### 4. Tables Component
+
 **Location**: `src/app/features/components/tables/tables.component.ts`
 
 #### Key Features
+
 - Advanced data tables
 - Sorting and filtering
 - Pagination and virtual scrolling
@@ -187,27 +212,33 @@ interface Product {
 ## Layout Components
 
 ### 1. Header Component
+
 **Location**: `src/app/layout/header.component.ts`
 
 #### Key Features
+
 - User profile dropdown
 - Notifications panel
 - Theme toggle
 - Search functionality
 
 ### 2. Sidebar Component
+
 **Location**: `src/app/layout/sidebar.component.ts`
 
 #### Key Features
+
 - Collapsible navigation
 - Role-based menu items
 - Active route highlighting
 - Mobile responsive
 
 ### 3. Layout Component
+
 **Location**: `src/app/layout/layout.component.ts`
 
 #### Key Features
+
 - Main application layout
 - Responsive design
 - Theme support
@@ -218,38 +249,37 @@ interface Product {
 ## Best Practices
 
 ### 1. Component Structure
+
 ```typescript
 @Component({
   selector: 'app-example',
   standalone: true,
   imports: [CommonModule, MatButtonModule],
   templateUrl: './example.component.html',
-  styleUrl: './example.component.scss'
+  styleUrl: './example.component.scss',
 })
 export class ExampleComponent implements OnInit {
   // Services
   private service = inject(ServiceName);
-  
+
   // Inputs
   data = input<DataType[]>([]);
   config = input<ConfigType>();
-  
+
   // Outputs
   actionClick = output<ActionEvent>();
-  
+
   // Signals
   loading = signal(false);
   items = signal<ItemType[]>([]);
-  
+
   // Computed
-  filteredItems = computed(() => 
-    this.items().filter(item => item.active)
-  );
-  
+  filteredItems = computed(() => this.items().filter((item) => item.active));
+
   ngOnInit(): void {
     this.loadData();
   }
-  
+
   private loadData(): void {
     // Implementation
   }
@@ -257,38 +287,40 @@ export class ExampleComponent implements OnInit {
 ```
 
 ### 2. Template Patterns
+
 ```html
 <!-- Loading State -->
 @if (loading()) {
-  <app-loader></app-loader>
+<app-loader></app-loader>
 } @else {
-  <!-- Content -->
+<!-- Content -->
 }
 
 <!-- Conditional Rendering -->
 @if (hasPermission('VIEW_USERS')) {
-  <button mat-button>View Users</button>
+<button mat-button>View Users</button>
 }
 
 <!-- Loops -->
 @for (item of items(); track item.id) {
-  <div>{{ item.name }}</div>
+<div>{{ item.name }}</div>
 }
 
 <!-- Error Handling -->
 @if (error()) {
-  <mat-error>{{ error() }}</mat-error>
+<mat-error>{{ error() }}</mat-error>
 }
 ```
 
 ### 3. Styling Patterns
+
 ```scss
 .component-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  
+
   @media (max-width: 768px) {
     padding: 0.5rem;
   }
@@ -298,7 +330,7 @@ export class ExampleComponent implements OnInit {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -306,6 +338,7 @@ export class ExampleComponent implements OnInit {
 ```
 
 ### 4. Permission Integration
+
 ```typescript
 // In component
 hasRole = inject(AuthService).hasRole;
@@ -328,6 +361,7 @@ hasPermission = inject(AuthService).hasPermission;
 ## Code Examples
 
 ### 1. Creating a New Feature Component
+
 ```typescript
 // new-feature.component.ts
 import { Component, signal, inject, input, output } from '@angular/core';
@@ -340,20 +374,20 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [CommonModule, MatCardModule, MatButtonModule],
   templateUrl: './new-feature.component.html',
-  styleUrl: './new-feature.component.scss'
+  styleUrl: './new-feature.component.scss',
 })
 export class NewFeatureComponent {
   // Inputs
   title = input<string>('Default Title');
   data = input<any[]>([]);
-  
+
   // Outputs
   itemClick = output<any>();
-  
+
   // State
   loading = signal(false);
   selectedItem = signal<any>(null);
-  
+
   onItemClick(item: any): void {
     this.selectedItem.set(item);
     this.itemClick.emit(item);
@@ -362,6 +396,7 @@ export class NewFeatureComponent {
 ```
 
 ### 2. Using Shared Components
+
 ```typescript
 // page.component.ts
 import { DataTableComponent } from '@shared/components/data-table.component';
@@ -378,33 +413,31 @@ import { CardComponent } from '@shared/components/card.component';
         [data]="users()"
         [columns]="columns()"
         [showSelection]="true"
-        (actionClick)="onUserAction($event)">
+        (actionClick)="onUserAction($event)"
+      >
       </app-data-table>
-      
-      <app-button 
-        [variant]="'primary'"
-        (click)="addUser()">
-        Add User
-      </app-button>
+
+      <app-button [variant]="'primary'" (click)="addUser()"> Add User </app-button>
     </app-card>
-  `
+  `,
 })
 export class PageComponent {
   users = signal<User[]>([]);
   columns = signal<TableColumn[]>([
     { key: 'name', label: 'Name', sortable: true },
-    { key: 'email', label: 'Email', sortable: true }
+    { key: 'email', label: 'Email', sortable: true },
   ]);
 }
 ```
 
 ### 3. Mobile Responsive Patterns
+
 ```scss
 .responsive-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 0.5rem;
@@ -419,7 +452,7 @@ export class PageComponent {
 
 .mobile-only {
   display: none;
-  
+
   @media (max-width: 768px) {
     display: block;
   }
@@ -431,6 +464,7 @@ export class PageComponent {
 ## Quick Reference
 
 ### Component Checklist
+
 - [ ] Standalone component with proper imports
 - [ ] Uses inject() for services
 - [ ] Uses input()/output() for props
@@ -443,6 +477,7 @@ export class PageComponent {
 - [ ] Proper TypeScript types
 
 ### Import Patterns
+
 ```typescript
 // Always include
 import { Component, signal, inject, input, output } from '@angular/core';

@@ -10,12 +10,12 @@
 
 .main-content {
   padding: 24px;
-  
+
   // Mobile responsive padding
   @media (max-width: 768px) {
     padding: 16px 12px;
   }
-  
+
   @media (max-width: 480px) {
     padding: 12px 8px;
   }
@@ -26,7 +26,7 @@
   .mat-drawer-backdrop {
     background-color: rgba(0, 0, 0, 0.6);
   }
-  
+
   .mat-drawer {
     width: 280px !important;
     max-width: 85vw;
