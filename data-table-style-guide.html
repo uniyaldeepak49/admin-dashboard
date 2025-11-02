@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Table Component - Style Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .props-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .props-table th,
+        .props-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .props-table th {
+            background: #f8f9fa;
+            font-weight: 500;
+            color: #667eea;
+        }
+
+        .props-table code {
+            background: #e9ecef;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .example-preview {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1rem 0;
+            border: 2px dashed #dee2e6;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #ffc107;
+            margin: 1rem 0;
+        }
+
+        .interface-block {
+            background: #e8f4fd;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Data Table Component</h1>
+            <p>Comprehensive Style Guide & Documentation</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>🚀 Overview</h2>
+            </div>
+            <div class="card-content">
+                <p>The Data Table component is a powerful, feature-rich table implementation built with Angular 20 and Material Design 3. It provides advanced functionality including sorting, filtering, pagination, virtual scrolling, and more.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>🔍 Advanced Filtering</h3>
+                        <p>Global search, column filters, advanced filter builder, and quick filter buttons.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📄 Pagination & Virtual Scrolling</h3>
+                        <p>Handle large datasets efficiently with pagination or virtual scrolling options.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎯 Selection & Actions</h3>
+                        <p>Row selection, bulk actions, individual row actions, and context menus.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📱 Mobile Responsive</h3>
+                        <p>Fully responsive design with touch-friendly controls and adaptive layouts.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💾 Caching & Offline</h3>
+                        <p>Built-in data caching, offline support, and configurable refresh strategies.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📊 Export & Grouping</h3>
+                        <p>Export data in multiple formats, group rows by columns, and hierarchical data support.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔄 Drag & Drop</h3>
+                        <p>Reorder rows with drag and drop functionality for custom sorting.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎨 Customizable</h3>
+                        <p>Extensive theming options, custom sort functions, and flexible column configuration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>📋 Usage Guide</h2>
+            </div>
+            <div class="card-content">
+                <div class="tabs">
+                    <button class="tab active" onclick="showTab('basic')">Basic Usage</button>
+                    <button class="tab" onclick="showTab('advanced')">Advanced Features</button>
+                    <button class="tab" onclick="showTab('interfaces')">Interfaces</button>
+                    <button class="tab" onclick="showTab('examples')">Examples</button>
+                </div>
+
+                <div id="basic" class="tab-content active">
+                    <h3>Basic Implementation</h3>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table
+  [data]="users()"
+  [columns]="columns()"
+  [showPagination]="true"
+  [showGlobalSearch]="true"
+  [(pageIndex)]="pageIndex"
+  [(pageSize)]="pageSize"
+  (actionClick)="onActionClick($event)"&gt;
+&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h3>Component Setup</h3>
+                    <div class="code-block">
+                        <pre><code>import { DataTableComponent, TableColumn } from '@shared/components/data-table.component';
+
+@Component({
+  selector: 'app-users',
+  standalone: true,
+  imports: [DataTableComponent],
+  template: `&lt;app-data-table [data]="users()" [columns]="columns()"&gt;&lt;/app-data-table&gt;`
+})
+export class UsersComponent {
+  users = signal&lt;User[]&gt;([
+    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User' }
+  ]);
+
+  columns = signal&lt;TableColumn[]&gt;([
+    { key: 'name', label: 'Name', sortable: true, filterable: true },
+    { key: 'email', label: 'Email', sortable: true, filterable: true },
+    { key: 'role', label: 'Role', type: 'text' }
+  ]);
+
+  pageIndex = model(0);
+  pageSize = model(10);
+}</code></pre>
+                    </div>
+                </div>
+
+                <div id="advanced" class="tab-content">
+                    <h3>Advanced Configuration</h3>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table
+  [data]="users()"
+  [columns]="columns()"
+  [actions]="actions()"
+  [bulkActions]="bulkActions()"
+  [showSelection]="true"
+  [showRowMenu]="true"
+  [rowMenuActions]="rowMenuActions()"
+  [enableDragDrop]="true"
+  [showExport]="true"
+  [exportFormats]="['csv', 'excel', 'pdf']"
+  [virtualScrolling]="true"
+  [showColumnFilters]="true"
+  [showAdvancedFilter]="true"
+  [showQuickFilters]="true"
+  [quickFilters]="quickFilters()"
+  [cacheKey]="'users-table'"
+  [dataLoader]="loadUsers"
+  (actionClick)="onActionClick($event)"
+  (bulkActionClick)="onBulkAction($event)"
+  (rowReorder)="onRowReorder($event)"&gt;
+&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h3>Actions Configuration</h3>
+                    <div class="code-block">
+                        <pre><code>actions = signal&lt;TableAction[]&gt;([
+  { icon: 'edit', label: 'Edit', action: 'edit' },
+  { icon: 'delete', label: 'Delete', action: 'delete' },
+  { icon: 'visibility', label: 'View', action: 'view' }
+]);
+
+bulkActions = signal&lt;BulkAction[]&gt;([
+  { icon: 'delete', label: 'Delete Selected', action: 'bulk-delete', color: 'warn' },
+  { icon: 'archive', label: 'Archive', action: 'bulk-archive' }
+]);
+
+rowMenuActions = signal&lt;RowMenuAction[]&gt;([
+  { icon: 'edit', label: 'Edit', action: 'edit' },
+  { icon: 'copy', label: 'Duplicate', action: 'duplicate' },
+  { icon: 'delete', label: 'Delete', action: 'delete', color: 'warn', divider: true }
+]);</code></pre>
+                    </div>
+                </div>
+
+                <div id="interfaces" class="tab-content">
+                    <h3>TypeScript Interfaces</h3>
+                    
+                    <div class="interface-block">
+                        <h4>TableColumn Interface</h4>
+                        <div class="code-block">
+                            <pre><code>interface TableColumn {
+  key: string;                    // Data property key
+  label: string;                  // Display label
+  sortable?: boolean;             // Enable sorting
+  type?: 'text' | 'number' | 'date' | 'actions';
+  filterable?: boolean;           // Enable filtering
+  filterType?: 'text' | 'number-range' | 'date-range' | 'dropdown';
+  filterOptions?: string[];       // Dropdown options
+  sortFn?: (a: any, b: any) => number;  // Custom sort function
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="interface-block">
+                        <h4>TableAction Interface</h4>
+                        <div class="code-block">
+                            <pre><code>interface TableAction {
+  icon: string;                   // Material icon name
+  label: string;                  // Action label
+  action: string;                 // Action identifier
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="interface-block">
+                        <h4>BulkAction Interface</h4>
+                        <div class="code-block">
+                            <pre><code>interface BulkAction {
+  icon: string;                   // Material icon name
+  label: string;                  // Action label
+  action: string;                 // Action identifier
+  color?: 'primary' | 'accent' | 'warn';  // Button color
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="examples" class="tab-content">
+                    <h3>Real-World Examples</h3>
+                    
+                    <div class="highlight">
+                        <strong>💡 Pro Tip:</strong> Use these examples as templates for your own implementations.
+                    </div>
+
+                    <h4>1. User Management Table</h4>
+                    <div class="code-block">
+                        <pre><code>// users.component.ts
+export class UsersComponent {
+  users = signal&lt;User[]&gt;([]);
+  
+  columns = signal&lt;TableColumn[]&gt;([
+    { key: 'avatar', label: 'Avatar', type: 'text' },
+    { key: 'name', label: 'Full Name', sortable: true, filterable: true },
+    { key: 'email', label: 'Email', sortable: true, filterable: true },
+    { key: 'role', label: 'Role', filterable: true, filterType: 'dropdown', 
+      filterOptions: ['Admin', 'User', 'Manager'] },
+    { key: 'status', label: 'Status', sortable: true },
+    { key: 'lastLogin', label: 'Last Login', type: 'date', sortable: true },
+    { key: 'actions', label: 'Actions', type: 'actions' }
+  ]);
+
+  actions = signal&lt;TableAction[]&gt;([
+    { icon: 'edit', label: 'Edit User', action: 'edit' },
+    { icon: 'lock_reset', label: 'Reset Password', action: 'reset-password' },
+    { icon: 'delete', label: 'Delete User', action: 'delete' }
+  ]);
+
+  onActionClick(event: { action: string; row: User }) {
+    switch(event.action) {
+      case 'edit':
+        this.editUser(event.row);
+        break;
+      case 'delete':
+        this.deleteUser(event.row);
+        break;
+    }
+  }
+}</code></pre>
+                    </div>
+
+                    <h4>2. Product Catalog Table</h4>
+                    <div class="code-block">
+                        <pre><code>// products.component.ts
+export class ProductsComponent {
+  products = signal&lt;Product[]&gt;([]);
+  
+  columns = signal&lt;TableColumn[]&gt;([
+    { key: 'image', label: 'Image', type: 'text' },
+    { key: 'name', label: 'Product Name', sortable: true, filterable: true },
+    { key: 'category', label: 'Category', filterable: true, filterType: 'dropdown' },
+    { key: 'price', label: 'Price', type: 'number', sortable: true, 
+      filterType: 'number-range' },
+    { key: 'stock', label: 'Stock', type: 'number', sortable: true },
+    { key: 'rating', label: 'Rating', sortable: true },
+    { key: 'actions', label: 'Actions', type: 'actions' }
+  ]);
+
+  quickFilters = signal&lt;QuickFilter[]&gt;([
+    { key: 'in-stock', label: 'In Stock', icon: 'inventory', 
+      filterFn: (data) => data.filter(p => p.stock > 0) },
+    { key: 'low-stock', label: 'Low Stock', icon: 'warning', 
+      filterFn: (data) => data.filter(p => p.stock < 10) },
+    { key: 'high-rated', label: 'High Rated', icon: 'star', 
+      filterFn: (data) => data.filter(p => p.rating >= 4.5) }
+  ]);
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>⚙️ Input Properties</h2>
+            </div>
+            <div class="card-content">
+                <div class="tabs">
+                    <button class="tab active" onclick="showInputTab('data-props')">Data & Display</button>
+                    <button class="tab" onclick="showInputTab('interaction-props')">Interaction</button>
+                    <button class="tab" onclick="showInputTab('performance-props')">Performance</button>
+                    <button class="tab" onclick="showInputTab('advanced-props')">Advanced</button>
+                </div>
+
+                <div id="data-props" class="tab-content active">
+                    <h3>📊 Data & Display Properties</h3>
+                    
+                    <h4><code>data</code> - Array of data objects</h4>
+                    <div class="code-block">
+                        <pre><code>// Component
+users = signal&lt;User[]&gt;([
+  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User' }
+]);
+
+// Template
+&lt;app-data-table [data]="users()"&gt;&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h4><code>columns</code> - Column configuration</h4>
+                    <div class="code-block">
+                        <pre><code>columns = signal&lt;TableColumn[]&gt;([
+  { key: 'name', label: 'Full Name', sortable: true, filterable: true },
+  { key: 'email', label: 'Email Address', sortable: true },
+  { key: 'role', label: 'User Role', filterType: 'dropdown', 
+    filterOptions: ['Admin', 'User', 'Manager'] },
+  { key: 'actions', label: 'Actions', type: 'actions' }
+]);
+
+&lt;app-data-table [columns]="columns()"&gt;&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h4><code>loading</code> - Show loading state</h4>
+                    <div class="code-block">
+                        <pre><code>isLoading = signal(false);
+
+loadData() {
+  this.isLoading.set(true);
+  this.userService.getUsers().subscribe(users => {
+    this.users.set(users);
+    this.isLoading.set(false);
+  });
+}
+
+&lt;app-data-table [loading]="isLoading()" [loadingRows]="5"&gt;&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h4><code>actions</code> - Row action buttons</h4>
+                    <div class="code-block">
+                        <pre><code>actions = signal&lt;TableAction[]&gt;([
+  { icon: 'edit', label: 'Edit User', action: 'edit' },
+  { icon: 'delete', label: 'Delete User', action: 'delete' },
+  { icon: 'visibility', label: 'View Details', action: 'view' }
+]);
+
+&lt;app-data-table [actions]="actions()"&gt;&lt;/app-data-table&gt;</code></pre>
+                    </div>
+                </div>
+
+                <div id="interaction-props" class="tab-content">
+                    <h3>🎯 Interaction Properties</h3>
+                    
+                    <h4><code>showSelection</code> - Enable row selection</h4>
+                    <div class="code-block">
+                        <pre><code>selectedUsers = signal&lt;User[]&gt;([]);
+
+&lt;app-data-table 
+  [showSelection]="true"
+  (selectionChange)="selectedUsers.set($event)"&gt;
+&lt;/app-data-table&gt;
+
+// Access selected items
+deleteSelected() {
+  const selected = this.selectedUsers();
+  console.log('Deleting:', selected);
+}</code></pre>
+                    </div>
+
+                    <h4><code>bulkActions</code> - Bulk operation buttons</h4>
+                    <div class="code-block">
+                        <pre><code>bulkActions = signal&lt;BulkAction[]&gt;([
+  { icon: 'delete', label: 'Delete Selected', action: 'bulk-delete', color: 'warn' },
+  { icon: 'archive', label: 'Archive Selected', action: 'bulk-archive' },
+  { icon: 'email', label: 'Send Email', action: 'bulk-email', color: 'primary' }
+]);
+
+&lt;app-data-table 
+  [bulkActions]="bulkActions()"
+  (bulkActionClick)="onBulkAction($event)"&gt;
+&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h4><code>showRowMenu</code> - Row context menu</h4>
+                    <div class="code-block">
+                        <pre><code>rowMenuActions = signal&lt;RowMenuAction[]&gt;([
+  { icon: 'edit', label: 'Edit', action: 'edit' },
+  { icon: 'copy', label: 'Duplicate', action: 'duplicate' },
+  { icon: 'delete', label: 'Delete', action: 'delete', color: 'warn', divider: true }
+]);
+
+&lt;app-data-table 
+  [showRowMenu]="true"
+  [rowMenuActions]="rowMenuActions()"&gt;
+&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h4><code>enableDragDrop</code> - Row reordering</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [enableDragDrop]="true"
+  (rowReorder)="onRowReorder($event)"&gt;
+&lt;/app-data-table&gt;
+
+onRowReorder(event: { previousIndex: number; currentIndex: number; data: any[] }) {
+  // Update your data order
+  this.users.set(event.data);
+  console.log(`Moved row from ${event.previousIndex} to ${event.currentIndex}`);
+}</code></pre>
+                    </div>
+                </div>
+
+                <div id="performance-props" class="tab-content">
+                    <h3>⚡ Performance Properties</h3>
+                    
+                    <h4><code>virtualScrolling</code> - Handle large datasets</h4>
+                    <div class="code-block">
+                        <pre><code>// For datasets with 1000+ rows
+&lt;app-data-table 
+  [virtualScrolling]="true"
+  [itemSize]="48"
+  [data]="largeDataset()"&gt;
+&lt;/app-data-table&gt;
+
+// Disable pagination when using virtual scrolling
+&lt;app-data-table 
+  [virtualScrolling]="true"
+  [showPagination]="false"&gt;
+&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h4><code>cacheKey</code> & <code>dataLoader</code> - Data caching</h4>
+                    <div class="code-block">
+                        <pre><code>// Enable caching for better performance
+loadUsers = () => this.userService.getUsers().toPromise();
+
+&lt;app-data-table 
+  [cacheKey]="'users-table'"
+  [cacheTtl]="300000"
+  [dataLoader]="loadUsers"
+  [refreshStrategy]="'time-based'"&gt;
+&lt;/app-data-table&gt;
+
+// Refresh cache manually
+refreshData() {
+  this.dataTable.refreshCache();
+}</code></pre>
+                    </div>
+
+                    <h4><code>showPagination</code> - Pagination controls</h4>
+                    <div class="code-block">
+                        <pre><code>pageIndex = model(0);
+pageSize = model(25);
+
+&lt;app-data-table 
+  [showPagination]="true"
+  [(pageIndex)]="pageIndex"
+  [(pageSize)]="pageSize"&gt;
+&lt;/app-data-table&gt;
+
+// Access current page info
+getCurrentPageInfo() {
+  console.log(`Page: ${this.pageIndex()}, Size: ${this.pageSize()}`);
+}</code></pre>
+                    </div>
+                </div>
+
+                <div id="advanced-props" class="tab-content">
+                    <h3>🔧 Advanced Properties</h3>
+                    
+                    <h4><code>showGlobalSearch</code> - Global search functionality</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [showGlobalSearch]="true"&gt;
+&lt;/app-data-table&gt;
+
+// Searches across all filterable columns
+// Users can type to filter data in real-time</code></pre>
+                    </div>
+
+                    <h4><code>showColumnFilters</code> - Individual column filters</h4>
+                    <div class="code-block">
+                        <pre><code>columns = signal&lt;TableColumn[]&gt;([
+  { key: 'name', label: 'Name', filterable: true, filterType: 'text' },
+  { key: 'age', label: 'Age', filterable: true, filterType: 'number-range' },
+  { key: 'joinDate', label: 'Join Date', filterable: true, filterType: 'date-range' },
+  { key: 'department', label: 'Department', filterable: true, 
+    filterType: 'dropdown', filterOptions: ['IT', 'HR', 'Sales'] }
+]);
+
+&lt;app-data-table 
+  [showColumnFilters]="true"
+  [columns]="columns()"&gt;
+&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h4><code>showAdvancedFilter</code> - Complex filter builder</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [showAdvancedFilter]="true"&gt;
+&lt;/app-data-table&gt;
+
+// Allows users to build complex filters like:
+// (name contains 'John' AND age > 25) OR (department = 'IT')</code></pre>
+                    </div>
+
+                    <h4><code>quickFilters</code> - Predefined filter buttons</h4>
+                    <div class="code-block">
+                        <pre><code>quickFilters = signal&lt;QuickFilter[]&gt;([
+  { 
+    key: 'active-users', 
+    label: 'Active Users', 
+    icon: 'person', 
+    filterFn: (data) => data.filter(user => user.status === 'active') 
+  },
+  { 
+    key: 'recent-logins', 
+    label: 'Recent Logins', 
+    icon: 'schedule', 
+    filterFn: (data) => data.filter(user => 
+      new Date(user.lastLogin) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    ) 
+  }
+]);
+
+&lt;app-data-table 
+  [showQuickFilters]="true"
+  [quickFilters]="quickFilters()"&gt;
+&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h4><code>showExport</code> - Data export functionality</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [showExport]="true"
+  [exportFormats]="['csv', 'excel', 'pdf', 'json']"&gt;
+&lt;/app-data-table&gt;
+
+// Users can export filtered/sorted data in various formats</code></pre>
+                    </div>
+
+                    <h4><code>groupBy</code> - Group rows by column</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [showGrouping]="true"
+  [groupBy]="'department'"&gt;
+&lt;/app-data-table&gt;
+
+// Groups rows by the specified column value
+// Users can expand/collapse groups</code></pre>
+                    </div>
+
+                    <h4><code>hierarchical</code> - Tree-like data structure</h4>
+                    <div class="code-block">
+                        <pre><code>// For parent-child relationships
+hierarchicalData = signal([
+  { id: 1, name: 'Parent 1', parentId: null, children: [
+    { id: 2, name: 'Child 1', parentId: 1 },
+    { id: 3, name: 'Child 2', parentId: 1 }
+  ]}
+]);
+
+&lt;app-data-table 
+  [hierarchical]="true"
+  [parentKey]="'parentId'"
+  [childrenKey]="'children'"
+  [data]="hierarchicalData()"&gt;
+&lt;/app-data-table&gt;</code></pre>
+                    </div>
+
+                    <h4><code>multiSort</code> - Enable multi-column sorting</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [multiSort]="true"&gt;
+&lt;/app-data-table&gt;
+
+// Users can Ctrl+Click column headers to sort by multiple columns
+// Shows sort priority numbers when multiple columns are sorted</code></pre>
+                    </div>
+
+                    <h4><code>loadingRows</code> - Number of skeleton rows</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [loading]="true"
+  [loadingRows]="8"&gt;
+&lt;/app-data-table&gt;
+
+// Shows 8 skeleton rows while loading data</code></pre>
+                    </div>
+
+                    <h4><code>itemSize</code> - Virtual scroll item height</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [virtualScrolling]="true"
+  [itemSize]="56"&gt;
+&lt;/app-data-table&gt;
+
+// Each row will be 56px high for virtual scrolling calculations</code></pre>
+                    </div>
+
+                    <h4><code>cacheTtl</code> - Cache time-to-live</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [cacheKey]="'users-table'"
+  [cacheTtl]="600000"&gt;
+&lt;/app-data-table&gt;
+
+// Cache expires after 10 minutes (600000ms)</code></pre>
+                    </div>
+
+                    <h4><code>refreshStrategy</code> - Cache refresh strategy</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;app-data-table 
+  [refreshStrategy]="'time-based'"&gt;
+&lt;/app-data-table&gt;
+
+// Options: 'time-based' | 'manual' | 'on-focus'
+// Controls when cached data should be refreshed</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>📤 Output Events</h2>
+            </div>
+            <div class="card-content">
+                <h3><code>(actionClick)</code> - Handle row actions</h3>
+                <div class="code-block">
+                    <pre><code>// Template
+&lt;app-data-table 
+  [actions]="actions()"
+  (actionClick)="onActionClick($event)"&gt;
+&lt;/app-data-table&gt;
+
+// Component
+onActionClick(event: { action: string; row: any }) {
+  switch(event.action) {
+    case 'edit':
+      this.editUser(event.row);
+      break;
+    case 'delete':
+      this.confirmDelete(event.row);
+      break;
+    case 'view':
+      this.viewUserDetails(event.row);
+      break;
+    default:
+      console.log('Unknown action:', event.action);
+  }
+}
+
+editUser(user: User) {
+  // Open edit dialog
+  const dialogRef = this.dialog.open(EditUserDialog, {
+    data: user
+  });
+}
+
+confirmDelete(user: User) {
+  // Show confirmation dialog
+  const result = confirm(`Delete user ${user.name}?`);
+  if (result) {
+    this.userService.deleteUser(user.id).subscribe(() => {
+      this.loadUsers(); // Refresh data
+    });
+  }
+}</code></pre>
+                </div>
+
+                <h3><code>(selectionChange)</code> - Handle row selection</h3>
+                <div class="code-block">
+                    <pre><code>// Template
+&lt;app-data-table 
+  [showSelection]="true"
+  (selectionChange)="onSelectionChange($event)"&gt;
+&lt;/app-data-table&gt;
+
+// Component
+selectedUsers = signal&lt;User[]&gt;([]);
+selectionCount = computed(() => this.selectedUsers().length);
+
+onSelectionChange(selectedRows: User[]) {
+  this.selectedUsers.set(selectedRows);
+  console.log(`Selected ${selectedRows.length} users`);
+  
+  // Enable/disable bulk actions based on selection
+  this.updateBulkActionState();
+}
+
+updateBulkActionState() {
+  const hasSelection = this.selectedUsers().length > 0;
+  // Update UI state based on selection
+}
+
+// Use selection in other methods
+deleteSelectedUsers() {
+  const selected = this.selectedUsers();
+  if (selected.length === 0) {
+    alert('Please select users to delete');
+    return;
+  }
+  
+  const ids = selected.map(user => user.id);
+  this.userService.deleteUsers(ids).subscribe(() => {
+    this.loadUsers();
+    this.selectedUsers.set([]); // Clear selection
+  });
+}</code></pre>
+                </div>
+
+                <h3><code>(bulkActionClick)</code> - Handle bulk operations</h3>
+                <div class="code-block">
+                    <pre><code>// Template
+&lt;app-data-table 
+  [bulkActions]="bulkActions()"
+  (bulkActionClick)="onBulkAction($event)"&gt;
+&lt;/app-data-table&gt;
+
+// Component
+onBulkAction(event: { action: string; rows: any[] }) {
+  const { action, rows } = event;
+  
+  switch(action) {
+    case 'bulk-delete':
+      this.bulkDelete(rows);
+      break;
+    case 'bulk-archive':
+      this.bulkArchive(rows);
+      break;
+    case 'bulk-email':
+      this.sendBulkEmail(rows);
+      break;
+    case 'bulk-export':
+      this.exportUsers(rows);
+      break;
+    default:
+      console.log('Unknown bulk action:', action);
+  }
+}
+
+bulkDelete(users: User[]) {
+  const count = users.length;
+  const confirmed = confirm(`Delete ${count} selected users?`);
+  
+  if (confirmed) {
+    const ids = users.map(user => user.id);
+    this.userService.deleteUsers(ids).subscribe({
+      next: () => {
+        this.snackBar.open(`${count} users deleted successfully`, 'Close');
+        this.loadUsers();
+      },
+      error: (error) => {
+        this.snackBar.open('Error deleting users', 'Close');
+      }
+    });
+  }
+}
+
+sendBulkEmail(users: User[]) {
+  const emails = users.map(user => user.email);
+  // Open email composer with recipients
+  this.emailService.composeEmail({ to: emails });
+}</code></pre>
+                </div>
+
+                <h3><code>(rowReorder)</code> - Handle drag & drop reordering</h3>
+                <div class="code-block">
+                    <pre><code>// Template
+&lt;app-data-table 
+  [enableDragDrop]="true"
+  (rowReorder)="onRowReorder($event)"&gt;
+&lt;/app-data-table&gt;
+
+// Component
+onRowReorder(event: { previousIndex: number; currentIndex: number; data: any[] }) {
+  const { previousIndex, currentIndex, data } = event;
+  
+  // Update local data
+  this.users.set(data);
+  
+  // Save new order to backend
+  const reorderedItem = data[currentIndex];
+  const newOrder = currentIndex + 1; // Assuming 1-based ordering
+  
+  this.userService.updateUserOrder(reorderedItem.id, newOrder).subscribe({
+    next: () => {
+      console.log(`Moved ${reorderedItem.name} from position ${previousIndex} to ${currentIndex}`);
+      this.snackBar.open('Order updated successfully', 'Close');
+    },
+    error: () => {
+      // Revert on error
+      this.loadUsers();
+      this.snackBar.open('Error updating order', 'Close');
+    }
+  });
+}
+
+// For complex reordering logic
+updateAllPositions(reorderedData: any[]) {
+  const updates = reorderedData.map((item, index) => ({
+    id: item.id,
+    position: index + 1
+  }));
+  
+  this.userService.bulkUpdatePositions(updates).subscribe(() => {
+    console.log('All positions updated');
+  });
+}</code></pre>
+                </div>
+
+                <div class="highlight">
+                    <strong>💡 Event Handling Best Practices:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>Always handle errors in event handlers</li>
+                        <li>Provide user feedback for actions (loading states, success/error messages)</li>
+                        <li>Use confirmation dialogs for destructive actions</li>
+                        <li>Update local state optimistically, revert on error</li>
+                        <li>Clear selections after bulk operations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>📊 Complete Properties Reference</h2>
+            </div>
+            <div class="card-content">
+                <h3>All Input Properties</h3>
+                <table class="props-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>data</code></td><td><code>any[]</code></td><td><code>[]</code></td><td>Array of data objects to display</td></tr>
+                        <tr><td><code>columns</code></td><td><code>TableColumn[]</code></td><td><code>[]</code></td><td>Column configuration array</td></tr>
+                        <tr><td><code>actions</code></td><td><code>TableAction[]</code></td><td><code>[]</code></td><td>Row action buttons</td></tr>
+                        <tr><td><code>bulkActions</code></td><td><code>BulkAction[]</code></td><td><code>[]</code></td><td>Bulk operation buttons</td></tr>
+                        <tr><td><code>rowMenuActions</code></td><td><code>RowMenuAction[]</code></td><td><code>[]</code></td><td>Context menu actions</td></tr>
+                        <tr><td><code>quickFilters</code></td><td><code>QuickFilter[]</code></td><td><code>[]</code></td><td>Predefined filter buttons</td></tr>
+                        <tr><td><code>exportFormats</code></td><td><code>ExportFormat[]</code></td><td><code>['csv', 'json']</code></td><td>Available export formats</td></tr>
+                        <tr><td><code>showSelection</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable row selection checkboxes</td></tr>
+                        <tr><td><code>showPagination</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Show pagination controls</td></tr>
+                        <tr><td><code>showRowMenu</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show row context menu</td></tr>
+                        <tr><td><code>enableDragDrop</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable row drag and drop reordering</td></tr>
+                        <tr><td><code>showExport</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show export functionality</td></tr>
+                        <tr><td><code>virtualScrolling</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable virtual scrolling for large datasets</td></tr>
+                        <tr><td><code>showGlobalSearch</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show global search input</td></tr>
+                        <tr><td><code>showColumnFilters</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show individual column filters</td></tr>
+                        <tr><td><code>showAdvancedFilter</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show advanced filter builder</td></tr>
+                        <tr><td><code>showQuickFilters</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show quick filter buttons</td></tr>
+                        <tr><td><code>showGrouping</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable row grouping</td></tr>
+                        <tr><td><code>hierarchical</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable hierarchical tree structure</td></tr>
+                        <tr><td><code>multiSort</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable multi-column sorting</td></tr>
+                        <tr><td><code>loading</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show loading skeleton</td></tr>
+                        <tr><td><code>loadingRows</code></td><td><code>number</code></td><td><code>5</code></td><td>Number of skeleton rows to show</td></tr>
+                        <tr><td><code>itemSize</code></td><td><code>number</code></td><td><code>48</code></td><td>Row height for virtual scrolling</td></tr>
+                        <tr><td><code>cacheTtl</code></td><td><code>number</code></td><td><code>300000</code></td><td>Cache time-to-live in milliseconds</td></tr>
+                        <tr><td><code>cacheKey</code></td><td><code>string</code></td><td><code>''</code></td><td>Cache key for data persistence</td></tr>
+                        <tr><td><code>groupBy</code></td><td><code>string</code></td><td><code>''</code></td><td>Column key to group rows by</td></tr>
+                        <tr><td><code>parentKey</code></td><td><code>string</code></td><td><code>'parentId'</code></td><td>Parent ID key for hierarchical data</td></tr>
+                        <tr><td><code>childrenKey</code></td><td><code>string</code></td><td><code>'children'</code></td><td>Children array key for hierarchical data</td></tr>
+                        <tr><td><code>refreshStrategy</code></td><td><code>RefreshStrategy</code></td><td><code>'time-based'</code></td><td>Cache refresh strategy</td></tr>
+                        <tr><td><code>dataLoader</code></td><td><code>() => Promise&lt;any[]&gt;</code></td><td><code>undefined</code></td><td>Function to load data for caching</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>All Output Events</h3>
+                <table class="props-table">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Payload Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>(actionClick)</code></td><td><code>{ action: string; row: any }</code></td><td>Emitted when a row action is clicked</td></tr>
+                        <tr><td><code>(selectionChange)</code></td><td><code>any[]</code></td><td>Emitted when row selection changes</td></tr>
+                        <tr><td><code>(bulkActionClick)</code></td><td><code>{ action: string; rows: any[] }</code></td><td>Emitted when a bulk action is performed</td></tr>
+                        <tr><td><code>(rowReorder)</code></td><td><code>{ previousIndex: number; currentIndex: number; data: any[] }</code></td><td>Emitted when rows are reordered via drag & drop</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Two-Way Binding (Models)</h3>
+                <table class="props-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>[(pageIndex)]</code></td><td><code>number</code></td><td>Current page index (0-based)</td></tr>
+                        <tr><td><code>[(pageSize)]</code></td><td><code>number</code></td><td>Number of items per page</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>🎨 Styling & Theming</h2>
+            </div>
+            <div class="card-content">
+                <h3>CSS Custom Properties</h3>
+                <div class="code-block">
+                    <pre><code>/* Override default table styling */
+app-data-table {
+  --table-header-bg: #f8f9fa;
+  --table-header-color: #495057;
+  --table-row-hover: #f8f9fa;
+  --table-border-color: #dee2e6;
+  --table-selected-bg: #e3f2fd;
+}</code></pre>
+                </div>
+
+                <h3>Mobile Responsive Classes</h3>
+                <div class="code-block">
+                    <pre><code>/* Built-in responsive classes */
+.mobile-hidden    /* Hidden on mobile devices */
+.tablet-hidden    /* Hidden on tablet devices */
+.desktop-only     /* Visible only on desktop */
+.mobile-stack     /* Stack columns on mobile */</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>🚀 Getting Started</h2>
+            </div>
+            <div class="card-content">
+                <div class="highlight">
+                    <strong>📋 Quick Checklist:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>Import DataTableComponent in your component</li>
+                        <li>Define your data signal with proper typing</li>
+                        <li>Configure columns with appropriate properties</li>
+                        <li>Set up event handlers for actions</li>
+                        <li>Add pagination models if using pagination</li>
+                    </ul>
+                </div>
+
+                <button class="btn" onclick="copyToClipboard()">📋 Copy Starter Template</button>
+                
+                <div id="starter-template" style="display: none;">
+import { Component, signal, model } from '@angular/core';
+import { DataTableComponent, TableColumn, TableAction } from '@shared/components/data-table.component';
+
+@Component({
+  selector: 'app-my-table',
+  standalone: true,
+  imports: [DataTableComponent],
+  template: `
+    <app-data-table
+      [data]="data()"
+      [columns]="columns()"
+      [actions]="actions()"
+      [showPagination]="true"
+      [(pageIndex)]="pageIndex"
+      [(pageSize)]="pageSize"
+      (actionClick)="onActionClick($event)">
+    </app-data-table>
+  `
+})
+export class MyTableComponent {
+  data = signal<any[]>([]);
+  
+  columns = signal<TableColumn[]>([
+    { key: 'name', label: 'Name', sortable: true, filterable: true },
+    { key: 'email', label: 'Email', sortable: true, filterable: true },
+    { key: 'actions', label: 'Actions', type: 'actions' }
+  ]);
+
+  actions = signal<TableAction[]>([
+    { icon: 'edit', label: 'Edit', action: 'edit' },
+    { icon: 'delete', label: 'Delete', action: 'delete' }
+  ]);
+
+  pageIndex = model(0);
+  pageSize = model(10);
+
+  onActionClick(event: { action: string; row: any }) {
+    console.log('Action clicked:', event);
+  }
+}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function showInputTab(tabName) {
+            // Hide all input tab contents
+            const contents = document.querySelectorAll('#data-props, #interaction-props, #performance-props, #advanced-props');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from input tabs
+            const tabs = event.target.parentElement.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function copyToClipboard() {
+            const template = document.getElementById('starter-template').textContent;
+            navigator.clipboard.writeText(template).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                btn.style.background = '#28a745';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -12,6 +12,7 @@ import {
   TableColumn,
   TableAction,
   QuickFilter,
+  BulkAction,
 } from '../../shared/components/data-table.component';
 import { UsersService } from '../../core/services/users.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -42,7 +43,7 @@ export class UsersComponent {
 
   users = this.usersService.getUsers;
   pageIndex = signal(0);
-  pageSize = signal(5);
+  pageSize = signal(50);
 
   userStats = computed(() => {
     const allUsers = this.users();
@@ -140,17 +141,44 @@ export class UsersComponent {
     },
   ];
 
-  columns: TableColumn[] = [
-    { key: 'name', label: 'Name', sortable: true },
-    { key: 'email', label: 'Email', sortable: true },
-    { key: 'role', label: 'Role', sortable: true },
-    { key: 'status', label: 'Status', sortable: true },
-  ];
+  columns = signal<TableColumn[]>([
+    { key: 'name', label: 'Name', sortable: true, filterable: true, filterType: 'text' },
+    { key: 'email', label: 'Email', sortable: true, filterable: true, filterType: 'text' },
+    {
+      key: 'role',
+      label: 'Role',
+      sortable: true,
+      filterable: true,
+      filterType: 'dropdown',
+      filterOptions: ['Admin', 'Editor', 'Viewer'],
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      sortable: true,
+      filterable: true,
+      filterType: 'dropdown',
+      filterOptions: ['Active', 'Inactive'],
+    },
+  ]);
 
   actions: TableAction[] = [
     { icon: 'edit', label: 'Edit user', action: 'edit' },
     { icon: 'security', label: 'Assign Permissions', action: 'permissions' },
     { icon: 'delete', label: 'Delete user', action: 'delete' },
+  ];
+
+  bulkActions: BulkAction[] = [
+    {
+      action: 'delete',
+      icon: '',
+      label: 'Delete All',
+    },
+    {
+      action: 'archive',
+      icon: '',
+      label: 'Archive',
+    },
   ];
 
   onTableAction(event: { action: string; row: unknown }) {
@@ -166,6 +194,17 @@ export class UsersComponent {
           this.deleteUser(event.row);
           break;
       }
+    }
+  }
+
+  onButtonActionClick(event: { action: string; rows: any[] }) {
+    console.log('Bulk Action', event);
+    if (event.action === 'delete') {
+      // TODO Delete All
+    }
+
+    if (event.action === 'archive') {
+      // ToDO Archive
     }
   }
 
@@ -198,8 +237,12 @@ export class UsersComponent {
   }
 
   onSelectionChange(selected: unknown[]) {
+    console.log('selected', selected);
     if (selected?.length > 0) {
       return;
     }
+  }
+  onRowReorder(data: { previousIndex: number; currentIndex: number; data: any[] }) {
+    console.log('Data to be reorder', data);
   }
 }
